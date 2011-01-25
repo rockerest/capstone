@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+	<!--<link rel="shortcut icon" href="../images/favicon.ico" type="image/x-icon" />
+	<link rel="icon" href="../images/favicon.ico" type="image/x-icon" />-->
+
+	<style type="text/css">
+		/*-----global css-----*/
+		<?php
+			require_once('blueprint/screen.css');		
+		?>
+		
+		/*-----Menu CSS-----*/
+		<?php
+			print $tmpl->menuContent['css'];
+		?>
+		
+		/*-----End Menu-----*/
+		
+		/*-----Header CSS-----*/
+		<?php
+			print $tmpl->headerContent['css'];
+		?>
+		
+		/*-----End header-----*/
+		
+		/*-----Main Page CSS-----*/
+		<?php
+			print $tmpl->appContent['css'];
+		?>
+		
+		/*-----End Main Page-----*/
+				
+	</style>
+	<title>
+	<?php
+		print "$tmpl->title\n";
+	?>
+	</title>		
+</head>
+
+<body>
+	
+	<div id="page" class="clear">
+		<?= $tmpl->headerContent['html'] ."\n"; ?>
+		<div id="content">
+			<?= $tmpl->menuContent['html'] . "\n"; ?>
+			<?= $tmpl->menuItem['html']."\n";?>		
+			<?= $tmpl->appContent['html'] . "\n"; ?>
+		</div>
+	</div>
+	<noscript>
+		<div id="nojs" style="display: block;">
+			It looks like you don't have Javascript enabled.  This site uses javascript for most functionality, and you will be missing out on a lot of cool features and many abilities without it!
+			<br />
+			It is recommended that you turn Javascript ON in your browser.
+		</div>
+	</noscript>
+	<script type="text/javascript" src="../scripts/global.js"></script>
+
+	<!--    Load Javascript Library - jQuery     -->
+	<script type="text/javascript" src="../../jquery/jquery.js"></script>
+	
+	<!--	Load side menu Script	-->
+	<script type="text/javascript" src="../scripts/sdmenu/sdmenu.js"></script>
+	
+	<!--    Load custom jQuery Plugins           -->
+	<script type="text/javascript" src="../../jquery/jquery.fadeDown.js"></script>
+	<script type="text/javascript" src="../../jquery/jquery.idle.js"></script>
+
+	<!--    Load external jQuery plugins         -->
+	<script type="text/javascript" src="../../jquery/jquery.event.hover.js"></script>
+	<script type="text/javascript" src="../../jquery/jquery.easing.js"></script>
+
+	<script type="text/javascript">
+	$( document ).ready( function(){
+		var myMenu = new SDMenu("my_menu");
+		myMenu.init();
+								  <?php
+										print $tmpl->headerContent['js'] . "\n";
+										print $tmpl->menuContent['js'] . "\n";
+										print $tmpl->appContent['js'] . "\n";
+									?>
+								  });
+	</script>
+</body>
+</html>

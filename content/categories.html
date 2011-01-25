@@ -1,0 +1,10 @@
+<table>
+<?
+	foreach( $tmpl->cats as $cat)
+	{
+		?>
+		<tr><td><?= $cat['name']; ?></td><td><?= $cat['number']; ?></td></tr>
+		<?
+	}
+?>
+</table>

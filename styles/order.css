@@ -1,0 +1,152 @@
+ .clear
+ {
+ clear:both;
+ }
+ 
+ 
+ #main
+ {
+	width:100%;
+	margin:20px 0 0 0;
+ }
+ #menuNav
+ {
+ float:left;
+ width:15%;
+ padding-left:10px;
+ }
+ #menuContent
+ {
+	float:left;
+	width:60%;
+	margin:0 2.5em 0 2.5em;
+	min-height:500px;
+	border:1px solid #333;
+	border-radius:5px;
+ }
+ #curMenuItem
+ {
+	padding:20px;
+	min-height:500px;
+ }
+ #curMenuItem_title
+ {
+	font-size:2em;
+	margin-left:20px;
+ }
+ #curMenuItem_title_rating
+ {
+	font-size:.5em;
+	vertical-align:top;
+	font-style:italic;
+ }
+ #curMenuItem_pic
+ {
+ float:left;
+ width:50%;
+ }
+ #curMenuItem_desc
+ {
+ float:left;
+ width:50%;
+ }
+ #addButton
+ {
+ float:right;
+ }
+ #reviewButton
+ {
+float:right;
+ }
+ #curMenuItem_reviews
+ {
+	clear:both;
+	float:left;
+	width:44%;
+	margin:25px 10% auto auto;
+	border: 1px solid #666;
+	height: 20em;
+ }
+ #curMenuItem_reviews a
+ {
+	text-decoration:none;
+ }
+ #curMenuItem_reviews_title
+ {
+	font-size:1.4em;
+ }
+ #curMenuItem_similar
+ {
+	float:left;
+	width:44%;
+	margin:25px auto auto auto;
+	border: 1px solid #666;
+	height: 20em;
+	
+ }
+ #curMenuItem_similar a
+ {
+	text-decoration:none;
+ }
+ #curMenuItem_similar_title
+ {
+	font-size:1.4em;
+ }
+ 
+ #menuIngredients
+ {
+	float:left;
+	width:15%;
+ }
+ #menuIngredients_title
+ {
+	font-size:1.1em;
+	font-weight:bold;
+	text-decoration:underline;
+ }
+ .menuIngredients_li
+ {
+	list-style-type:none;
+	border-bottom:1px solid #333;
+ }
+ #addIngredient
+  {
+ 	font-style:italic;
+	font-size:.8em;
+	color:#aaa;
+	width:80%;
+ }
+ 
+ #foot
+ {
+	clear:both;
+ }
+ #receipt
+ {
+	margin: 25px auto auto auto;
+	background-color: #ffb;
+	border:1px solid #333;
+	padding-bottom: 25px;
+ }
+ #receipt_table_num
+ {
+	font-size:1.3em;
+	text-align:center;
+ }
+ #receipt_items_table 
+ {
+	width:100%;
+ }
+ #receipt_items_table tr
+ {
+	border-bottom: 1px solid #333;
+ }
+ #receipt_totals td
+ {
+	text-align:right;
+ }
+ #receipt input
+ {
+	float:right;
+ }
+ 

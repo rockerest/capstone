@@ -1,0 +1,50 @@
+
+ #head{
+	height:50px;
+	border-bottom:1px solid #333;
+	padding:5px;
+	background-color: #E5ECF9;
+	color:#555;
+ }
+ 
+ #logo{
+	float:left;
+	font-size:3em;
+ }
+ 
+ #searchBar{
+	float:left;
+	margin-top:28px;
+ }
+ 
+ #searchInput{
+ 	font-style:italic;
+	font-size:.8em;
+	color:#aaa;
+ }
+ 
+ #headNav{
+	float:right;
+	margin-top:33px;
+ }
+ 
+ .headNav_li{
+ list-style-type:none;
+ display:inline;
+ padding:0 2px 0 2px;
+ }
+ 
+ #head a{
+	text-decoration:none;
+	color:#555;
+ }
+ 
+ #head a:hover{
+	text-decoration:underline;
+ }
+ 
+ #srchNavCont{
+	float: right;
+    max-width: 34.833em;
+    width: auto;
+ }
