@@ -11,19 +11,18 @@
 		protected $menuItem;
 		private $curr;
 		private $page_title;
-
+		
         public function __construct($curr, $page_title )
 		{
 			$this->curr = $curr;
 			$this->page_title = $page_title;		
-			$item_id = isset($_GET['id']) ? $_GET['id'] : 1;
         }
 
 		public function run()
 		{
             $this->menu = new Menubar();
 			$this->header = new Header($this->curr);
-			$this->menuItem = new MenuItem($item_id);
+			$this->menuItem = new MenuItem(isset($_GET['id']) ? $_GET['id'] : 1);
             $this->menu->run();
 			$this->header->run();			
 			$this->menuItem->run();

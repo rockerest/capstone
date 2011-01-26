@@ -8,14 +8,20 @@
 	{
 		private $db;
 		public $newitems;
-
+		private $item_info;
+		
 		function __construct($itemid)
 		{
+			$this->item_info = array();
 			
 			$this->db = new Database($GLOBALS['user'], $GLOBALS['pass'], $GLOBALS['dbname'], $GLOBALS['host'], 'mysql');
-			
 			$newitems = $this->db->q("SELECT * FROM items WHERE itemid='".$itemid."';");
-			var_dump($newitems);
+			
+			foreach( $newitems as $item )
+			{
+				$this->item_info = $item;
+			}
+			
 		}
 		
 		public function run()
@@ -26,6 +32,7 @@
 		public function generate()
 		{
 			$tmpl = new Template();
+			$tmpl->item_info = $this->item_info;
 
 			$css = $tmpl->build('menuitem.css');
 			$html = $tmpl->build('menuitem.html');

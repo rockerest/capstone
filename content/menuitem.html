@@ -1,8 +1,17 @@
 <div class="container">
 	<div id="curMenuItem">
-				<span id="curMenuItem_title"><?=$this->newitems['name']?><span id="curMenuItem_title_rating">Rating:</span>*****</span>
-				<div id="curMenuItem_pic"><img src="images/sandwich.jpg" /></div>
-				<div id="curMenuItem_desc">Chicken Sandwich Description Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut lectus elit, tincidunt vitae ultrices sit amet, tempor ut metus. Nullam semper mollis scelerisque. Fusce eget velit quis ante accumsan placerat. Donec eget erat risus, porttitor feugiat est</div>
+				<div id="curMenuItem_title">
+				<?php
+						//var_dump($this->item_info);
+						print $this->item_info['name'];
+					
+				?>
+				<span id="curMenuItem_title_rating">Rating:</span>*****</div>
+				<div id="curMenuItem_pic"><img src="images/<?=$this->item_info['image']?>" /></div>
+				<br class="clear"/>
+				<div id="curMenuItem_desc"><?=$this->item_info['description']?></div>
+				<div id="curMenuItem_price"><?=$this->item_info['price']?></div>
+				<br class="clear"/>
 				<input type="submit" value="Add To Order" id="addButton" >
 				<input type="submit" value="Review This Item" id="reviewButton" >
 	</div>

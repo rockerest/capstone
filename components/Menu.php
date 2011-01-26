@@ -28,6 +28,9 @@ class Menu
 		{
 		
 			//This does not work...
+			/* I dont know why this is here...
+			
+			
 			$d = new Database($user, $pass, $dbname, $host, 'mysql');
 			$newitems = $d->q("SELECT * FROM items");
 			var_dump($newitems);
@@ -99,6 +102,7 @@ class Menu
 				  </div>
 				</div>
 				</div>";
+				*/
 		}
 }
 
