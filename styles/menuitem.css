@@ -6,7 +6,8 @@
  #curMenuItem_title
  {
 	font-size:2em;
-	margin-left:20px;
+	float:left;
+	width:200px;
  }
  #curMenuItem_title_rating
  {
@@ -17,12 +18,10 @@
  #curMenuItem_pic
  {
  float:left;
- width:50%;
+ width:200px;
  }
  #curMenuItem_desc
  {
- float:left;
- width:50%;
  }
  #addButton
  {
@@ -31,38 +30,4 @@
  #reviewButton
  {
 float:right;
- }
- #curMenuItem_reviews
- {
-	clear:both;
-	float:left;
-	width:44%;
-	margin:25px 10% auto auto;
-	border: 1px solid #666;
-	height: 20em;
- }
- #curMenuItem_reviews a
- {
-	text-decoration:none;
- }
- #curMenuItem_reviews_title
- {
-	font-size:1.4em;
- }
- #curMenuItem_similar
- {
-	float:left;
-	width:44%;
-	margin:25px auto auto auto;
-	border: 1px solid #666;
-	height: 20em;
-	
- }
- #curMenuItem_similar a
- {
-	text-decoration:none;
- }
- #curMenuItem_similar_title
- {
-	font-size:1.4em;
  }

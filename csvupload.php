@@ -138,6 +138,7 @@
 							else
 							{
 								//WTF?
+								//BBQ?
 								$ingid = -1;
 							}
 							

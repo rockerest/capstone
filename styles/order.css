@@ -24,7 +24,8 @@
 	border:1px solid #333;
 	border-radius:5px;
  }
- #curMenuItem
+ 
+#curMenuItem
  {
 	padding:20px;
 	min-height:500px;
@@ -32,7 +33,8 @@
  #curMenuItem_title
  {
 	font-size:2em;
-	margin-left:20px;
+	float:left;
+	width:200px;
  }
  #curMenuItem_title_rating
  {
@@ -43,12 +45,10 @@
  #curMenuItem_pic
  {
  float:left;
- width:50%;
+ width:200px;
  }
  #curMenuItem_desc
  {
- float:left;
- width:50%;
  }
  #addButton
  {
@@ -149,4 +149,3 @@ float:right;
  {
 	float:right;
  }
- 
