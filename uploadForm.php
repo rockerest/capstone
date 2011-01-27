@@ -25,12 +25,12 @@ set_include_path('backbone:components:content:scripts:styles:images');
 	else
 	{
 		
-		if(($_POST['item_name']!='')&&($_POST['item_desc']!='')&&($_POST['item_image']!='')&&($_POST['item_price']!='')&&($_POST['item_preptime']!='')&&($_POST['item_hasCookLevels']!='')&&($_POST['item_ingredients']!='')&&($_POST['item_characteristics']!='')&&($_POST['item_category_name']!='')&&($_POST['item_category_number']!=''))
-		{
+		if(($_POST['item_name']!='')&&($_POST['item_desc']!='')&&($_POST['item_price']!='')&&($_POST['item_preptime']!='')&&($_POST['item_hasCookLevels']!='')&&($_POST['item_ingredients']!='')&&($_POST['item_characteristics']!='')&&($_POST['item_category_name']!='')&&($_POST['item_category_number']!=''))
+		{			//get the image file			$file_info = pathinfo( $_FILES['item_image']['name'] );			if(($file_info['extension']=='jpg')||($file_info['extension']=='png')||($file_info['extension']=='gif'))			{				$file_name = $file_info['filename'].".".$file_info['extension'];				move_uploaded_file( $_FILES['item_image']['tmp_name'], "images/".$file_name );			}			else			{				echo "this is not an image file we support.";			}
 			$catid;
 			$item_name = $_POST['item_name'];
 			$item_desc = $_POST['item_desc'];
-			$item_image = $_POST['item_image'];
+			$item_image = $file_name;
 			$item_price = $_POST['item_price'];
 			$item_preptime = $_POST['item_price'];
 			$item_hasCookLevels = $_POST['item_hasCookLevels'];

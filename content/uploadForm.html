@@ -1,10 +1,10 @@
 <div class="container">
-<form action="uploadForm.php?submit=1" method="post">
+<form action="uploadForm.php?submit=1" method="post" enctype="multipart/form-data">
 	<table id="uploadForm_table">
 	<tr><td><h2>Item Insert</h2></td></tr>
 	<tr><td><label for="item_name">Name:</label></td><td><input type="text" name="item_name" id="item_name" /></td></tr>
 	<tr><td><label for="item_desc">Description:</label></td><td><input type="text" name="item_desc" id="item_desc" /></td></tr>
-	<tr><td><label for="item_image">Image Path (image must be in folder www/images (be sure to include extension)):</label></td><td><input type="text" name="item_image" id="item_image" /></td></tr>
+	<tr><td><label for="item_image">Image</label></td><td><input type="file" name="item_image" id="item_image" /></td></tr>
 	<tr><td><label for="item_price">Price:</label></td><td><input type="text" name="item_price" id="item_price" /></td></tr>
 	<tr><td><label for="item_preptime">Prep Time:</label></td><td><input type="text" name="item_preptime" id="item_preptime" /></td></tr>
 	<tr><td><label for="item_item_hasCookLevels">Has cook levels?:</label></td><td><input type="text" name="item_hasCookLevels" id="item_hasCookLevels" /></td></tr>

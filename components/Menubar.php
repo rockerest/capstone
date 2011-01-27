@@ -15,7 +15,7 @@
 		{
 			$this->labels = array();
 			$this->links = array();	
-			$rootlink = "http://capstone.thomasrandolph.info/www/order.php?id="; // or something similar
+			$rootlink = "order.php?id="; // or something similar
 			
 			$this->db = new Database($GLOBALS['user'], $GLOBALS['pass'], $GLOBALS['dbname'], $GLOBALS['host'], 'mysql');
 			
