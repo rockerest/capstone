@@ -9,8 +9,10 @@
 		protected $menu;
 		protected $header;
 		protected $menuItem;
+		protected $ingredients_list;
 		private $curr;
 		private $page_title;
+
 		
         public function __construct($curr, $page_title )
 		{
@@ -33,9 +35,8 @@
 			
 			$tmpl->headerContent = $this->header->generate();
             $tmpl->menuContent = $this->curr == 1 ? $this->menu->generate() : "";			
-			$tmpl->menuItem = $this->curr == 1 ? $this->menuItem->generate() : "";
+			$tmpl->menuItem = ($this->curr == 1) ? $this->menuItem->generate($this->curr) : "";
             $tmpl->appContent = $appContent;
-
 			$tmpl->title = $this->page_title;
 
             return $tmpl->build('page.html');

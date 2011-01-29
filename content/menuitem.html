@@ -1,5 +1,5 @@
 <div class="container">
-	<div id="curMenuItem">
+	<div id="curMenuItem" class="span-16">
 				<div id="curMenuItem_title">
 				<?php
 						//var_dump($this->item_info);
@@ -12,7 +12,23 @@
 				<div id="curMenuItem_desc"><?=$this->item_info['description']?></div>
 				<div id="curMenuItem_price"><?=$this->item_info['price']?></div>
 				<br class="clear"/>
-				<input type="submit" value="Add To Order" id="addButton" >
-				<input type="submit" value="Review This Item" id="reviewButton" >
+				
 	</div>
+
+				<div id=\"ingredients_list\" class=\"span-6\">
+				<form action="additem.php?id=<?=$this->item_info['itemid']?>" method="post">
+				<?
+				$ing_labels = $this->ing_labels;
+				foreach($ing_labels as $ing_plabels)			
+				{				
+					?>			
+					<input type="checkbox" value="<?=$ing_plabels?>" name="ingredients" checked="true" /><?=$ing_plabels?><br />				
+					<?						
+				}?>
+				<input type="submit" value="Add To Order" id="addButton" />
+				</form>
+				<input type="submit" value="Review This Item" id="reviewButton" >
+				</div>
+			
+
 </div>

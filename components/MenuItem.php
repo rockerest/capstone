@@ -8,20 +8,33 @@
 	{
 		private $db;
 		public $newitems;
+		public $ingredients;
+		
 		private $item_info;
+		private $ing_labels;
 		
 		function __construct($itemid)
 		{
 			$this->item_info = array();
+			$this->ing_labels = array();
 			
 			$this->db = new Database($GLOBALS['user'], $GLOBALS['pass'], $GLOBALS['dbname'], $GLOBALS['host'], 'mysql');
-			$newitems = $this->db->q("SELECT * FROM items WHERE itemid='".$itemid."';");
 			
+			$sql = "SELECT * FROM items WHERE itemid='".$itemid."';";
+			$newitems = $this->db->q($sql);
 			foreach( $newitems as $item )
 			{
 				$this->item_info = $item;
 			}
 			
+			$sql = "SELECT * FROM ingredients WHERE ingredientid IN (SELECT ingredientid FROM items_have_ingredients WHERE itemid='".$itemid."');";
+			$ingredients = $this->db->q($sql);
+			foreach( $ingredients as $ingredient )
+			{	
+				array_push($this->ing_labels, $ingredient['name']);
+				//$this->ing_labels = $ingredients;
+			}
+
 		}
 		
 		public function run()
@@ -29,12 +42,13 @@
 			//in case you need to do something that's not constructing and not generating
 		}
 		
-		public function generate()
+		public function generate($view)
 		{
 			$tmpl = new Template();
 			$tmpl->item_info = $this->item_info;
-
-			$css = $tmpl->build('menuitem.css');
+			$tmpl->view = $view;
+			$tmpl->ing_labels = $this->ing_labels;
+			$css = $tmpl->build('menuitem.css');		
 			$html = $tmpl->build('menuitem.html');
 			//$js = $tmpl->build('menubar.js'); // For any JS related to the menubar
 			
