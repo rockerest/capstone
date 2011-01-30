@@ -22,7 +22,7 @@
 				foreach($ing_labels as $ing_plabels)			
 				{				
 					?>			
-					<input type="checkbox" value="<?=$ing_plabels?>" name="ingredients" checked="true" /><?=$ing_plabels?><br />				
+					<input type="checkbox" value="<?=$ing_plabels?>" name="ingredients[]" checked="true" /><?=$ing_plabels?><br />				
 					<?						
 				}?>
 				<input type="submit" value="Add To Order" id="addButton" />

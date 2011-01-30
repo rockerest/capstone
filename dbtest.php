@@ -152,4 +152,32 @@ foreach($tot_categories as $tot_category)
 	print "Category-number: ".$tot_category['number']."<br/>------------------------------------><br/>";
 }
 
+echo "__USERS__<br />";
+echo "_userid__fname__lname<br />";
+$sql = "SELECT * FROM users";
+$users = $d->q($sql);
+foreach($users as $user)
+{
+	print $user['userid']."-".$user['fname']."-".$user['lname']."<br />";
+}
+
+echo "__TABLES__<br />";
+echo "_tableid__serverid__isAvailable<br />";
+$sql = "SELECT * FROM tables";
+$tables = $d->q($sql);
+foreach($tables as $table)
+{
+	print $table['tableid']."-".$table['serverid']."-".$table['isAvailable']."<br />";
+}
+
+echo "__SERVERS__<br />";
+echo "_serverid__userid__isWorking<br />";
+$sql = "SELECT * FROM servers";
+$servers = $d->q($sql);
+foreach($servers as $server)
+{
+	print $server['serverid']."-".$server['userid']."-".$server['isWorking']."<br />";
+}
+
+
 ?>
