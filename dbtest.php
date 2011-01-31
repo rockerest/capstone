@@ -17,9 +17,26 @@ $q = "SELECT * FROM items";
 		foreach($menu_items as $menu_item)
 		{
 			print $menu_item['name']." - ".$menu_item['categoryid']."<br/>";
-			
+			$sql = "SELECT * FROM ingredients WHERE ingredientid IN (SELECT ingredientid FROM items_have_ingredients WHERE itemid='".$menu_item['itemid']."');";
+			$item_ingredients = $d->q($sql);
+			foreach($item_ingredients as $ingredient)
+			{
+				print "Ingredient - ".$ingredient['name']."</br />";
+			}
 		}
-		
+
+$q = "SELECT * FROM items_have_ingredients";
+$ing = $d->q($q);
+foreach($ing as $ping)
+{
+	print $ping['itemid']."-".$ping['ingredientid']."<br />";
+}
+$q = "SELECT * FROM ingredients";
+$ing = $d->q($q);
+foreach($ing as $ping)
+{
+	print $ping['name']."-".$ping['ingredientid']."<br />";
+}
 
 $orders = $d->q("SELECT * FROM orders");
 foreach($orders as $order)
@@ -75,6 +92,7 @@ foreach($orders as $order)
 			
 			//get ingredients in each item
 			$iiq = "SELECT * FROM ingredients WHERE ingredientid IN (SELECT ingredientid FROM items_have_ingredients WHERE itemid=".$item['itemid'].")";
+			echo $iiq."</br>";
 			$ingredients = $d->q($iiq);
 			if(!empty($ingredients)){print "Ingredients:<br/>";};
 			foreach($ingredients as $ingredient)
@@ -133,5 +151,33 @@ foreach($tot_categories as $tot_category)
 	print "Category-name: ".$tot_category['name']."<br/>";
 	print "Category-number: ".$tot_category['number']."<br/>------------------------------------><br/>";
 }
+
+echo "__USERS__<br />";
+echo "_userid__fname__lname<br />";
+$sql = "SELECT * FROM users";
+$users = $d->q($sql);
+foreach($users as $user)
+{
+	print $user['userid']."-".$user['fname']."-".$user['lname']."<br />";
+}
+
+echo "__TABLES__<br />";
+echo "_tableid__serverid__isAvailable<br />";
+$sql = "SELECT * FROM tables";
+$tables = $d->q($sql);
+foreach($tables as $table)
+{
+	print $table['tableid']."-".$table['serverid']."-".$table['isAvailable']."<br />";
+}
+
+echo "__SERVERS__<br />";
+echo "_serverid__userid__isWorking<br />";
+$sql = "SELECT * FROM servers";
+$servers = $d->q($sql);
+foreach($servers as $server)
+{
+	print $server['serverid']."-".$server['userid']."-".$server['isWorking']."<br />";
+}
+
 
 ?>

@@ -7,7 +7,7 @@ set_include_path('backbone:components:content:scripts:styles:images');
 	require_once('Database.php');
 	require_once('capstone.db');
 	
-	$submit = isset( $_GET['submit'] ) ? $_GET['submit'] : 0;
+	$submit = isset( $_GET['submit'] ) ? $_GET['submit'] : 0;	$last;
 
 	$page = new Page(0, "OrderUp - Upload via Form");
 	$db = new Database($user, $pass, $dbname, $host, 'mysql');
@@ -79,7 +79,7 @@ set_include_path('backbone:components:content:scripts:styles:images');
 							}
 							$sql = "INSERT INTO items (categoryid, name, description, image, price, prepTime, hasCookLevels) VALUES (?,?,?,?,?,?,?)";
 							$values = array($catid, $item_name, $item_desc, $item_image, $item_price, $item_preptime, $item_hasCookLevels);
-							$db->qwv($sql, $values);
+							$db->qwv($sql, $values);							if( $db->stat() )								{									$last = $db->last();								}
 							echo "inserted into items<br />";
 							print_r($values);
 						}

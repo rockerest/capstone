@@ -1,54 +1,47 @@
 <?php
-
-//		TODO: Modifiers, Customizations
-//
-//
-//
-//		2010/11/16
-
-require_once('Receipt.php');
-
-class Ingredients
-{
-	public function __construct()
-	{
+	error_reporting(E_ALL);
+	set_include_path('backbone:components:content:styles:scripts');
 	
-	}
-	public function build($ingredients_list)
-	{
+	require_once('Database.php');
+	require_once('capstone.db');
 
-	if($ingredients_list == 0)
+	class Ingredients
 	{
-		print "	<div id=\"menuIngredients\">
-			<span id=\"menuIngredients_title\">Included Ingredients:</span>
-			<ul id=\"menuIngredients_ul\">
-				<li class=\"menuIngredients_li\"><input type=\"checkbox\" checked=\"true\" id=\"menuItem1\"/><label for=\"menuItem1\">Chicken Patty</label></li>
-				<li class=\"menuIngredients_li\"><input type=\"checkbox\" checked=\"true\" id=\"menuItem2\"/><label for=\"menuItem2\">Tomatoes</label></li>
-				<li class=\"menuIngredients_li\"><input type=\"checkbox\" checked=\"true\" id=\"menuItem3\"/><label for=\"menuItem3\">Lettuce</label></li>
-				<li class=\"menuIngredients_li\"><input type=\"checkbox\" checked=\"true\" id=\"menuItem4\"/><label for=\"menuItem4\">Provolone Cheese</label></li>
-				<li class=\"menuIngredients_li\"><input type=\"checkbox\" checked=\"true\" id=\"menuItem5\"/><label for=\"menuItem5\">Onions</label></li>
-				<li class=\"menuIngredients_li\"><input type=\"checkbox\" checked=\"true\" id=\"menuItem6\"/><label for=\"menuItem6\">Pickles</label></li>
-				<li class=\"menuIngredients_li\"><input type=\"checkbox\" checked=\"true\" id=\"menuItem7\"/><label for=\"menuItem7\">\"Special Sauce\"</label></li>
-				<li class=\"menuIngredients_li\"><input type=\"checkbox\" id=\"menuItem8\"/><label for=\"menuItem8\"><input type=\"textbox\" value=\"Add an Ingredient\" id=\"addIngredient\"/></label></li>
-			</ul>";
-	}
-	else
-	{
-		print "	<div id=\"menuIngredients\">
-			<span id=\"menuIngredients_title\">Included Ingredients:</span>
-			<ul id=\"menuIngredients_ul\">";
-		foreach($ingredients_list as $single_ingredient)
+		private $db;
+		private $ing_labels;
+		private $itemid;
+		
+		function __construct($itemid)
 		{
-			print "<li class=\"menuIngredients_li\"><input type=\"checkbox\" checked=\"true\" id=\"".$single_ingredient['ingredientid']."\"/><label for=\"".$single_ingredient['ingredientid']."\">".$single_ingredient['name']."</label></li>";
+			$this->itemid = $itemid;
 		}
-		print "</ul>";
-	}
 		
-	$r = new Receipt();
-	$r->build();
+		public function run()
+		{
+			//in case you need to do something that's not constructing and not generating
+			$this->ing_labels = array();
+			
+			$this->db = new Database($GLOBALS['user'], $GLOBALS['pass'], $GLOBALS['dbname'], $GLOBALS['host'], 'mysql');
+			
+			$ingredients = $this->db->q("SELECT * FROM ingredients WHERE ingredientid IN (SELECT ingredientid FROM items_have_ingredients WHERE itemid=".$itemid.");" );
+			foreach( $ingredients as $ingredient )
+			{
+				array_push($this->ing_labels, $ingredient['name']);
+			}
+		}
 		
-	print "</div>";
-	}
+		public function generate()
+		{
+			$tmpl = new Template();
+			$tmpl->ing_labels = $this->ing_labels;
+
+			$css = $tmpl->build('ingredients.css');		
+			$html = $tmpl->build('ingredients.html');
+			//$js = $tmpl->build('menubar.js'); // For any JS related to the menubar
+			
+			$content = array('html' => $html, 'css' => $css, 'js' => $js);
+			return $content;
+		}
 }
 
 ?>
