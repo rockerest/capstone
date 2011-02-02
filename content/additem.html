@@ -1,0 +1,16 @@
+<div class="container">
+	<?php
+	if($_GET['order']=='submitted')
+	{
+		echo "order submitted";
+	}
+	else
+	{
+	?>
+		<form action="additem.php" method="post">
+			<textarea id="message" name="message" cols=40 rows=6>Enter Special comment here</textarea>
+			<input type="hidden" name="itemid" value="<?=$_GET['id']?>" />
+			<input type="submit" value="Add to order" />
+		</form>
+	<?}?>
+</div>
