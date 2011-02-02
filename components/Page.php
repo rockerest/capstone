@@ -4,6 +4,9 @@
 	require_once('Menubar.php');
 	require_once('Header.php');	
 	require_once('MenuItem.php');
+	require_once('Session.php');
+	setSession(0,"/");
+	
 
     class Page {
 		protected $menu;
