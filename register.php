@@ -29,6 +29,8 @@
 			$email = $_POST['email']==$_POST['email_confirm'] ? $_POST['email'] : -1; 
 			$password = $_POST['pass']==$_POST['pass_confirm'] ? $_POST['pass'] : -1; 
 			
+			$role = isset($_POST['register_role']) ? $_POST['register_role'] : 3;
+			
 			if($email==-1||$password==-1)
 			{
 				echo "incorrect";
@@ -49,7 +51,7 @@
 				
 				//insert into auth
 				$sql = "INSERT INTO authentication (identity, salt, password, userid, roleid) VALUES (?,?,?,?,?)";
-				$values = array($email, $salt, $real_pass, $userid, 3);
+				$values = array($email, $salt, $real_pass, $userid, $role);
 				$db->qwv($sql, $values);
 			}
 			
