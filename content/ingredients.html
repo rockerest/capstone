@@ -1,0 +1,13 @@
+<div>
+<span>Ingredients</span>		
+	<?php			
+		$labels = $tmpl->ing_labels;
+			echo "balls";
+		foreach($labels as $plabels)			
+		{				
+			?>			
+			<input type="checkbox" value="<?=$plabels?>" /><br />				
+			<?						
+		}		
+	?>		
+</div>		
