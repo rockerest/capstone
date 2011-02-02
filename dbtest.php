@@ -179,5 +179,22 @@ foreach($servers as $server)
 	print $server['serverid']."-".$server['userid']."-".$server['isWorking']."<br />";
 }
 
+echo "__ROLES__<br />";
+echo "_roleid__role<br />";
+$sql = "SELECT * FROM roles";
+$servers = $d->q($sql);
+foreach($servers as $server)
+{
+	print $server['roleid']."-".$server['role']."<br />";
+}
+echo "__AUTHENTICATION__<br />";
+echo "_authenticationid__identity__salt__password__userid__roleid<br />";
+$sql = "SELECT * FROM authentication";
+$servers = $d->q($sql);
+foreach($servers as $server)
+{
+	print $server['authenticationid']."-".$server['identity']."-".$server['salt']."-".$server['password']."-".$server['userid']."-".$server['roleid']."<br />";
+}
+
 
 ?>
