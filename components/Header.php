@@ -3,7 +3,7 @@
 	
 	require_once('Template.php');
 	require_once('Session.php');
-	setSession(1,1);
+	setSession(0,"/");
 	
 	class Header
 	{
