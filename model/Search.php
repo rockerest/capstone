@@ -5,18 +5,20 @@
 	{
 		public static function getByID($id)
 		{
+			global $db;
 			$searchSQL = "SELECT * FROM searches WHERE searchid=?";
 			$values = array($id);
-			$srch = db::qwv($searchSQL, $values);
+			$srch = $db->qwv($searchSQL, $values);
 			
 			return Search::wrap($srch);
 		}
 		
 		public static function getByItem($id)
 		{
+			global $db;
 			$srchSQL = "SELECT * FROM searches WHERE closestMatch=?";
 			$values = array($id);
-			$srch = db::qwv($srchSQL, $values);
+			$srch = $db->qwv($srchSQL, $values);
 			
 			return Search::wrap($srch);
 		}

@@ -6,27 +6,30 @@
 	{
 		public static function getByID($id)
 		{
+			global $db;
 			$ratingSQL = "SELECT * FROM ratings WHERE ratingid=?";
 			$values = array($id);
-			$rating = db::qwv($ratingSQL, $values);
+			$rating = $db->qwv($ratingSQL, $values);
 			
 			return Rating::wrap($rating);
 		}
 		
 		public static function getByItem($id)
 		{
+			global $db;
 			$ratingSQL = "SELECT * FROM ratings WHERE itemid=?";
 			$values = array($id);
-			$ratings = db::qwv($ratingSQL, $values);
+			$ratings = $db->qwv($ratingSQL, $values);
 			
 			return Rating::wrap($ratings);
 		}
 		
 		public static function getByUser($id)
 		{
+			global $db;
 			$ratingSQL = "SELECT * FROM ratings WHERE userid=?";
 			$values = array($id);
-			$ratings = db::qwv($ratingSQL, $values);
+			$ratings = $db->qwv($ratingSQL, $values);
 			
 			return Rating::wrap($ratings);
 		}

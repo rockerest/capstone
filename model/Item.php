@@ -11,10 +11,11 @@
 	{
 		public static function getByID($id)
 		{
+			global $db;
 			//get raw item stuff (items table only)
 			$itemSQL = "SELECT * FROM items WHERE itemid=?";
 			$values = array($id);
-			$item = db::qwv($itemSQL, $values);
+			$item = $db->qwv($itemSQL, $values);
 			
 			return Item::wrap($item);
 		}

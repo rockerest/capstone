@@ -5,27 +5,30 @@
 	{
 		public static function getByID($id)
 		{
+			global $db;
 			$viewSQL = "SELECT * FROM views WHERE viewid=?";
 			$values = array($id);
-			$view = db::qwv($viewSQL, $values);
+			$view = $db->qwv($viewSQL, $values);
 			
 			return View::wrap($view);
 		}
 		
 		public static function getByItem($id)
 		{
+			global $db;
 			$viewSQL = "SELECT * FROM views WHERE itemid=?";
 			$values = array($id);
-			$view = db::qwv($viewSQL, $values);
+			$view = $db->qwv($viewSQL, $values);
 			
 			return View::wrap($view);
 		}
 		
 		public static function getByUser($id)
 		{
+			global $db;
 			$viewSQL = "SELECT * FROM views WHERE userid=?";
 			$values = array($id);
-			$view = db::qwv($viewSQL, $values);
+			$view = $db->qwv($viewSQL, $values);
 			
 			return View::wrap($view);
 		}

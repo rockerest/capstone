@@ -5,28 +5,30 @@
 	{
 		public static function getByID($id)
 		{
+			global $db;
 			$characteristicsSQL = "SELECT * FROM characteristics WHERE characteristicid=?";
 			$values = array($id);
-			$char = db::qwv($characteristicsSQL, $values);
+			$char = $db->qwv($characteristicsSQL, $values);
 			
 			return Characteristic::wrap($char);
 		}
 		
 		public static function getByItem($id)
 		{
+			global $db;
 			//get characteristics linked to item
 			$characteristicsSQL = "SELECT * FROM items_have_characteristics WHERE itemid=?";
 			$values = array($id);
-			$charList = db::qwv($characteristicsSQL, $values);
+			$charList = $db->qwv($characteristicsSQL, $values);
 			
 			//get characteristic info for each characteristic linked to the item
 			$characteristicSQL = "SELECT * FROM characteristics WHERE characteristicid=?";
 			$characteristics = array();
-			db::prep($characteristicSQL);
+			$db->prep($characteristicSQL);
 			foreach($charList as $charID)
 			{
 				$values = array($charID['characteristicid']);
-				$char = db::qwv(null, $values);
+				$char = $db->qwv(null, $values);
 				array_push($characteristics, $char[0]);
 			}
 			

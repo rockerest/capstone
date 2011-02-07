@@ -5,22 +5,24 @@
 	{
 		public static function getByID($id)
 		{
+			global $db;
 			$categorySQL = "SELECT * FROM categories WHERE categoryid=?";
 			$values = array($id);
-			$cat = db::qwv($categorySQL, $values);
+			$cat = $db->qwv($categorySQL, $values);
 			
 			return Category::wrap($cat);
 		}
 		
 		public static function getByItem($id)
 		{
+			global $db;
 			$itemSQL = "SELECT * FROM items WHERE itemid=?";
 			$values = array($id);
-			$item = db::qwv($itemSQL, $values);
+			$item = $db->qwv($itemSQL, $values);
 			
 			$catSQL = "SELECT * FROM categories WHERE categoryid=?";
 			$values = array($item[0]['categoryid']);
-			$cat = db::qwv($catSQL, $values);
+			$cat = $db->qwv($catSQL, $values);
 			
 			return Category::wrap($cat);
 		}
