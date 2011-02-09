@@ -20,7 +20,7 @@
 			$userList = array();
 			foreach( $users as $user )
 			{
-				$auth = Authentication::getByUserID($id);
+				$auth = Authentication::getByUserID($user['userid']);
 				array_push($userList, new User($user, $auth));
 			}
 			
