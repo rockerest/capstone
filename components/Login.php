@@ -27,24 +27,20 @@
 				{
 					$email = $_POST['email'];
 					$userpass = $_POST['pass'];
-					//$sql = 'SELECT salt FROM authentication WHERE identity=?';
-					//$results = $this->db->qwv( $sql, array($email) );
-					//$salt = $results[0]['salt'];
-					//$salted = hash('whirlpool', $salt.$userpass);
-					//$sql = 'SELECT * FROM authentication WHERE identity=? AND password=?';
-					//$values = array( $email, $salted );
-					//$results = $this->db->qwv( $sql, $values );
-					//$num = count($results);
-					//$this->message = "Email -".$email." - userpass - ".$userpass." - salt - ".$salt." - salted - ".$salted;
-					//if($num == 1)
-					//{
-					//	$userid = $results[0]['userid'];
-						$user_info = Authentication::validate($email, $userpass);
-						var_dump($user_info);
-					//	
-					//	setSessionVar('active', true);
-					//	setSessionVar('role', $results[0]['roleid']);
-					//	setSessionVar('userid', $userid);
+					
+					$user_info = Authentication::validate($email, $userpass);
+					
+					if($user_info)
+					{
+						setSessionVar('active', true);
+						setSessionVar('role', $user_info[0]->authentication[0]->role[0]->roleid);
+						setSessionVar('userid', $user_info[0]->userid);
+						Header('Location: index.php');
+					}
+					else
+					{
+						$this->message = "Incorrect username or password";
+					}
 				}
 				else
 				{

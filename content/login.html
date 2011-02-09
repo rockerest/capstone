@@ -1,8 +1,5 @@
 <div class="container">
-	<?php 
-			print isset($this->message) ? "<div class=\"error\">".$this->message."</div>" : "";
-			
-		?>
+	<?= isset($this->message) ? is_array($this->message) ? var_dump($this->message) : "<div class=\"error\">".$this->message."</div>" : "";?>
 	<div class="span-10 prepend-7 append-7">
 		<table>
 			<form action="login.php?loginsubmit=1" method="post">
