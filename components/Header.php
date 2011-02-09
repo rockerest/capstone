@@ -33,7 +33,6 @@
 										"OrderList",
 										"DBTEST",
 										"Item Upload",
-										"Create Users",
 										"Logout"
 										),
 						"link" => array(
@@ -43,7 +42,6 @@
 										"orderlist.php",
 										"dbtest.php",
 										"uploadForm.php",
-										"register.php",
 										"login.php?logout=true"
 										)
 						) :  array(
