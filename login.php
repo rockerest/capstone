@@ -6,7 +6,7 @@
 	require_once('Database.php');
 	require_once('capstone.db');
 	
-	if(isset($_GET['logout']&&$_GET['logout']==true)
+	if($_GET['logout']==true)
 	{
 		session_destroy();
 		header('Location: index.php');
