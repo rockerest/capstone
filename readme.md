@@ -1,7 +1,7 @@
-# CS4980 Capstone II - Group 6
+CS4980 Capstone II - Group 6
 ============================
 
-## Group Members
+Group Members
 -------------
 
 [Stuart Feldt](http://www.github.com/StuartFeldt)
@@ -12,7 +12,7 @@
 
 [Kyle Smith](http://www.github.com/illusion87)
 
-## Overview
+Overview
 --------
 
 This application aims to streamline the ordering process for restaurants.
