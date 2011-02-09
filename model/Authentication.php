@@ -10,12 +10,12 @@
 		{
 			global $db;
 			
-			$identSQL = "SELECT salt FROM authentication WHERE identity=?";
+			$identSQL = "SELECT salt FROM authenticate WHERE identity=?";
 			$values = array($identity);
 			$res = $db->qwv($identSQL, $values);
 			
 			$saltPass = hash('whirlpool', $res[0]['salt'].$password);
-			$authSQL = "SELECT * FROM authentication WHERE identity=? AND password=?";
+			$authSQL = "SELECT * FROM authenticate WHERE identity=? AND password=?";
 			$values = array($identity, $saltPass);
 			$res = $db->qwv($authSQL, $values);
 			
