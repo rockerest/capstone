@@ -1,0 +1,22 @@
+<div class="container">
+	<div class="span-10 prepend-7 append-7">
+		<table>
+			<form action="register.php?submit=1" method="post">
+				<?if($_SESSION['role']==1){?>
+					<tr><td>
+					<input type="radio" name="register_role" value="1">Admin</input>
+					<input type="radio" name="register_role" value="2">Manager</input>
+					<input type="radio" name="register_role" value="3" checked>Customer</input>
+					</td></tr>
+				<?}?>
+				<tr><td><label for="fname">First Name:</label></td><td><input type="text" id="fname" name="fname" /></td></tr>
+				<tr><td><label for="lname">Last Name:</label></td><td><input type="text" id="lname" name="lname" /></td></tr>
+				<tr><td><label for="email">Email:</label></td><td><input type="text" id="email" name="email" /></td></tr>
+				<tr><td><label for="email_confirm">Re-Type Email:</label></td><td><input type="text" id="email_confirm" name="email_confirm" /></td></tr>
+				<tr><td><label for="pass">Password:</label></td><td><input type="password" id="pass" name="pass" /></td></tr>
+				<tr><td><label for="pass_confirm">Re-Type Password:</label></td><td><input type="password" id="pass_confirm" name="pass_confirm" /></td></tr>
+				<tr><td></td><td><input type="submit" value="Register" /></td></tr>
+			</form>
+		</table>
+	</div>
+</div>

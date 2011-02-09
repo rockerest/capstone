@@ -1,0 +1,13 @@
+<div class="container">
+	<?= isset($this->message) ? is_array($this->message) ? var_dump($this->message) : "<div class=\"error\">".$this->message."</div>" : "";?>
+	<div class="span-10 prepend-7 append-7">
+		<table>
+			<form action="login.php?loginsubmit=1" method="post">
+				<tr><td><label for="email">Email:</label></td><td><input type="text" id="email" name="email" /></td></tr>
+				<tr><td><label for="pass">Password:</label></td><td><input type="password" id="pass" name="pass" /></td></tr>
+				<tr><td></td><td><input type="submit" value="Login" /></td></tr>
+			</form>
+		</table>
+		Need to <a href="register.php">Register</a>?
+	</div>
+</div>
