@@ -50,7 +50,7 @@
 				
 				setSessionVar('active', true);
 				setSessionVar('role', $results[0]['roleid']);
-				setSessionVar('userid', $userid);
+				
 			}
 		}
 	}

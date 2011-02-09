@@ -23,7 +23,7 @@
 		
 		//order table vars
 		$tableid = 1;
-		$userid = $_SESSION['userid'];
+		$userid = 1;
 		$statusid = 1;
 		$time = $date->getTimestamp();
 		$specialcomment = $_POST['message'];
