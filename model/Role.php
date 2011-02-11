@@ -14,6 +14,16 @@
 			return Role::wrap($role);
 		}
 		
+		public static function getByRole($role)
+		{
+			global $db;
+			$roleSQL = "SELECT * FROM roles WHERE role LIKE '%?%'";
+			$values = array($role);
+			$role = $db->qwv($roleSQL, $values);
+			
+			return Role::wrap($role);
+		}
+		
 		public static function wrap($roles)
 		{
 			$roleList = array();
