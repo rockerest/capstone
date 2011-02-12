@@ -47,7 +47,7 @@
 				}
 				else
 				{
-					$status = User::delete($db->last())
+					$status = User::delete($db->last());
 					
 					if( $status )
 					{
