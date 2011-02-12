@@ -63,6 +63,16 @@
 			
 			return Authentication::wrap($auth);
 		}
+		
+		public static function deleteByUser($id)
+		{
+			global $db;
+			$delSQL = "DELETE FROM authentication WHERE userid=?";
+			$values = array($id);
+			$del = $db->qwv($delSQL, $values);
+			
+			return $db->stat();
+		}
 	
 		public static function wrap($auths)
 		{

@@ -67,9 +67,15 @@
 		
 		public static function delete($userid)
 		{
+			global $db;
 			$delUser = "DELETE FROM users WHERE userid=?";
 			$values = array($userid);
 			$db->qwv($delUser, $values);
+			
+			if( $db->stat() )
+			{
+				return Authentication::deleteByUser($userid);
+			}
 			
 			return $db->stat();
 		}
@@ -104,6 +110,23 @@
 		public function __get($var)
 		{
 			return $this->$var;
+		}
+		
+		public function save()
+		{
+			global $db;
+			if( !isset($userid) )
+			{
+				return false;
+			}
+			else
+			{
+				$userSQL = "UPDATE users SET fname=?, lname=? WHERE userid=?";
+				$values = array ($this->fname, $this->lname);
+				$db->qwv($userSQL, $values);
+				
+				return $db->stat();
+			}
 		}
 	}
 ?>
