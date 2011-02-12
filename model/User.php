@@ -122,7 +122,7 @@
 			else
 			{
 				$userSQL = "UPDATE users SET fname=?, lname=? WHERE userid=?";
-				$values = array ($this->fname, $this->lname);
+				$values = array ($this->fname, $this->lname, $this->userid);
 				$db->qwv($userSQL, $values);
 				
 				return $db->stat();
