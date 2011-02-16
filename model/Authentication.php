@@ -120,7 +120,7 @@
 				{
 					$authSQL = "UPDATE authentication SET identity=?, salt=?, password=?, roleid=? WHERE authenticationid=? AND userid=?";
 					$values = array($this->identity, $this->salt, $this->password, $this->role[0]->roleid, $this->authenticationid, $this->userid);
-					$db-qwv($authSQL, $values);
+					$db->qwv($authSQL, $values);
 					
 					return $db->stat();
 				}
