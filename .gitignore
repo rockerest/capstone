@@ -1,0 +1,17 @@
+# Database Credentials #
+########################
+
+*.db
+
+# Project Files #
+#################
+
+*.psd
+*.mwb
+
+# Specific Files #
+##################
+
+jquery.js
+ui.jquery.js
+/backbone
