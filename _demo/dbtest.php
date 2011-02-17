@@ -7,8 +7,8 @@
 //	Stuart Feldt 2010/11/17
 //
 
-require_once('backbone/Database.php');
-require_once('backbone/capstone.db');
+require_once('../backbone/Database.php');
+require_once('../backbone/capstone.db');
 $d = new Database($user, $pass, $dbname, $host, 'mysql');
 $total = 0;
 

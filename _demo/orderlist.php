@@ -10,7 +10,7 @@
 	*/
 
 
-	set_include_path('backbone:components:content:scripts:styles:images');
+	set_include_path('../backbone:../components:../content:../scripts:../styles:../images:../render');
 	
 	require_once('Page.php');
 	require_once('Template.php');

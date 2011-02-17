@@ -1,19 +1,62 @@
-<div class="container">
-	<? if( $tmpl->code > -1 )
-	{
-	?>
-	<div class="message-box center w50 <?= $tmpl->msg-css; ?>">
-		<?= $tmpl->message; ?>
-	</div>
-	<?
-	}
-	?>
-	<div class="center">
-		<form action="/components/Login.php" method="post">
-			<label for="email">Email:</label><input type="text" id="email" name="email" />
-			<label for="pass">Password:</label><input type="password" id="pass" name="pass" />
-			<input type="submit" value="Login" />
-		</form>
-		Need to <a href="login.php?action=register">Register</a>?
-	</div>
+<? if( $tmpl->code > -1 )
+{
+?>
+<div class="message-box center w50 <?= $tmpl->msg-css; ?>">
+	<?= $tmpl->message; ?>
 </div>
+<?
+}
+?>
+
+<? if( $tmpl->action == 'register' )
+{
+?>
+<div class="center">
+	<form action="/components.php?Login.php?action=register" method="post">
+		<?if( $_SESSION['roleid'] == 1 ){?>
+			<input type="radio" name="register_role" value="1">Admin</input>
+			<input type="radio" name="register_role" value="2">Manager</input>
+			<input type="radio" name="register_role" value="3" checked>Customer</input>
+			<br />
+		<?}?>
+		<label for="fname">First Name:</label>
+		<input type="text" id="fname" name="fname" />
+		<br />
+		<label for="lname">Last Name:</label>
+		<input type="text" id="lname" name="lname" />
+		<br />
+		<label for="email">Email:</label>
+		<input type="text" id="email" name="email" />
+		<br />
+		<label for="email_confirm">Re-Type Email:</label>
+		<input type="text" id="email_confirm" name="email_confirm" />
+		<br />
+		<label for="pass">Password:</label>
+		<input type="password" id="pass" name="pass" />
+		<br />
+		<label for="pass_confirm">Re-Type Password:</label>
+		<input type="password" id="pass_confirm" name="pass_confirm" />
+		<br />
+		<input type="submit" value="Register" />
+	</form>
+</div>
+<?
+}
+else
+{
+?>
+<div class="center">
+	<form action="/components/Login.php?action=login" method="post">
+		<label for="email">Email:</label>
+		<input type="text" id="email" name="email" />
+		<br />
+		<label for="pass">Password:</label>
+		<input type="password" id="pass" name="pass" />
+		<br />
+		<input type="submit" value="Login" />
+	</form>
+	Need to <a href="login.php?action=register">Register</a>?
+</div>
+<?
+}
+?>

@@ -1,0 +1,48 @@
+<? if( $tmpl->code > -1 )
+{
+?>
+<div class="message-box center w50 <?= $tmpl->msg-css; ?>">
+	<?= $tmpl->message; ?>
+</div>
+<?
+}
+else
+{
+?>
+<div id="curMenuItem">
+	<div id="curMenuItem_title">
+		<?= $tmpl->item->name; ?>
+		<span id="curMenuItem_title_rating">Rating:</span>*****
+	</div>
+	<div id="curMenuItem_pic">
+		<img src="images/<?= $tmpl->item->image; ?>" />
+	</div>
+	<div id="curMenuItem_desc">
+		<?= $tmpl->item->description; ?>
+	</div>
+	<div id="curMenuItem_price">
+		<?= $tmpl->item->price; ?>
+	</div>
+</div>
+
+<div id="ingredients_list">
+	<form>
+		<?
+		foreach($tmpl->item->ingredients as $ing)			
+		{				
+		?>			
+			<input type="checkbox" value="<?= $ing->ingredientid; ?>" name="ingredients[]" checked="true" /><?= $ing->name; ?><br />				
+		<?						
+		}
+		?>
+		<textarea>Special Comment</textarea>
+		<br />
+		<input type="hidden" value="<?= $tmpl->item->itemid ?>" name="itemid" />
+		<input type="submit" value="Add To Order" id="addButton" />
+		<input type="submit" value="Review This Item" id="reviewButton" >
+	</form>
+	This form will submit via AJAX to an "Order.php" component.  The Order.php component will add it to their "cart" or order list, and they will remain on the page, or be redirected back to the menu if the AJAX returns a success.
+</div>
+<?
+}
+?>

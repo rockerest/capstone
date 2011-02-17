@@ -34,7 +34,7 @@
 		kick( $identity, 2);
 	}
 	
-	public function kick($identity = null, $code)
+	function kick($identity = null, $code)
 	{
 		if( $identity != null )
 		{

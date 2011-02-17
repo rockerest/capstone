@@ -25,7 +25,7 @@
 			
 			if( $_SESSION['active'] )
 			{
-				if( $_SESSION['role'] == 1 )
+				if( $_SESSION['roleid'] == 1 )
 				{
 					$tmpl->menu = array(
 										"display" => array(
@@ -48,7 +48,7 @@
 														"/login.php?action=register",
 														"/login.php?action=logout"
 														)
-										)
+										);
 				}
 				else
 				{
@@ -65,7 +65,7 @@
 														"/checkout.php",
 														"/login.php?action=logout"
 														)
-										)
+										);
 				}
 			}
 			else

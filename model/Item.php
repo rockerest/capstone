@@ -17,7 +17,14 @@
 			$values = array($id);
 			$item = $db->qwv($itemSQL, $values);
 			
-			return Item::wrap($item);
+			if( $db->stat() )
+			{
+				return Item::wrap($item);
+			}
+			else
+			{
+				return false;
+			}
 		}
 		
 		public static function wrap($items)
@@ -25,10 +32,10 @@
 			$itemList = array();
 			foreach( $items as $item )
 			{
-				$ingredients = Ingredient::getByItem($item['id']);
-				$recommendations = Ingredient::getRecommendedByItem($item['id']);
-				$characteristics = Characteristic::getByItem($item['id']);
-				array_push($itemList, new Item($item, $ingredients, $recommendations, $characteristics);
+				$ingredients = Ingredient::getByItem($item['itemid']);
+				$recommendations = Ingredient::getRecommendedByItem($item['itemid']);
+				$characteristics = Characteristic::getByItem($item['itemid']);
+				array_push($itemList, new Item($item, $ingredients, $recommendations, $characteristics));
 			}
 			return $itemList;
 		}
