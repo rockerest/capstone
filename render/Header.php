@@ -39,14 +39,14 @@
 														"Logout"
 														),
 										"link" => array(
-														"index.php",
-														"order.php",
-														"checkout.php",
-														"_demo/orderlist.php",
-														"_demo/dbtest.php",
-														"_demo/uploadForm.php",
-														"login.php?action=register",
-														"login.php?action=logout"
+														"/index.php",
+														"/order.php",
+														"/checkout.php",
+														"/_demo/orderlist.php",
+														"/_demo/dbtest.php",
+														"/_demo/uploadForm.php",
+														"/login.php?action=register",
+														"/login.php?action=logout"
 														)
 										)
 				}
@@ -60,10 +60,10 @@
 														"Logout"
 														),
 										"link" => array(
-														"index.php",
-														"order.php",
-														"checkout.php",
-														"login.php?action=logout"
+														"/index.php",
+														"/order.php",
+														"/checkout.php",
+														"/login.php?action=logout"
 														)
 										)
 				}
@@ -78,10 +78,10 @@
 													"Login"
 													),
 									"link" => array(
-													"index.php",
-													"order.php",
-													"checkout.php",
-													"login.php"
+													"/index.php",
+													"/order.php",
+													"/checkout.php",
+													"/login.php"
 													)
 									);
 			}
@@ -90,7 +90,7 @@
 			$html = $tmpl->build('header.html');
 			//$js = $tmpl->build('header.js');
 			
-			$content = array('html' => $html, 'css' => $css, 'js' => $js);
+			$content = array('html' => $html, 'css' => array('code' => $css, 'link' => '/styles/header.css'), 'js' => $js);
 			return $content;
 		}
 	}

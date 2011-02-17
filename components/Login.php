@@ -1,82 +1,48 @@
 <?php
-	set_include_path('backbone:components:content:styles:scripts:model');
+	set_include_path('../model:../backbone');
 	
+	require_once('RedirectBrowserException.php');
 	require_once('Authentication.php');
-	require_once('Role.php');
+	require_once('Session.php');
+	setSession(0, '/');
 	
-	class Login
+	$password = isset($_POST['pass']) ? $_POST['pass'] : null;
+	$identity = isset($_POST['email']) ? $_POST['email'] : null;
+	
+	if( $password != null && $identity != null )
 	{
-		private $submit;
-		private $message;
+		$tmp = Authentication::validate($identity, $password);
 		
-		public function __construct()
+		if( $tmp )
 		{
-			if(isset($_GET['logout'])&&$_GET['logout']==true)
-			{
-				session_destroy();
-				header('Location: index.php');
-			}
-
-				
-			$this->submit = isset( $_GET['loginsubmit'] ) ? $_GET['loginsubmit'] : 0;
-			//$db = new Database($user, $pass, $dbname, $host, 'mysql');
+			$user = $tmp[0];
+			setSessionVar('active', true);
+			setSessionVar('fname', $user->fname);
+			setSessionVar('lname', $user->lname);
+			setSessionVar('roleid', $user->authentication[0]->role[0]->roleid);
+			setSessionVar('userid', $user->userid);
 			
-			if($this->submit == 1)
-			{
-				if($_POST['email']!=''&&$_POST['pass']!='')
-				{
-					$email = $_POST['email'];
-					$userpass = $_POST['pass'];
-					
-					$user_info = Authentication::validate($email, $userpass);
-					
-					if($user_info)
-					{
-						setSessionVar('active', true);
-						setSessionVar('role', $user_info[0]->authentication[0]->role[0]->roleid);
-						setSessionVar('userid', $user_info[0]->userid);
-						Header('Location: index.php');
-					}
-					else
-					{
-						$this->message = "Incorrect username or password";
-					}
-				}
-				else
-				{
-						$this->message =  "Please fill out all fields. Thanks.";
-				}
-			}
+			kick( null, 0 );
 		}
-		
-		public function run()
+		else
 		{
-		
+			kick($identity, 1);
 		}
-		
-		public function generate()
-		{	
-			if($this->submit!=1)
-			{
-				$tmpl = new Template();
-				$tmpl->message = $this->message;
-				$html = $tmpl->build('login.html');
-				$css = $tmpl->build('login.css');
-				$content = array('html' => $html, 'css' => $css);
-				return $content;
-			}
-			else
-			{
-				$tmpl = new Template();
-				$tmpl->message = $this->message;
-				$html = $tmpl->build('login.html');
-				$css = $tmpl->build('login.css');
-				$content = array('html' => $html, 'css' => $css);
-				return $content;
-			}
-			
-		}
-		
+	}
+	else
+	{
+		kick( $identity, 2);
 	}
 	
-	?>
+	public function kick($identity = null, $code)
+	{
+		if( $identity != null )
+		{
+			throw new RedirectBrowserException("/login.php?code=" . $code . "&identity=" . $identity);
+		}
+		else
+		{
+			throw new RedirectBrowserException("/index.php?code=" . $code);
+		}
+	}
+?>

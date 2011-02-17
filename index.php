@@ -15,7 +15,9 @@
 	
 	$appContent = array(
 						'html'	=>	$html,
-						'css'	=>	$css,
+						'css'	=>	array(	'code' => $css,
+											'link' => '/styles/index.css'
+											),
 						'js' => $js
 						);
 

@@ -1,13 +1,19 @@
 <div class="container">
-	<?= isset($this->message) ? is_array($this->message) ? var_dump($this->message) : "<div class=\"error\">".$this->message."</div>" : "";?>
-	<div class="span-10 prepend-7 append-7">
-		<table>
-			<form action="login.php?loginsubmit=1" method="post">
-				<tr><td><label for="email">Email:</label></td><td><input type="text" id="email" name="email" /></td></tr>
-				<tr><td><label for="pass">Password:</label></td><td><input type="password" id="pass" name="pass" /></td></tr>
-				<tr><td></td><td><input type="submit" value="Login" /></td></tr>
-			</form>
-		</table>
-		Need to <a href="register.php">Register</a>?
+	<? if( $tmpl->code > -1 )
+	{
+	?>
+	<div class="message-box center w50 <?= $tmpl->msg-css; ?>">
+		<?= $tmpl->message; ?>
+	</div>
+	<?
+	}
+	?>
+	<div class="center">
+		<form action="/components/Login.php" method="post">
+			<label for="email">Email:</label><input type="text" id="email" name="email" />
+			<label for="pass">Password:</label><input type="password" id="pass" name="pass" />
+			<input type="submit" value="Login" />
+		</form>
+		Need to <a href="login.php?action=register">Register</a>?
 	</div>
 </div>
