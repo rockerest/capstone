@@ -17,13 +17,13 @@
 		
 		$tmpl->code = -1;
 		$tmpl->message = "Should not display";
-		$tmpl->{msg-css} = "info";
+		$tmpl->css = "info";
 	}
 	else
 	{
 		$tmpl->code = 0;
 		$tmpl->message = "Could not find item.";
-		$tmpl->{msg-css} = "error";
+		$tmpl->css = "error";
 	}
 	
 	$page->run();

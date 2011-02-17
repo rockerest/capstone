@@ -21,16 +21,16 @@
 	switch($tmpl->code)
 	{
 		case 1:
-				$tmpl->{msg-css} = "error";
+				$tmpl->css = "error";
 				$tmpl->message = "Username or password incorrect.";
 				break;
 		case 2:
-				$tmpl->{msg-css} = "error";
+				$tmpl->css = "error";
 				$tmpl->message = "You must fill both fields.";
 				break;
 		case -1:
 		default:
-				$tmpl->{msg-css} = "hide";
+				$tmpl->css = "hide";
 				$tmpl->message = "Unknown error.";
 				break;
 	}
