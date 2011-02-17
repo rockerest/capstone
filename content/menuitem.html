@@ -1,13 +1,12 @@
 <div class="container">
 	<div id="curMenuItem" class="span-16">
 				<div id="curMenuItem_title">
-				<?php
-						//var_dump($this->item_info);
-						print $this->item_info['name'];
-					
-				?>
-				<span id="curMenuItem_title_rating">Rating:</span>*****</div>
-				<div id="curMenuItem_pic"><img src="images/<?=$this->item_info['image']?>" /></div>
+					<?= $this->item_info['name']; ?>
+					<span id="curMenuItem_title_rating">Rating:</span>*****
+				</div>
+				<div id="curMenuItem_pic">
+					<img src="images/<?=$this->item_info['image']?>" />
+				</div>
 				<br class="clear"/>
 				<div id="curMenuItem_desc"><?=$this->item_info['description']?></div>
 				<div id="curMenuItem_price"><?=$this->item_info['price']?></div>
