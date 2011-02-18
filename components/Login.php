@@ -7,7 +7,7 @@
 	require_once('Session.php');
 	setSession(0, '/');
 	
-	$action = isset($_POST['action']) ? $_POST['action'] : null;
+	$action = isset($_GET['action']) ? $_GET['action'] : null;
 	
 	$password = isset($_POST['pass']) ? $_POST['pass'] : null;
 	$identity = isset($_POST['email']) ? $_POST['email'] : null;
@@ -96,7 +96,7 @@
 	}
 	else
 	{
-		kick(0, array('identity' => ""), 3);
+		kick(0, array('identity' => $identity), 3);
 	}
 	
 	function kick($page, $input, $code)
@@ -109,7 +109,7 @@
 		{
 			throw new RedirectBrowserException("/login.php?action=register&code=" . $code . "&identity=" . $input['identity'] . "&fname=" . $input['fname'] . "&lname=" . $input['lname']);
 		}
-		else( $page == 2 )
+		elseif( $page == 2 )
 		{
 			throw new RedirectBrowserException("/index.php?code=" . $code);
 		}

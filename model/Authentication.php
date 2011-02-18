@@ -35,7 +35,7 @@
 			$real_pass = hash('whirlpool', $salt.$pass);
 			
 			$object = array(	'identity'=>$ident,
-								'password'=>$pass,
+								'password'=>$real_pass,
 								'userid'=>$id,
 								'roleid'=>$roleid,
 								'salt'=>$salt
