@@ -1,6 +1,4 @@
 <?php
-	set_include_path('backbone:components:content:scripts:styles');
-	
 	require_once('Template.php');
 	require_once('Session.php');
 	setSession(0,"/");

@@ -1,6 +1,5 @@
 <?php
-	set_include_path('../backbone:../components:../content:../scripts:../styles:../images:../render');
-	
+	set_include_path('../backbone:../global:../jquery:../components:../content:../images:../model:../render:../scripts:../styles');
 	require_once('Page.php');
 	require_once('Template.php');
 	require_once('Database.php');
@@ -58,9 +57,9 @@
 	} 
 	else
 	{
-		$html = $tmpl->build('additem.html');
-		$css = $tmpl->build('additem.css');
-		//$js = $tmpl->build('index.js');
+		$html = $tmpl->build('../content/additem.html');
+		$css = $tmpl->build('../styles/additem.css');
+		//$js = $tmpl->build('../scripts/additem.js');
 	}
 	
 	

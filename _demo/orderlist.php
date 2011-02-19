@@ -1,5 +1,5 @@
 <?php
-
+	set_include_path('../backbone:../global:../jquery:../components:../content:../images:../model:../render:../scripts:../styles');
 	/*	This script is terrible.
 		Please do not judge me.
 		This is for testing purposes only.
@@ -8,10 +8,6 @@
 		-Stuart
 		2010/01/29
 	*/
-
-
-	set_include_path('../backbone:../components:../content:../scripts:../styles:../images:../render');
-	
 	require_once('Page.php');
 	require_once('Template.php');
 	require_once('Database.php');
@@ -124,9 +120,9 @@
 	$tmpl->table_data = $table_data;
 	
 	$page->run();
-	$html = $tmpl->build('orderlist.html');
-	//$css = $tmpl->build('orderlist.css');
-	//$js = $tmpl->build('orderlist.js');
+	$html = $tmpl->build('../content/orderlist.html');
+	//$css = $tmpl->build('../styles/orderlist.css');
+	//$js = $tmpl->build('../scripts/orderlist.js');
 	
 	$appContent = array(
 						'html'	=>	$html,

@@ -1,5 +1,4 @@
 <?php
-	set_include_path('global:jquery:backbone:components:content:render:model:scripts:styles:images');
 	require_once('Template.php');
 	require_once('Header.php');	
 	require_once('Session.php');

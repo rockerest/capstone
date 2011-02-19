@@ -1,5 +1,5 @@
 <?php
-	set_include_path('../model:../backbone');
+	set_include_path('../backbone:../global:../jquery:../components:../content:../images:../model:../render:../scripts:../styles');
 	
 	require_once('RedirectBrowserException.php');
 	require_once('Session.php');
