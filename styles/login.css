@@ -1,0 +1,37 @@
+#login{
+	width: 13em;
+}
+
+#login input[type='text'], #login input[type='password']{
+	width: 13em;
+}
+
+form {
+	text-align: left;
+}
+
+fieldset{
+	border: .0625em solid #5555AA;
+	padding: 1em;
+	padding-top: 0;
+}
+
+fieldset legend{
+	margin: auto auto auto -.5em;
+	padding: .25em .5em;
+	background-color: #AAAAAA;
+	
+	-moz-border-radius: .5em;
+	-webkit-border-radius: .5em;
+	border-radius: .5em;
+}
+
+#login label{
+	margin: 1em auto auto auto;
+	display: inline-block;
+}
+
+#submit_button{
+	margin: 1em auto 1em auto;
+	float: right;
+}

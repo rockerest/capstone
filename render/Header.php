@@ -45,6 +45,16 @@
 														"/_demo/uploadForm.php",
 														"/login.php?action=register",
 														"/login.php?action=logout"
+														),
+										'icon' => array(
+														null,
+														null,
+														null,
+														null,
+														null,
+														null,
+														null,
+														'user'
 														)
 										);
 				}
@@ -56,6 +66,9 @@
 														),
 										"link" => array(
 														"/login.php?action=logout"
+														),
+										"icon" => array(
+														"user"
 														)
 										);
 				}
@@ -68,6 +81,9 @@
 													),
 									"link" => array(
 													"/login.php"
+													),
+									"icon" => array(
+													"user"
 													)
 									);
 			}

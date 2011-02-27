@@ -9,13 +9,17 @@ a{
 	color: #555555;
 }
 
+#page a{
+	color: #5555AA;
+}
+
 a:hover{
 	text-decoration: underline;
 }
 
-.page{
+#page{
 	width: 58.5em;
-	margin: -2em auto auto auto;
+	margin: 1em auto auto auto;
 	min-height: 550px;
 	
 	padding: 1em 2em 0em 2em;
@@ -30,34 +34,13 @@ a:hover{
 	border-radius-top-left: .5em;
 }
 
-#nojs{
-	line-height: 1.1;
-	font-size: 0.75em;
-	background: #CC3333;
-	
-	position: fixed;
-	bottom: 0px;
-	left: 10%;
-	
-	margin: 0px auto 0px auto;
-	padding: 1px;
-	
-	width: 80%;
-	z-index: 100000;
-	
-	-moz-border-radius-topleft: 35px;
-	-moz-border-radius-topright: 35px;
-	-webkit-border-top-left-radius: 35px;
-	-webkit-border-top-right-radius: 35px;
-	border-radius-top-right: 35px;
-	border-radius-top-left: 35px;
-}
-
 #sticky-wrap{
 	min-height: 100%;
 	height: auto !important;
 	height: 100%;
-	margin: 0 auto -4.01em;
+	margin: 0 auto -3.04em;
+	
+	background-color: #EEEEEE;
 }
 
 #footer, #push {

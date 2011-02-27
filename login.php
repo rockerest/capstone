@@ -39,7 +39,7 @@
 	
 	$html = $tmpl->build('login.html');
 	$css = $tmpl->build('login.css');
-	$js = $tmpl->build('login.js');
+	//$js = $tmpl->build('login.js');
 
 	$appContent = array(
 						'html'	=>	$html,

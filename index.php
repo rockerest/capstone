@@ -22,5 +22,4 @@
 						);
 
 	print $page->build($appContent);
-	
 ?>

@@ -6,28 +6,36 @@
 	<div id="searchBar"><input type="text" id="searchInput" value="Item Search"/></div>
 	
 	<div id="headNav">
-		<ul id="headNav_ul">
-			<?php
-				$display = $tmpl->menu['display'];
-				$links = $tmpl->menu['link'];
-				
-				$count = 0;
-				foreach( $display as $string )
+		<?php
+			$display = $tmpl->menu['display'];
+			$links = $tmpl->menu['link'];
+			$icons = $tmpl->menu['icon'];
+			
+			$count = 0;
+			foreach( $display as $string )
+			{
+				if( $count == $tmpl->cur_page )
 				{
-					if( $count == $tmpl->cur_page )
-					{
-						$class = " current";
-					}
-					else
-					{
-						$class = "";
-					}
-				?>
-				<li class="headNav_li<?=$class?>"><a href="<?=$links[$count]?>"><?=$string?></a></li>
-				<?
-				$count++;
+					$class = " current";
 				}
-				?>
-		</ul>
+				else
+				{
+					$class = "";
+				}
+				
+				if( isset($icons[$count]) && $icons[$count] != "" )
+				{
+					$span = "<span class=\"icon " . $icons[$count] . "\"></span>";
+				}
+				else
+				{
+					$span = "";
+				}
+			?>
+			<a href="<?= $links[$count]; ?>" class="button"><?= $span; ?><?= $string; ?></a>
+			<?
+			$count++;
+			}
+			?>
 	</div>
 </div>
