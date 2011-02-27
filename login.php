@@ -16,6 +16,9 @@
 	}
 	
 	$tmpl->identity = isset($_GET['identity']) ? $_GET['identity'] : '';
+	$tmpl->fname = isset($_GET['fname']) ? $_GET['fname'] : '';
+	$tmpl->lname = isset($_GET['lname']) ? $_GET['lname'] : '';
+	
 	$tmpl->code = isset($_GET['code']) ? $_GET['code'] : -1;
 	
 	switch($tmpl->code)
@@ -27,6 +30,34 @@
 		case 2:
 				$tmpl->css = "error";
 				$tmpl->message = "You must fill both fields.";
+				break;
+		case 3:
+				$tmpl->css = "error";
+				$tmpl->message = "You must enter a first name.";
+				break;
+		case 4:
+				$tmpl->css = "error";
+				$tmpl->message = "You must enter a last name.";
+				break;
+		case 5:
+				$tmpl->css = "error";
+				$tmpl->message = "You must enter a valid email address.";
+				break;
+		case 6:
+				$tmpl->css = "error";
+				$tmpl->message = "You must enter a password.";
+				break;
+		case 7:
+				$tmpl->css = "error";
+				$tmpl->message = "The email addresses you entered do not match.  Please check your spelling and try again.";
+				break;
+		case 8:
+				$tmpl->css = "error";
+				$tmpl->message = "The passwords you entered do not match, please try again.";
+				break;
+		case 9:
+				$tmpl->css = "error";
+				$tmpl->message = "The user could not be created.  Please try again later.";
 				break;
 		case -1:
 		default:

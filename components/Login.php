@@ -54,32 +54,32 @@
 						);
 		if( $fname == null || $fname == "" )
 		{
-			kick(1, $vals, 0);
+			kick(1, $vals, 3);
 		}
 		
 		if( $lname == null || $lname == "" )
 		{
-			kick(1, $vals, 1);
+			kick(1, $vals, 4);
 		}
 		
 		if( $identity == null || $identity == "" )
 		{
-			kick(1, $vals, 2);
-		}
-		
-		if( $password == null || $password == "" )
-		{
-			kick(1, $vals, 3);
+			kick(1, $vals, 5);
 		}
 		
 		if( $identity !== $ident_conf )
 		{
-			kick(1, $vals, 4);
+			kick(1, $vals, 7);
 		}
 		
+		if( $password == null || $password == "" )
+		{
+			kick(1, $vals, 6);
+		}
+
 		if( $password !== $pass_conf )
 		{
-			kick(1, $vals, 5);
+			kick(1, $vals, 8);
 		}
 		
 		$stat = User::add($fname, $lname, $identity, $password, $role);
@@ -90,7 +90,7 @@
 		}
 		else
 		{
-			kick(1, $vals, 6);
+			kick(1, $vals, 9);
 		}
 	}
 	else

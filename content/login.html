@@ -12,7 +12,7 @@
 {
 ?>
 <div id="login" class="center">
-	<form action="/components.php/Login.php?action=register" method="post" class="clear">
+	<form action="/components/Login.php?action=register" method="post" class="clear">
 		<?if( $_SESSION['roleid'] == 1 ){?>
 			<input type="radio" name="register_role" value="1">Admin</input>
 			<input type="radio" name="register_role" value="2">Manager</input>
@@ -23,17 +23,17 @@
 			<legend>Account Identity</legend>
 			<label for="fname">First Name:</label>
 			<br />
-			<input type="text" id="fname" name="fname" />
+			<input type="text" id="fname" name="fname" value="<?= $tmpl->fname; ?>" />
 			<br />
 			<label for="lname">Last Name:</label>
 			<br />
-			<input type="text" id="lname" name="lname" />
+			<input type="text" id="lname" name="lname" value="<?= $tmpl->lname; ?>"/>
 		</fieldset>
 		<fieldset class="bump">
 			<legend>Account Login</legend>
 			<label for="email">Email:</label>
 			<br />
-			<input type="text" id="email" name="email" />
+			<input type="text" id="email" name="email" value="<?= $tmpl->identity; ?>"/>
 			<br />
 			<label for="email_confirm">Re-Type Email:</label>
 			<br />
