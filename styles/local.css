@@ -9,10 +9,6 @@ a{
 	color: #555555;
 }
 
-#page a{
-	color: #5555AA;
-}
-
 a:hover{
 	text-decoration: underline;
 }
@@ -22,27 +18,49 @@ a:hover{
 	margin: 1em auto auto auto;
 	min-height: 550px;
 	
-	padding: 1em 2em 0em 2em;
+	padding: 1em 2em;
 	
 	background: #FFFFFF;
 	
-	-moz-border-radius-topleft: .5em;
-	-moz-border-radius-topright: .5em;
-	-webkit-border-top-left-radius: .5em;
-	-webkit-border-top-right-radius: .5em;
-	border-radius-top-right: .5em;
-	border-radius-top-left: .5em;
+	-moz-border-radius: .5em;
+	-webkit-border-radius: .5em;
+	border-radius: .5em;
+}
+
+.big_button{
+	width: 10em;
+	height: 10em;
+	
+	background-color: #ECECEC;
+	
+	color: #3C3C3D;	
+	line-height: 10em;
+	text-align: center;
+	
+	-moz-border-radius: .125em;
+	-webkit-border-radius: .125em;
+	border-radius: .125em;
+}
+
+.big_button:hover{
+	background-color: #2D7DC5;
+	
+	color: #FFFFFF;
+	text-shadow: -1px -1px 0 rgba(0,0,0,0.3);
+
+	cursor: pointer;
 }
 
 #sticky-wrap{
 	min-height: 100%;
 	height: auto !important;
 	height: 100%;
-	margin: 0 auto -3.04em;
+	margin: 0 auto -4.04em;
 	
 	background-color: #EEEEEE;
 }
 
 #footer, #push {
 	height: 3em;
+	padding-top: 1em;
 }

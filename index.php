@@ -11,7 +11,7 @@
 	
 	$html = $tmpl->build('index.html');
 	$css = $tmpl->build('index.css');
-	//$js = $tmpl->build('index.js');
+	$js = $tmpl->build('index.js');
 	
 	$appContent = array(
 						'html'	=>	$html,

@@ -1,5 +1,6 @@
 #login{
 	width: 13em;
+	margin: 1em auto auto auto;
 }
 
 #login input[type='text'], #login input[type='password']{

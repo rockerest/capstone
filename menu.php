@@ -10,7 +10,7 @@
 	$page->run();
 	
 	$html = $tmpl->build('menu.html');
-	$css = $tmpl->build('menu.css');
+	//$css = $tmpl->build('menu.css');
 	//$js = $tmpl->build('menu.js');
 	
 	$appContent = array(
