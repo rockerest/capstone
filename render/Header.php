@@ -52,15 +52,9 @@
 				{
 					$tmpl->menu = array(
 										"display" => array(
-														"Home",
-														"Menu",
-														"Pay",
 														"Logout"
 														),
 										"link" => array(
-														"/index.php",
-														"/order.php",
-														"/checkout.php",
 														"/login.php?action=logout"
 														)
 										);
@@ -70,15 +64,9 @@
 			{
 				$tmpl->menu = array(
 									"display" => array(
-													"Home",
-													"Menu",
-													"Pay",
 													"Login"
 													),
 									"link" => array(
-													"/index.php",
-													"/order.php",
-													"/checkout.php",
 													"/login.php"
 													)
 									);

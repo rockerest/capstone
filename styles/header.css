@@ -1,49 +1,40 @@
-
- #head{
-	height:50px;
-	border-bottom:1px solid #333;
-	padding:5px;
+#header{
+	height: 3.125em;
+	border-bottom: .0125em solid #333333;
+	padding: .3125em;
 	background-color: #E5ECF9;
-	color:#555;
- }
- 
- #logo{
-	float:left;
-	font-size:3em;
- }
- 
- #searchBar{
-	float:left;
-	margin-top:28px;
- }
- 
- #searchInput{
- 	font-style:italic;
-	font-size:.8em;
-	color:#aaa;
- }
- 
- #headNav{
-	float:right;
-	margin-top:33px;
- }
- 
- .headNav_li{
- list-style-type:none;
- display:inline;
- padding:0 2px 0 2px;
- }
- 
- #head a{
-	text-decoration:none;
-	color:#555;
- }
- 
- #head a:hover{
-	text-decoration:underline;
- }
- 
- #srchNavCont{
+	color: #555555;
+	line-height: 3em;
+}
+
+#logo{
+	float: left;
+	font-size: 3em;
+}
+
+#searchBar{
+	float: left;
+	margin-right: 1em;
+}
+
+#searchInput{
+	font-style: italic;
+	font-size: .8em;
+	color: #AAAAAA;
+}
+
+#headNav{
 	float: right;
-    width: auto;
- }
+}
+
+.headNav_li{
+	list-style-type: none;
+	display: inline;
+	padding: 0 .125em 0 .125em;
+}
+
+#srchNavCont{
+	float: right;
+	width: auto;
+	margin-right: 2em; 
+}

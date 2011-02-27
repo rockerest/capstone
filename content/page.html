@@ -8,8 +8,6 @@
 	<link rel="icon" href="../images/favicon.ico" type="image/x-icon" />-->
 	
 	<link rel="stylesheet" href="/global/global.css" type="text/css" />
-	
-	<!-- If we need a local "global" stylesheet -->
 	<link rel="stylesheet" href="/styles/local.css" type="text/css" />
 	
 	<link rel="stylesheet" href="<?= $tmpl->headerContent['css']['link']; ?>" type="text/css" />
@@ -21,12 +19,24 @@
 </head>
 
 <body>
-	
-	<div id="page" class="clear">
-		<?= $tmpl->headerContent['html'] ."\n"; ?>
-		<div id="content">
-			<?= $tmpl->appContent['html'] . "\n"; ?>
+	<div id="sticky-wrap">
+		<div id="header">
+			<?= $tmpl->headerContent['html'] ."\n"; ?>
 		</div>
+		<div id="page" class="clear">
+			
+			<div id="content">
+				<?= $tmpl->appContent['html'] . "\n"; ?>
+			</div>
+		</div>
+		<div class="push"></div>
+	</div>
+	<div id="footer">
+		This is a sticky footer.  Delete this text if you want it to go away.
+		<br />
+		Also, you might want to adjust the heights in "styles/local.css" to make it invisible.
+		<br />
+		If you want a real footer, you need to create "render/Footer.php" just like the Header.
 	</div>
 	<noscript>
 		<div id="nojs" style="display: block;">

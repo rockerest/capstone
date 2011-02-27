@@ -1,36 +1,33 @@
-<div id="head">
-	<div id="logo">
-		<a href="index.php">OrderUp</a>
-	</div>
+<div id="logo">
+	<a href="/">OrderUp</a>
+</div>
+
+<div id="srchNavCont">
+	<div id="searchBar"><input type="text" id="searchInput" value="Item Search"/></div>
 	
-	<div id="srchNavCont">
-		<div id="searchBar"><input type="text" id="searchInput" value="Item Search"/></div>
-		
-		<div id="headNav">
-			<ul id="headNav_ul">
-				<?php
-					$display = $tmpl->menu['display'];
-					$links = $tmpl->menu['link'];
-					
-					$count = 0;
-					foreach( $display as $string )
+	<div id="headNav">
+		<ul id="headNav_ul">
+			<?php
+				$display = $tmpl->menu['display'];
+				$links = $tmpl->menu['link'];
+				
+				$count = 0;
+				foreach( $display as $string )
+				{
+					if( $count == $tmpl->cur_page )
 					{
-						if( $count == $tmpl->cur_page )
-						{
-							$class = " current";
-						}
-						else
-						{
-							$class = "";
-						}
-					?>
-					<li class="headNav_li<?=$class?>"><a href="<?=$links[$count]?>"><?=$string?></a></li>
-					<?
-					$count++;
+						$class = " current";
 					}
-					?>
-			</ul>
-		</div>
+					else
+					{
+						$class = "";
+					}
+				?>
+				<li class="headNav_li<?=$class?>"><a href="<?=$links[$count]?>"><?=$string?></a></li>
+				<?
+				$count++;
+				}
+				?>
+		</ul>
 	</div>
-	
 </div>
