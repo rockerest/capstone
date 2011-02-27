@@ -11,7 +11,7 @@
 			$values = array($id);
 			$comment = $db->qwv($commentSQL, $values);
 			
-			return new CommentObject($comment[0]);
+			return new Comment($comment[0]);
 		}
 		
 		public static function getByRating($id)
