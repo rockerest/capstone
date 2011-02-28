@@ -17,13 +17,72 @@
 			$values = array($id);
 			$item = $db->qwv($itemSQL, $values);
 			
-			if( $db->stat() )
+			$items = Item::wrap($item);
+			
+			if( count($items) > 1 )
 			{
-				return Item::wrap($item);
+				return $items;
+			}
+			elseif( count($items) == 1 )
+			{
+				return $items[0];
 			}
 			else
 			{
 				return false;
+			}
+		}
+		
+		public static function getByName($name)
+		{
+			global $db;
+			$sql = "SELECT FROM items WHERE LOWER(name)=?";
+			$values = array(strtolower($name));
+			$items = $db->qwv($sql, $values);
+			
+			if( count($items) > 0 )
+			{
+				return $items[0];
+			}
+			else
+			{
+				return false;
+			}
+		}
+		
+		public static function add($name, $description, $image, $price, $preptime, $cooklvl, $chars, $ings, $recs)
+		{
+			$item = Item::getByName($name);
+			if( !$item )
+			{
+				$item['name'] = $name;
+				$item['description'] = $description;
+				$item['image'] = $image;
+				$item['price'] = $price;
+				$item['prepTime'] = $preptime;
+				$item['hasCookLevels'] = $cooklvl;
+				
+				foreach( $chars as $char )
+				{
+					array_push($charList, Characteristic::add($char));
+				}
+				
+				foreach( $ings as $ing )
+				{
+					array_push($ingList, Ingredient::add($ing['name', $ing['isVegetarian'], $ing['isAllergenic'], $ing['canBeSide']);
+				}
+				
+				foreach( $recs as $rec )
+				{
+					array_push($recList, Ingredient::add($ing['name', $ing['isVegetarian'], $ing['isAllergenic'], $ing['canBeSide']);
+				}
+				
+				$item = new Item($item, $ingList, $recList, $charList);
+				return $item->save();
+			}
+			else
+			{
+				return $item;
 			}
 		}
 		
@@ -58,7 +117,7 @@
 			$this->recommendations = $rec;
 			$this->characteristics = $char;
 			
-			$this->itemid = $item['itemid'];
+			$this->itemid = isset($item['itemid']) ? $item['itemid'] : null;
 			$this->name = $item['name'];
 			$this->description = $item['description'];
 			$this->image = $item['image'];
@@ -70,6 +129,58 @@
 		public function __get($var)
 		{
 			return $this->$var;
+		}
+		
+		public function save()
+		{
+			global $db;
+			if( $this->itemid == null )
+			{
+				//if the item object is new and needs to be inserted
+				$sql = "INSERT INTO items (name, description, image, price, prepTime, hasCookLevels) VALUES (?, ?, ?, ?, ?, ?)";
+				$values = array( $this->name, $this->description, $this->image, $this->price, $this->prepTime, $this->hasCookLevels );
+				$db->qwv($sql, $values);
+				
+				if( $db->stat() )
+				{
+					//set the itemid
+					$this->itemid = $db->last();
+					
+					//link the item to ingredients, characteristics
+					$sql = "INSERT INTO items_have_ingredients (ingredientid, itemid) VALUES (?, ?)";
+					$db->prep($sql);
+					foreach( $this->ingredients as $ing )
+					{
+						$db->qwv(null, array($ing['ingredientid'], $this->itemid));
+					}
+					
+					$sql = "INSERT INTO items_have_recommended_ingredients (ingredientid, itemid) VALUES (?, ?)";
+					$db->prep($sql);
+					foreach( $this->recommendations as $rec )
+					{
+						$db->qwv(null, array($rec['ingredientid'], $this->itemid));
+					}
+					
+					$sql = "INSERT INTO items_have_characteristics (characteristicid, itemid) VALUES (?, ?)";
+					$db->prep($sql);
+					foreach( $this->characteristics as $char )
+					{
+						$db->qwv(null, array($char['characteristicid'], $this->itemid));
+					}
+					
+					//This function should do a check to make sure everything inserted properly.  Return a warning to check/modify the item if something failed?
+					
+					return $this;
+				}
+				else
+				{
+					return false;
+				}
+			}
+			else
+			{
+				//if the object exists and is updated
+			}
 		}
 	}
 ?>

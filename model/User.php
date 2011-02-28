@@ -2,6 +2,7 @@
 	require_once('connect.php');
 	
 	require_once('Authentication.php');
+	require_once('Orders.php');
 
 	class User
 	{
@@ -86,7 +87,8 @@
 			foreach( $users as $user )
 			{
 				$auth = Authentication::getByUserID($user['userid']);
-				array_push($userList, new User($user, $auth));
+				$favs = Order::getByUserFavorites($user['userid']);
+				array_push($userList, new User($user, $auth, $favs));
 			}
 			
 			return $userList;
@@ -97,18 +99,25 @@
 		private $lname;
 		
 		private $authentication;
+		private $favorites;
 		
-		public function __construct($user, $auth)
+		public function __construct($user, $auth, $favs)
 		{
 			$this->userid = isset($user['userid']) ? $user['userid'] : null;
 			$this->fname = $user['fname'];
 			$this->lname = $user['lname'];
 			
 			$this->authentication = $auth;
+			$this->favorites = $favs;
 		}
 		
 		public function __get($var)
 		{
+			if( $var == 'favorites' )
+			{
+				//make sure the list is up-to-date
+				$this->refresh();
+			}
 			return $this->$var;
 		}
 		
@@ -127,6 +136,12 @@
 				
 				return $db->stat();
 			}
+		}
+		
+		public function refresh()
+		{
+			//pull in favorites again, in case one was added/removed since this object was created
+			$this->favorites = Order::getByUserFavorites($user['userid']);
 		}
 	}
 ?>

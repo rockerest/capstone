@@ -6,9 +6,9 @@
 		public static function getByID($id)
 		{
 			global $db;
-			$characteristicsSQL = "SELECT * FROM characteristics WHERE characteristicid=?";
+			$sql = "SELECT * FROM characteristics WHERE characteristicid=?";
 			$values = array($id);
-			$char = $db->qwv($characteristicsSQL, $values);
+			$char = $db->qwv($sql, $values);
 			
 			return Characteristic::wrap($char);
 		}
@@ -17,14 +17,14 @@
 		{
 			global $db;
 			//get characteristics linked to item
-			$characteristicsSQL = "SELECT * FROM items_have_characteristics WHERE itemid=?";
+			$sql = "SELECT * FROM items_have_characteristics WHERE itemid=?";
 			$values = array($id);
-			$charList = $db->qwv($characteristicsSQL, $values);
+			$charList = $db->qwv($sql, $values);
 			
 			//get characteristic info for each characteristic linked to the item
-			$characteristicSQL = "SELECT * FROM characteristics WHERE characteristicid=?";
+			$sql = "SELECT * FROM characteristics WHERE characteristicid=?";
 			$characteristics = array();
-			$db->prep($characteristicSQL);
+			$db->prep($sql);
 			foreach($charList as $charID)
 			{
 				$values = array($charID['characteristicid']);
@@ -33,6 +33,37 @@
 			}
 			
 			return Characteristic::wrap($characteristics);
+		}
+		
+		public static function getByCharacteristic($string)
+		{
+			global $db;
+			$sql = "SELECT * FROM characteristics WHERE LOWER(characteristic)=?";
+			$values = array(strtolower($string));
+			$chars = $db->qwv($sql, $values);
+			
+			if( count($chars) > 0 )
+			{
+				return $chars[0];
+			}
+			else
+			{
+				return false;
+			}
+		}
+		
+		public static function add($characteristic)
+		{
+			$char = Characteristic::getByCharacteristic($characteristic);
+			if( !char )
+			{
+				$char = new Characteristic(array('characteristic' => $characteristic));
+				return $char->save();
+			}
+			else
+			{
+				return $char;
+			}
 		}
 		
 		public static function wrap($chars)
@@ -52,13 +83,41 @@
 		
 		public function __construct($char)
 		{
-			$this->characteristicid = $char['characteristicid'];
+			$this->characteristicid = isset($char['characteristicid']) ? $char['characteristicid'] : null;
 			$this->characteristic = $char['characteristic'];
 		}
 		
 		public function __get($var)
 		{
 			return $this->$var;
+		}
+		
+		public function save()
+		{
+			global $db;
+			
+			//if char is new object
+			if( $this->characteristicid == null )
+			{
+				$sql = "INSERT INTO characteristics (characteristic) VALUES (?)";
+				$value = array($this->characteristic);
+				$db->qwv($sql, $values);
+				
+				if( $db->stat() )
+				{
+					$this->characteristicid = $db->last();
+					return $this;
+				}
+				else
+				{
+					return false;
+				}
+			}
+			else
+			{
+				//if char has been updated and already exists
+				return false;
+			}
 		}
 	}
 ?>

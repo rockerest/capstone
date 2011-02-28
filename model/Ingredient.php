@@ -6,9 +6,9 @@
 		public static function getByID($id)
 		{
 			global $db;
-			$ingredientSQL = "SELECT * FROM ingredients WHERE ingredientid=?";
+			$sql = "SELECT * FROM ingredients WHERE ingredientid=?";
 			$values = array($id);
-			$ing = $db->qwv($ingredientsSQL, $values);
+			$ing = $db->qwv($sql, $values);
 			
 			return Ingredient::wrap($ing);
 		}
@@ -17,14 +17,14 @@
 		{
 			global $db;
 			//get all ingredients associated with the item
-			$ingredientsSQL = "SELECT * FROM items_have_ingredients WHERE itemid=?";
+			$sql = "SELECT * FROM items_have_ingredients WHERE itemid=?";
 			$values = array($id);
-			$ingList = $db->qwv($ingredientsSQL, $values);
+			$ingList = $db->qwv($sql, $values);
 			
 			//get info for each ingredient
-			$ingredientSQL = "SELECT * FROM ingredients WHERE ingredientid=?";
+			$sql = "SELECT * FROM ingredients WHERE ingredientid=?";
 			$ingredients = array();
-			$db->prep($ingredientSQL);
+			$db->prep($sql);
 			foreach($ingList as $ingID)
 			{
 				$values = array($ingID['ingredientid']);
@@ -39,14 +39,14 @@
 		{
 			global $db;
 			//get all ingredients recommended for the item
-			$recommendedSQL = "SELECT * FROM items_have_recommended_ingredients WHERE itemid=?";
+			$sql = "SELECT * FROM items_have_recommended_ingredients WHERE itemid=?";
 			$values = array($id);
-			$recList = $db->qwv($recommendedSQL, $values);
+			$recList = $db->qwv($sql, $values);
 			
 			//get info for each ingredient
-			$recommendedSQL = "SELECT * FROM ingredients WHERE ingredientid=?";
+			$sql = "SELECT * FROM ingredients WHERE ingredientid=?";
 			$recommends = array();
-			$db->prep($recommendedSQL);
+			$db->prep($sql);
 			foreach($recList as $recID)
 			{
 				$values = array($recID['ingredientid']);
@@ -57,13 +57,49 @@
 			return Ingredient::wrap($recommends);
 		}
 		
+		public static function getByName($ingredient)
+		{
+			global $db;
+			$sql = "SELECT FROM ingredients WHERE LOWER(name)=?";
+			$values = array(strtolower($ingredient));
+			$ings = $db->qwv($sql, $values);
+			
+			if( count($ings) > 0 )
+			{
+				return $ings[0];
+			}
+			else
+			{
+				return false;
+			}
+		}
+		
+		public static function add($name, $isVeg, $isAll, $side)
+		{
+			global $db;
+			$ing = Ingredient::getByName($name);
+			if( $ings )
+			{
+				return $ing;
+			}
+			else
+			{
+				$values = array(	'name' => $name,
+									'isVegetarian' => $isVeg,
+									'isAllergenic' => $isAll,
+									'canBeSide' => $side
+								);
+				$ing = new Ingredient($values);
+				return $ing->save();
+			}
+		}
+		
 		public static function wrap($ingList)
 		{
 			$ingObs = array();			
 			foreach($ingList as $ing)
 			{
-				$tmp = new Ingredient($ing);
-				array_push($ingObs, $tmp);
+				array_push($ingObs, new Ingredient($ing));
 			}
 			
 			return $ingObs;
@@ -77,7 +113,7 @@
 		
 		public function __construct($ing)
 		{
-			$this->ingredientid = $ing['ingredientid'];
+			$this->ingredientid = isset($ing['ingredientid']) ? $ing['ingredientid'] : null;
 			$this->name = $ing['name'];
 			$this->isVegetarian = $ing['isVegetarian'];
 			$this->isAllergenic = $ing['isAllergenic'];
@@ -87,6 +123,28 @@
 		public function __get($var)
 		{
 			return $this->$var;
+		}
+		
+		public function save()
+		{
+			global $db;
+			if( $this->ingredientid == null )
+			{
+				//if ingredient object is new and not in database
+				$sql = "INSERT INTO ingredients (name, isVegetarian, isAllergenic, canBeSide) VALUES (?, ?, ?, ?)";
+				$values = array($this->name, $this->isVegetarian, $this->isAllergenic, $this->canBeSide);
+				$db->qwv($sql, $values);
+				
+				if( $db->stat() )
+				{
+					$this->ingredientid = $db->last();
+					return $this;
+				}
+				else
+				{
+					return false;
+				}
+			}
 		}
 	}
 ?>
