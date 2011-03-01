@@ -271,7 +271,6 @@
 				$db->qwv($sql, $values);
 				
 				return $db->stat() ? $this : false;
-				}
 			}
 		}
 	}

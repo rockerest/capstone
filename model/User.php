@@ -2,7 +2,7 @@
 	require_once('connect.php');
 	
 	require_once('Authentication.php');
-	require_once('Orders.php');
+	require_once('Order.php');
 
 	class User
 	{

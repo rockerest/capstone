@@ -43,7 +43,7 @@
 			{
 				$mod = Modifier::getByID($cust['modifierid']);
 				$ing = Ingredient::getByID($cust['ingredientid']);
-				array_push($custObs, new Customization($cust, $mod, $ing);
+				array_push($custObs, new Customization($cust, $mod, $ing));
 			}
 			
 			return $custObs;
@@ -60,7 +60,7 @@
 			$this->customizationid = $customization['customizationid'];
 			$this->order_itemid = $customization['order_itemid'];
 			
-			$this->modifier = $mod
+			$this->modifier = $mod;
 			$this->ingredient = $ing;
 		}
 		

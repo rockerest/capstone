@@ -69,12 +69,12 @@
 				
 				foreach( $ings as $ing )
 				{
-					array_push($ingList, Ingredient::add($ing['name', $ing['isVegetarian'], $ing['isAllergenic'], $ing['canBeSide']);
+					array_push($ingList, Ingredient::add($ing['name'], $ing['isVegetarian'], $ing['isAllergenic'], $ing['canBeSide']));
 				}
 				
 				foreach( $recs as $rec )
 				{
-					array_push($recList, Ingredient::add($ing['name', $ing['isVegetarian'], $ing['isAllergenic'], $ing['canBeSide']);
+					array_push($recList, Ingredient::add($ing['name'], $ing['isVegetarian'], $ing['isAllergenic'], $ing['canBeSide']));
 				}
 				
 				$item = new Item($item, $ingList, $recList, $charList);

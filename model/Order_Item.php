@@ -43,7 +43,7 @@
 			{
 				$item = Item::getByID($oi['itemid']);
 				$cust = Customizations::getByOrderItem($oi['order_itemid']);
-				array_push($oiObs, new Order_Item($oi, $item, $cust);
+				array_push($oiObs, new Order_Item($oi, $item, $cust));
 			}
 			
 			return $custObs;
@@ -52,7 +52,7 @@
 		private $order_itemid;
 		private $orderid;
 		
-		private $item
+		private $item;
 		private $customizations;
 		
 		public function __construct($oi, $item, $cust)
