@@ -6,15 +6,12 @@
 	setSession(0, '/');
 	
 	//No DB Connection.  THere will be a model class for adding orders soon
-	
-	//get time submitted ------ //use time() - TOM
-	$date = new DateTime();
 
 	//order table vars
 	$tableid = 1;
 	$userid = $_SESSION['userid'];
 	$statusid = 1;
-	$time = $date->getTimestamp();
+	$time = time();
 	$specialcomment = $_POST['message'];
 
 	//order_items table vars

@@ -15,9 +15,9 @@
 	
 	if( $submit != 1 )
 	{
-		$html = $tmpl->build('uploadForm.html');
-		$css = $tmpl->build('uploadForm.css');
-		//$js = $tmpl->build('upload.js');
+		$html = $tmpl->build('_uploadForm.html');
+		$css = $tmpl->build('_uploadForm.css');
+		//$js = $tmpl->build('_uploadForm.js');
 	}
 	else
 	{

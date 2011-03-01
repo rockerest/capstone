@@ -5,7 +5,7 @@
 	require_once('Page.php');
 	require_once('Template.php');
 	
-	$page = new Page(1, "OrderUp - a new way to improve your dining experience");
+	$page = new Page(1, "OrderUp - Item Review");
 	$tmpl = new Template();
 
 	$tmpl->itemid = isset($_GET['id']) ? $_GET['id'] : -1;
@@ -28,14 +28,14 @@
 	
 	$page->run();
 	
-	$html = $tmpl->build('order.html');
-	$css = $tmpl->build('order.css');	
-	//$js = $tmpl->build('order.js');
+	$html = $tmpl->build('item.html');
+	$css = $tmpl->build('item.css');	
+	//$js = $tmpl->build('item.js');
 	
 	$appContent = array(
 						'html'	=>	$html,
 						'css'	=>	array(	'code' => $css,
-											'link' => '/styles/order.css'
+											'link' => '/styles/item.css'
 											),
 						'js' => $js
 						);
