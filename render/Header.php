@@ -38,7 +38,7 @@
 														),
 										"link" => array(
 														"/index.php",
-														"/order.php",
+														"/menu.php",
 														"/checkout.php",
 														"/_demo/orderlist.php",
 														"/_demo/dbtest.php",
