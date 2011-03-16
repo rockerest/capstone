@@ -1,20 +1,22 @@
 #login{
-	width: 13em;
+	width: 28em;
 	margin: 1em auto auto auto;
 }
 
 #login input[type='text'], #login input[type='password']{
-	width: 13em;
+	width: 28em;
 }
 
 form {
-	text-align: left;
+	text-align: center;
+	width: 25em;
 }
 
 fieldset{
 	border: .0625em solid #5555AA;
 	padding: 1em;
 	padding-top: 0;
+	text-align: left;
 }
 
 fieldset legend{

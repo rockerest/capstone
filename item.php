@@ -13,7 +13,7 @@
 	
 	if( $tmp )
 	{
-		$tmpl->item = $tmp[0];
+		$tmpl->item = $tmp;
 		
 		$tmpl->code = -1;
 		$tmpl->message = "Should not display";
