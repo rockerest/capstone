@@ -37,10 +37,7 @@
 				$cust = Customization::getByOrderItem($oi['order_itemid']);
 				array_push($oiObs, new Order_Item($oi, $item, $cust));
 			}
-			
-<<<<<<< HEAD
-			return $oiObs;
-=======
+
 			if( count( $oiObs ) > 1 )
 			{
 				return $oiObs;
@@ -53,7 +50,6 @@
 			{
 				return false;
 			}
->>>>>>> 61bddadce393fed7e17f5339b5a0a24f73bfbd4d
 		}
 
 		private $order_itemid;
