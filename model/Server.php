@@ -31,7 +31,7 @@
 			{
 				$user = User::getByID($server['userid']);
 				$tables = Table::getByServer($server['serverid']);
-				array_push($serverObs, new Server($server, $user, $tables));
+				array_push($serverObs, new Server($server['serverid'], $server['isWorking'], $user, $tables));
 			}
 			
 			if( count( $serverObs ) > 1 )
@@ -54,10 +54,39 @@
 		private $user;
 		private $tables;
 
-		public function __construct($server, $user, $tables)
+		public function __construct($serverid, $isWorking = false, $user = null, $tables = null)
 		{
-			$this->serverid = $server['serverid'];
-			$this->isWorking = $server['isWorking'];
+			if( $user == null && $tables == null )
+			{
+				if( ($serverid instanceof User) && is_bool($isWorking) )
+				{
+					$user = $serverid;
+					$serverid = null;
+					$tables = null;
+				}
+				elseif( is_bool($serverid) && ($isWorking instanceof User) )
+				{
+					$user = $isWorking;
+					$isWorking = $serverid;
+					$serverid = null;
+				}
+				elseif( ($serverid instanceof User) && ($isWorking[0] instanceof Table) )
+				{
+					$user = $serverid;
+					$tables = $isWorking;
+					$serverid = null;
+					$isWorking = true;
+				}
+			}
+			elseif( $tables == null )
+			{
+				$tables = $user;
+				$user = $isWorking;
+				$isWorking = $serverid;
+				$serverid = null;
+			}
+			$this->serverid = $serverid;
+			$this->isWorking = $isWorking;
 			
 			$this->user = $user;
 			$this->tables = $tables;

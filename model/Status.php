@@ -28,7 +28,7 @@
 			$statObs = array();
 			foreach($stats as $stat)
 			{
-				array_push($statObs, new Status($stat));
+				array_push($statObs, new Status($stat['statusid'], $stat['status']));
 			}
 			
 			if( count( $statObs ) > 1 )
@@ -48,10 +48,15 @@
 		private $statusid;
 		private $status;
 
-		public function __construct($stat)
+		public function __construct($statusid, $status = null)
 		{
-			$this->statusid = $stat['statusid'];
-			$this->status = $stat['status'];
+			if( $status == null )
+			{
+				$status = $statusid;
+				$statusid = null;
+			}
+			$this->statusid = $statusid;
+			$this->status = $status;
 		}
 		
 		public function __get($var)

@@ -30,7 +30,7 @@
 			foreach($tables as $table)
 			{
 				$server = Server::getByID($server['userid']);
-				array_push($tableObs, new Table($table, $server));
+				array_push($tableObs, new Table($table['tableid'], $table['isAvailable'], $server));
 			}
 			
 			if( count( $tableObs ) > 1 )
@@ -52,10 +52,17 @@
 		
 		private $server;
 
-		public function __construct($table, $server)
+		public function __construct($tableid, $isAvailable, $server = null)
 		{
-			$this->tableid = $table['tableid'];
-			$this->isAvailable = $table['isAvailable'];
+			if( $server == null )
+			{
+				$server = $isAvailable;
+				$isAvailable = $tableid;
+				$tableid = null;
+			}
+			
+			$this->tableid = $tableid;
+			$this->isAvailable = $isAvailable;
 			
 			$this->server = $server;
 		}

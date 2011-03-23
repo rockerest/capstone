@@ -125,7 +125,7 @@
 			{
 				$auth = Authentication::getByUserID($user['userid']);
 				$favs = Order::getByUserFavorites($user['userid']);
-				array_push($userList, new User($user, $auth, $favs));
+				array_push($userList, new User($user['userid'], $user['fname'], $user['lname'], $auth, $favs));
 			}
 			
 			if( count( $userList ) > 1 )
@@ -151,11 +151,30 @@
 		
 		private $Predict;
 		
-		public function __construct($user, $auth, $favs)
+		public function __construct($userid, $fname, $lname, $auth = null, $favs = null)
 		{
-			$this->userid = isset($user['userid']) ? $user['userid'] : null;
-			$this->fname = $user['fname'];
-			$this->lname = $user['lname'];
+			if( $favs == null && $auth == null )
+			{
+				$auth = $lname;
+				$lname = $fname;
+				$fname = $userid;
+				$userid = null;
+			}
+			elseif( $favs == null )
+			{
+				if( !($auth instanceof Authentication) )
+				{
+					$favs = $auth;
+					$auth = $lname;
+					$lname = $fname;
+					$fname = $userid;
+					$userid = null;
+				}
+			}
+
+			$this->userid = $userid;
+			$this->fname = $fname;
+			$this->lname = $lname;
 			
 			$this->authentication = $auth;
 			$this->favorites = $favs;
