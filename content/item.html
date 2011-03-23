@@ -26,7 +26,7 @@ else
 </div>
 
 <div id="ingredients_list">
-	<form action="item.php" method="post">
+	<form action="components/SubmitOrder.php" method="post">
 		<?
 		foreach($tmpl->item->ingredients as $ing)			
 		{				
@@ -35,7 +35,7 @@ else
 		<?						
 		}
 		?>
-		<textarea>Special Comment</textarea>
+		<textarea name="message">Special Comment</textarea>
 		<br />
 		<input type="hidden" value="<?= $tmpl->item->itemid ?>" name="itemid" />
 		<input type="submit" value="Add To Order" id="addButton" name="add" />

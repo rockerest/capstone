@@ -46,7 +46,7 @@
 				array_push($oiObs, new Order_Item($oi, $item, $cust));
 			}
 			
-			return $custObs;
+			return $oiObs;
 		}
 
 		private $order_itemid;

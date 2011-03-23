@@ -4,7 +4,6 @@
 	require_once('Item.php');
 	require_once('Page.php');
 	require_once('Template.php');
-	require_once('SubmitOrder.php');
 	
 	$page = new Page(1, "OrderUp - Item Review");
 	$tmpl = new Template();
@@ -26,11 +25,7 @@
 		$tmpl->message = "Could not find item.";
 		$tmpl->css = "error";
 	}
-	
-	if(isset($_POST['add']))
-	{
-		add();
-	}
+
 	$page->run();
 	
 	$html = $tmpl->build('item.html');
