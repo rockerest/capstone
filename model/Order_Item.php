@@ -54,7 +54,7 @@
 
 		private $order_itemid;
 		private $orderid;
-		private $special_comment;
+		private $specialComment;
 		
 		private $item;
 		private $customizations;
@@ -63,7 +63,7 @@
 		{
 			$this->order_itemid = $oi['order_itemid'];
 			$this->orderid = $oi['orderid'];
-			$this->special_comment = $oi['special_comment'];
+			$this->specialComment = $oi['specialComment'];
 			
 			$this->item = $item;
 			$this->customizations = $cust;
