@@ -34,6 +34,16 @@
 			return Rating::wrap($ratings);
 		}
 		
+		public static function getByUserForItem($userid, $itemid)
+		{
+			global $db;
+			$ratingSQL = "SELECT * FROM ratings WHERE userid=? AND itemid=?";
+			$values = array($userid, $itemid);
+			$ratings = $db->qwv($ratingSQL, $values);
+			
+			return Rating::wrap($ratings);
+		}
+		
 		public static function wrap($ratings)
 		{
 			//package all ratings
@@ -46,7 +56,18 @@
 				array_push($rateList, new Rating($rating[0], $comment));
 			}
 			
-			return $rateList;
+			if( count($rateList) > 1 )
+			{
+				return $rateList;
+			}
+			elseif( count($rateList) == 1 )
+			{
+				return $rateList[0];
+			}
+			else
+			{
+				return false;
+			}
 		}
 
 		private $comment;

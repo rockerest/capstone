@@ -25,6 +25,24 @@
 			}
 		}
 		
+		public static function getByUser($userid)
+		{
+			global $db;
+			$sql = "SELECT * FROM orders WHERE userid=?";
+			$values = array( $userid );
+			$orders = $db->qwv($sql, $values);
+			$order = Order::wrap($orders);
+			
+			if( count($order) > 0 )
+			{
+				return $order;
+			}
+			else
+			{
+				return false;
+			}
+		}
+		
 		public static function getByUserFavorites($userid)
 		{
 			global $db;
