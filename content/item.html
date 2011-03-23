@@ -26,7 +26,7 @@ else
 </div>
 
 <div id="ingredients_list">
-	<form>
+	<form action="item.php" method="post">
 		<?
 		foreach($tmpl->item->ingredients as $ing)			
 		{				
@@ -38,8 +38,8 @@ else
 		<textarea>Special Comment</textarea>
 		<br />
 		<input type="hidden" value="<?= $tmpl->item->itemid ?>" name="itemid" />
-		<input type="submit" value="Add To Order" id="addButton" />
-		<input type="submit" value="Review This Item" id="reviewButton" >
+		<input type="submit" value="Add To Order" id="addButton" name="add" />
+		<input type="submit" value="Review This Item" id="reviewButton" name="review" >
 	</form>
 	This form will submit via AJAX to an "Order.php" component.  The Order.php component will add it to their "cart" or order list, and they will remain on the page, or be redirected back to the menu if the AJAX returns a success.
 </div>

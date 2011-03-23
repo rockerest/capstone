@@ -31,7 +31,7 @@
 				$values = array($orderItem[0]['order_itemid']);
 				$customizations = $db->qwv($customizationSQL, $values);
 				
-				return wrap($customizations);
+				return Customization::wrap($customizations);
 			}
 			return false;
 		}

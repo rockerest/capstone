@@ -25,6 +25,18 @@
 			}
 		}
 		
+		//
+		//	Gets active orders by User
+		//
+		public static function getActiveByUser($userid)
+		{
+			global $db;
+			$sql = "SELECT orderid FROM orders WHERE userid=? AND statusid<9";
+			$values = array($userid);
+			$orders = $db->qwv($sql, $values);
+			return $orders[0];
+		}
+		
 		public static function getByUserFavorites($userid)
 		{
 			global $db;
@@ -107,7 +119,7 @@
 			global $db;
 			$sql = "INSERT INTO order_items (orderid, itemid, isCustomized, specialComment) VALUES (?, ?, ?, ?)";
 			$values = array($this->orderid, $itemid, is_array($modifiers), $comment);
-			$db->qwb($sql, $values);
+			$db->qwv($sql, $values);
 			
 			if( $db->stat() )
 			{

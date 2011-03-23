@@ -33,7 +33,7 @@
 			$values = array($id);
 			$order_items = $db->qwv($order_itemSQL, $values);
 			
-			return wrap($order_items);
+			return Order_Item::wrap($order_items);
 		}
 		
 		public static function wrap($ois)
@@ -42,7 +42,7 @@
 			foreach($ois as $oi)
 			{
 				$item = Item::getByID($oi['itemid']);
-				$cust = Customizations::getByOrderItem($oi['order_itemid']);
+				$cust = Customization::getByOrderItem($oi['order_itemid']);
 				array_push($oiObs, new Order_Item($oi, $item, $cust));
 			}
 			

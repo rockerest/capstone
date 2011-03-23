@@ -50,6 +50,14 @@
 			}
 		}
 		
+		public static function getByCategory($category)
+		{
+			global $db;
+			$sql = "SELECT * FROM items WHERE categoryid=?";
+			$values = array($category);
+			$items = $db->qwv($sql, $values);
+			return $items;
+		}
 		public static function add($name, $description, $image, $price, $preptime, $cooklvl, $chars, $ings, $recs)
 		{
 			$item = Item::getByName($name);
