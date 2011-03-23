@@ -14,15 +14,7 @@
 			$values = array($id);
 			$order_item = $db->qwv($order_itemSQL, $values);
 			
-			$oi = Order_Item::wrap($order_item);
-			if( count($oi) > 0 )
-			{
-				return $oi[0];
-			}
-			else
-			{
-				return false;
-			}
+			return Order_Item::wrap($order_item);
 		}
 		
 		public static function getByOrder($id)
@@ -46,11 +38,27 @@
 				array_push($oiObs, new Order_Item($oi, $item, $cust));
 			}
 			
+<<<<<<< HEAD
 			return $oiObs;
+=======
+			if( count( $oiObs ) > 1 )
+			{
+				return $oiObs;
+			}
+			elseif( count( $oiObs ) == 1 )
+			{
+				return $oiObs[0];
+			}
+			else
+			{
+				return false;
+			}
+>>>>>>> 61bddadce393fed7e17f5339b5a0a24f73bfbd4d
 		}
 
 		private $order_itemid;
 		private $orderid;
+		private $specialComment;
 		
 		private $item;
 		private $customizations;
@@ -59,6 +67,7 @@
 		{
 			$this->order_itemid = $oi['order_itemid'];
 			$this->orderid = $oi['orderid'];
+			$this->specialComment = $oi['specialComment'];
 			
 			$this->item = $item;
 			$this->customizations = $cust;
