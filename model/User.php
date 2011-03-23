@@ -128,7 +128,18 @@
 				array_push($userList, new User($user, $auth, $favs));
 			}
 			
-			return $userList;
+			if( count( $userList ) > 1 )
+			{
+				return $userList;
+			}
+			elseif( count( $userList ) == 1 )
+			{
+				return $userList[0];
+			}
+			else
+			{
+				return false;
+			}
 		}
 		
 		private $userid;

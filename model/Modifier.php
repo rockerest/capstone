@@ -11,7 +11,7 @@
 			$values = array($id);
 			$modifier = $db->qwv($modifierSQL, $values);
 			
-			return new Modifier($modifier[0]);
+			return Modifier::wrap($modifier);
 		}
 		
 		public static function getByCustomization($id)
@@ -27,18 +27,40 @@
 			$values = array($customization[0]['modifierid']);
 			$modifier = $db->qwv($modifierSQL, $values);
 			
-			return new Modifier($modifier[0]);
+			return Modifier::wrap($modifier);
+		}
+		
+		public static function wrap($mods)
+		{
+			$modList = array();
+			foreach( $mods as $mod )
+			{
+				array_push($modList, new Modifier($mod['modifierid'], $mod['text'], $mod['isCookLevel']));
+			}
+			
+			if( count( $modList ) > 1 )
+			{
+				return $modList;
+			}
+			elseif( count( $modList ) == 1 )
+			{
+				return $modList[0];
+			}
+			else
+			{
+				return false;
+			}
 		}
 
 		private $modifierid;
 		private $text;
 		private $isCookLevel;
 		
-		public function __construct($modifier)
+		public function __construct($modifierid, $text, $isCookLevel)
 		{
-			$this->modifierid = $modifier['modifierid'];
-			$this->text = $modifier['text'];
-			$this->isCookLevel = $modifier['isCookLevel'];
+			$this->modifierid = $modifierid;
+			$this->text = $text;
+			$this->isCookLevel = $isCookLevel;
 		}
 		
 		public function __get($var)

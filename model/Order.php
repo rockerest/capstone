@@ -13,16 +13,7 @@
 			$sql = "SELECT * FROM orders WHERE orderid=?";
 			$values = array($id);
 			$order = $db->qwv($sql, $values);
-			$ord = Order::wrap($order);
-			
-			if( count($ord) > 0 )
-			{
-				return $ord[0];
-			}
-			else
-			{
-				return false;
-			}
+			return Order::wrap($order);
 		}
 		
 		public static function getByUser($userid)
@@ -31,16 +22,7 @@
 			$sql = "SELECT * FROM orders WHERE userid=?";
 			$values = array( $userid );
 			$orders = $db->qwv($sql, $values);
-			$order = Order::wrap($orders);
-			
-			if( count($order) > 0 )
-			{
-				return $order;
-			}
-			else
-			{
-				return false;
-			}
+			return Order::wrap($orders);
 		}
 		
 		public static function getByUserFavorites($userid)
@@ -49,16 +31,7 @@
 			$sql = "SELECT * FROM orders WHERE orderid IN (SELECT orderid FROM users_have_favorite_orders WHERE userid=?)";
 			$values = array($userid);
 			$orders = $db->qwv($sql, $values);
-			$order = Order::wrap($orders);
-			
-			if( count($order) > 0 )
-			{
-				return $order;
-			}
-			else
-			{
-				return false;
-			}
+			return Order::wrap($orders);
 		}
 		
 		public static function create($tableid, $userid)
@@ -79,7 +52,19 @@
 				$items = Order_Item::getByOrder($order['orderid']);
 				array_push($orderObs, new Order($order, $items, $table, $user, $status));
 			}
-			return $orderObs;
+			
+			if( count( $orderObs ) > 1 )
+			{
+				return $orderObs;
+			}
+			elseif( count( $orderObs ) == 1 )
+			{
+				return $orderObs[0];
+			}
+			else
+			{
+				return false;
+			}
 		}
 		
 		private $orderid;

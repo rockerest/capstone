@@ -13,7 +13,7 @@
 			$values = array($id);
 			$customization = $db->qwv($customizationSQL, $values);
 			
-			return new Customization($comment[0]);
+			return Customization::wrap($customization);
 		}
 		
 		public static function getByOrderItem($id)
@@ -30,10 +30,8 @@
 				$customizationSQL = "SELECT * FROM customizations WHERE order_itemid=?";
 				$values = array($orderItem[0]['order_itemid']);
 				$customizations = $db->qwv($customizationSQL, $values);
-				
-				return wrap($customizations);
 			}
-			return false;
+			return Customization::wrap($customizations);
 		}
 		
 		public static function wrap($custs)
@@ -46,7 +44,18 @@
 				array_push($custObs, new Customization($cust, $mod, $ing));
 			}
 			
-			return $custObs;
+			if( count( $custObs ) > 1 )
+			{
+				return $custObs;
+			}
+			elseif( count( $custObs ) == 1 )
+			{
+				return $custObs[0];
+			}
+			else
+			{
+				return false;
+			}
 		}
 
 		private $customizationid;

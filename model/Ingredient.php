@@ -63,15 +63,7 @@
 			$sql = "SELECT FROM ingredients WHERE LOWER(name)=?";
 			$values = array(strtolower($ingredient));
 			$ings = $db->qwv($sql, $values);
-			
-			if( count($ings) > 0 )
-			{
-				return $ings[0];
-			}
-			else
-			{
-				return false;
-			}
+			return Ingredient::wrap($ings);
 		}
 		
 		public static function add($name, $isVeg, $isAll, $side)
@@ -102,7 +94,18 @@
 				array_push($ingObs, new Ingredient($ing));
 			}
 			
-			return $ingObs;
+			if( count( $ingObs ) > 1 )
+			{
+				return $ingObs;
+			}
+			elseif( count( $ingObs ) == 1 )
+			{
+				return $ingObs[0];
+			}
+			else
+			{
+				return false;
+			}
 		}
 
 		private $ingredientid;

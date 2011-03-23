@@ -31,7 +31,18 @@
 				array_push($srchList, new Search($srch));
 			}
 			
-			return $srchList;
+			if( count( $srchList ) > 1 )
+			{
+				return $srchList;
+			}
+			elseif( count( $srchList ) == 1 )
+			{
+				return $srchList[0];
+			}
+			else
+			{
+				return false;
+			}
 		}
 		
 		private $searchid;

@@ -12,15 +12,7 @@
 			$values = array($id);
 			$server = $db->qwv($sql, $values);
 			
-			$serv = Server::wrap($server);
-			if( count($serv) > 0 )
-			{
-				return $serv[0];
-			}
-			else
-			{
-				return false;
-			}
+			return Server::wrap($server);
 		}
 		
 		public static function getWorking()
@@ -29,15 +21,7 @@
 			$sql = "SELECT * FROM servers WHERE isWorking=1";
 			$server = $db->q($sql);
 			
-			$serv = Server::wrap($server);
-			if( count($serv) > 0 )
-			{
-				return $serv;
-			}
-			else
-			{
-				return false;
-			}
+			return Server::wrap($server);
 		}
 		
 		public static function wrap($servers)
@@ -49,7 +33,19 @@
 				$tables = Table::getByServer($server['serverid']);
 				array_push($serverObs, new Server($server, $user, $tables));
 			}
-			return $serverObs;
+			
+			if( count( $serverObs ) > 1 )
+			{
+				return $serverObs;
+			}
+			elseif( count( $serverObs ) == 1 )
+			{
+				return $serverObs[0];
+			}
+			else
+			{
+				return false;
+			}
 		}
 		
 		private $serverid;

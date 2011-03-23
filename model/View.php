@@ -41,7 +41,18 @@
 				array_push($viewList, new View($vw));
 			}
 			
-			return $viewList;
+			if( count( $viewList ) > 1 )
+			{
+				return $viewList;
+			}
+			elseif( count( $viewList ) == 1 )
+			{
+				return $viewList[0];
+			}
+			else
+			{
+				return false;
+			}
 		}
 		
 		private $viewsid;

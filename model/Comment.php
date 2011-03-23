@@ -11,7 +11,7 @@
 			$values = array($id);
 			$comment = $db->qwv($commentSQL, $values);
 			
-			return new Comment($comment[0]);
+			return Comment::wrap($comment);
 		}
 		
 		public static function getByRating($id)
@@ -27,16 +27,38 @@
 			$values = array($rating[0]['commentid']);
 			$comment = $db->qwv($commentSQL, $values);
 			
-			return new Comment($comment[0]);
+			return Comment::wrap($comment);
+		}
+		
+		public static function wrap($coms)
+		{
+			$comList = array();
+			foreach( $coms as $com )
+			{
+				array_push($comList, new Comment($com['commentid'], $com['comment']));
+			}
+			
+			if( count( $comList ) > 1 )
+			{
+				return $comList;
+			}
+			elseif( count( $comList ) == 1 )
+			{
+				return $comList[0];
+			}
+			else
+			{
+				return false;
+			}
 		}
 
 		private $commentid;
 		private $comment;
 		
-		public function __construct($comment)
+		public function __construct($commentid, $comment)
 		{
-			$this->commentid = $comment['commentid'];
-			$this->comment = $comment['comment'];
+			$this->commentid = $commentid;
+			$this->comment = $comment;
 		}
 		
 		public function __get($var)

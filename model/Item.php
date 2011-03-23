@@ -17,20 +17,7 @@
 			$values = array($id);
 			$item = $db->qwv($itemSQL, $values);
 			
-			$items = Item::wrap($item);
-			
-			if( count($items) > 1 )
-			{
-				return $items;
-			}
-			elseif( count($items) == 1 )
-			{
-				return $items[0];
-			}
-			else
-			{
-				return false;
-			}
+			return Item::wrap($item);
 		}
 		
 		public static function getByName($name)
@@ -39,15 +26,7 @@
 			$sql = "SELECT FROM items WHERE LOWER(name)=?";
 			$values = array(strtolower($name));
 			$items = $db->qwv($sql, $values);
-			
-			if( count($items) > 0 )
-			{
-				return $items[0];
-			}
-			else
-			{
-				return false;
-			}
+			return Item::wrap($items);
 		}
 		
 		public static function add($name, $description, $image, $price, $preptime, $cooklvl, $chars, $ings, $recs)
@@ -96,7 +75,19 @@
 				$characteristics = Characteristic::getByItem($item['itemid']);
 				array_push($itemList, new Item($item, $ingredients, $recommendations, $characteristics));
 			}
-			return $itemList;
+			
+			if( count( $itemList ) > 1 )
+			{
+				return $itemList;
+			}
+			elseif( count( $itemList ) == 1 )
+			{
+				return $itemList[0];
+			}
+			else
+			{
+				return false;
+			}
 		}
 
 		private $ingredients;

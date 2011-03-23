@@ -32,7 +32,18 @@
 				array_push($roleList, new Role($role));
 			}
 			
-			return $roleList;
+			if( count( $roleList ) > 1 )
+			{
+				return $roleList;
+			}
+			elseif( count( $roleList ) == 1 )
+			{
+				return $roleList[0];
+			}
+			else
+			{
+				return false;
+			}
 		}
 		
 		private $roleid;
