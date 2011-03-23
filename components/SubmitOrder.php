@@ -20,22 +20,25 @@
 		$item_id = $_POST['itemid'];
 		$isCustomized = 0;
 		$modifiers;
+
 		
 		//check to see if order is active
 		if(Order::getActiveByUser($userid))
 		{
 			//if active, add to it 
 			$active_order_ids = Order::getActiveByUser($userid);
-			$active_order = Order::getById($active_order_ids['orderid']);
+			$active_order = Order::getByID($active_order_ids['orderid']);
 			$active_order->addItem($item_id, $specialcomment, $modifiers);
 			throw new RedirectBrowserException("/orderlist.php");
 		}
 		else
 		{
 			//else, we must create an order and add items to it
-			//Order::addItem($item_id, $specialcomment, $modifiers);
-			throw new RedirectBrowserException("index.php");
+			$active_order = Order::create($tableid, $userid);
+			$active_order->addItem($item_id, $specialcomment, $modifiers);
+			throw new RedirectBrowserException("/orderlist.php");
 		}
+
 	}
 
 ?>

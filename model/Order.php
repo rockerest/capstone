@@ -31,7 +31,7 @@
 		public static function getActiveByUser($userid)
 		{
 			global $db;
-			$sql = "SELECT orderid FROM orders WHERE userid=? AND statusid<9";
+			$sql = "SELECT orderid FROM orders WHERE userid=? AND statusid!=4";
 			$values = array($userid);
 			$orders = $db->qwv($sql, $values);
 			return $orders[0];
@@ -111,7 +111,7 @@
 		
 			$this->table = $tbl;
 			$this->user = $usr;
-			$this->status = isset($stat) ? $stat : Status::getByStatus('received');
+			$this->status = isset($stat) ? $stat : Status::getByStatus('Submitted');
 			$this->items = isset($itm) ? $itm : null;
 		}
 		
@@ -273,7 +273,7 @@
 				//if order is new and needs to be inserted
 				$sql = "INSERT INTO orders (tableid, userid, statusid, time, specialComment) VALUES (?, ?, ?, ?, ?)";
 				$values = array(	$this->table->tableid,
-									$this->user->userid,
+									$this->user[0]->userid,
 									$this->status->statusid,
 									$this->time,
 									$this->specialComment

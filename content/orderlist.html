@@ -1,7 +1,7 @@
 <div>
 <h1>Active Order</h1>
 <table>
-<th>OrderId</th><th>Item Id</th><th>Table Number</th><th>User</th><th>Status</th><th>Time Submitted</th><th>Special Comment</th>
+<th>OrderId</th><th>Item Name</th><th>Table Number</th><th>User</th><th>Status</th><th>Time Submitted</th><th>Special Comment</th>
 <?php
 
 foreach($tmpl->active_order_items as $active_order_item)
@@ -20,4 +20,23 @@ foreach($tmpl->active_order_items as $active_order_item)
 </table>
 
 <h1>Past Orders</h1>
+<table>
+<th>OrderId</th><th>Item Name</th><th>Table Number</th><th>User</th><th>Status</th><th>Time Submitted</th><th>Special Comment</th>
+<?php
+foreach($tmpl->past_orders as $past_order_items)
+{
+	foreach($past_order_items->items as $past_order_item)
+	{
+	?>
+	<tr>
+	<td><?=$past_order_items->orderid?></td>
+	<td><?=$past_order_item->item->name?></td>
+	<td><?=$past_order_items->table->tableid?></td>
+	<td><?=$past_order_items->user[0]->fname?></td>
+	<td><?=$past_order_items->status->status?></td>
+	<td><?=$past_order_items->time?></td>
+	<td><?=$past_order_items->specialComment?></td>
+	</tr>
+<?}}?>
+</table>
 </div>
