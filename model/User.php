@@ -35,17 +35,7 @@
 										'lname'=>$lname
 									);
 					
-					$user = User::wrap(array($object));
-					$save = $user[0]->save();
-					
-					if( $save )
-					{
-						return $user[0];
-					}
-					else
-					{
-						return false;
-					}
+					return User::wrap(array($object));
 				}
 				else
 				{
