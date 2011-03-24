@@ -8,6 +8,7 @@
 
 *.psd
 *.mwb
+.htaccess
 
 # Specific Files #
 ##################

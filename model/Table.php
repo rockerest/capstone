@@ -11,15 +11,7 @@
 			$values = array($id);
 			$table = $db->qwv($sql, $values);
 			
-			$tbl = Table::wrap($table);
-			if( count($tbl) > 0 )
-			{
-				return $tbl[0];
-			}
-			else
-			{
-				return false;
-			}
+			return Table::wrap($table);
 		}
 		
 		public static function getByServer($serverid)
@@ -29,15 +21,7 @@
 			$values = array($id);
 			$tables = $db->qwv($sql, $values);
 			
-			$tbl = Table::wrap($tables);
-			if( count($tbl) > 0 )
-			{
-				return $tbl;
-			}
-			else
-			{
-				return false;
-			}
+			return Table::wrap($tables);
 		}
 		
 		public static function wrap($tables)
@@ -46,9 +30,21 @@
 			foreach($tables as $table)
 			{
 				$server = Server::getByID($server['userid']);
-				array_push($tableObs, new Table($table, $server));
+				array_push($tableObs, new Table($table['tableid'], $table['isAvailable'], $server));
 			}
-			return $tableObs;
+			
+			if( count( $tableObs ) > 1 )
+			{
+				return $tableObs;
+			}
+			elseif( count( $tableObs ) == 1 )
+			{
+				return $tableObs[0];
+			}
+			else
+			{
+				return false;
+			}
 		}
 		
 		private $tableid;
@@ -56,10 +52,10 @@
 		
 		private $server;
 
-		public function __construct($table, $server)
+		public function __construct($tableid, $isAvailable, $server)
 		{
-			$this->tableid = $table['tableid'];
-			$this->isAvailable = $table['isAvailable'];
+			$this->tableid = $tableid;
+			$this->isAvailable = $isAvailable;
 			
 			$this->server = $server;
 		}

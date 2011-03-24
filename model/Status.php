@@ -10,15 +10,7 @@
 			$values = array($id);
 			$stat = $db->qwv($sql, $values);
 			
-			$status = Status::wrap($stat);
-			if( count($status) > 0 )
-			{
-				return $status[0];
-			}
-			else
-			{
-				return false;
-			}
+			return Status::wrap($stat);
 		}
 		
 		public static function getByStatus($status)
@@ -28,15 +20,7 @@
 			$values = array(strtolower($status));
 			$stat = $db->qwv($sql, $values);
 			
-			$status = Status::wrap($stat);
-			if( count($status) > 0 )
-			{
-				return $status[0];
-			}
-			else
-			{
-				return false;
-			}
+			return Status::wrap($stat);
 		}
 		
 		public static function wrap($stats)
@@ -44,18 +28,30 @@
 			$statObs = array();
 			foreach($stats as $stat)
 			{
-				array_push($statObs, new Status($stat));
+				array_push($statObs, new Status($stat['statusid'], $stat['status']));
 			}
-			return $statObs;
+			
+			if( count( $statObs ) > 1 )
+			{
+				return $statObs;
+			}
+			elseif( count( $statObs ) == 1 )
+			{
+				return $statObs[0];
+			}
+			else
+			{
+				return false;
+			}
 		}
 		
 		private $statusid;
 		private $status;
 
-		public function __construct($stat)
+		public function __construct($statusid, $status)
 		{
-			$this->statusid = $stat['statusid'];
-			$this->status = $stat['status'];
+			$this->statusid = $statusid;
+			$this->status = $status;
 		}
 		
 		public function __get($var)

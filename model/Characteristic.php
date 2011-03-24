@@ -42,14 +42,7 @@
 			$values = array(strtolower($string));
 			$chars = $db->qwv($sql, $values);
 			
-			if( count($chars) > 0 )
-			{
-				return $chars[0];
-			}
-			else
-			{
-				return false;
-			}
+			return Characteristic::wrap($chars);
 		}
 		
 		public static function add($characteristic)
@@ -75,7 +68,18 @@
 				array_push($charObs, $tmp);
 			}
 			
-			return $charObs;
+			if( count( $charObs ) > 1 )
+			{
+				return $charObs;
+			}
+			elseif( count( $charObs ) == 1 )
+			{
+				return $charObs[0];
+			}
+			else
+			{
+				return false;
+			}
 		}
 
 		private $characteristicid;

@@ -83,7 +83,18 @@
 				array_push($authList, new Authentication($auth, $role));
 			}
 			
-			return $authList;
+			if( count( $authList ) > 1 )
+			{
+				return $authList;
+			}
+			elseif( count( $authList ) == 1 )
+			{
+				return $authList[0];
+			}
+			else
+			{
+				return false;
+			}
 		}
 	
 		private $authenticationid;

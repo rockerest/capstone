@@ -35,7 +35,18 @@
 				array_push($catList, new Category($cat));
 			}
 			
-			return $catList;
+			if( count( $catList ) > 1 )
+			{
+				return $catList;
+			}
+			elseif( count( $catList ) == 1 )
+			{
+				return $catList[0];
+			}
+			else
+			{
+				return false;
+			}
 		}
 		
 		private $categoryid;

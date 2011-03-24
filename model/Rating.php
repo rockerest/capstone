@@ -51,9 +51,9 @@
 			foreach( $ratings as $rating )
 			{
 				//get comment from rating
-				$comment = Comment::getByID($rating[0]['commentid']);
+				$comment = Comment::getByID($rating['commentid']);
 				//add to the package
-				array_push($rateList, new Rating($rating[0], $comment));
+				array_push($rateList, new Rating($rating['ratingid'], $rating['rating'], $rating['userid'], $rating['itemid'], $rating['time'], $comment));
 			}
 			
 			if( count($rateList) > 1 )
@@ -78,15 +78,15 @@
 		private $itemid;
 		private $time;
 		
-		public function __construct($rating, $comment)
+		public function __construct($ratingid, $rating, $userid, $itemid, $time, $comment)
 		{
 			$this->comment = $comment;
 			
-			$this->ratingid = $rating['ratingid'];
-			$this->rating = $rating['rating'];
-			$this->userid = $rating['userid'];
-			$this->itemid = $rating['itemid'];
-			$this->time = $rating['time'];
+			$this->ratingid = $ratingid;
+			$this->rating = $rating;
+			$this->userid = $userid;
+			$this->itemid = $itemid;
+			$this->time = $time;
 		}
 		
 		public function __get($var)

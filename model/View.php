@@ -38,10 +38,21 @@
 			$viewList = array();
 			foreach( $views as $vw )
 			{
-				array_push($viewList, new View($vw));
+				array_push($viewList, new View($vw['viewsid'], $vw['userid'], $vw['itemid'], $vw['time']));
 			}
 			
-			return $viewList;
+			if( count( $viewList ) > 1 )
+			{
+				return $viewList;
+			}
+			elseif( count( $viewList ) == 1 )
+			{
+				return $viewList[0];
+			}
+			else
+			{
+				return false;
+			}
 		}
 		
 		private $viewsid;
@@ -49,12 +60,12 @@
 		private $itemid;
 		private $time;
 		
-		public function __construct($view)
+		public function __construct($viewsid, $userid, $itemid, $time)
 		{
-			$this->viewsid = $view['viewsid'];
-			$this->userid = $view['userid'];
-			$this->itemid = $view['itemid'];
-			$this->time = $view['time'];
+			$this->viewsid = $viewsid;
+			$this->userid = $userid;
+			$this->itemid = $itemid;
+			$this->time = $time;
 		}
 		
 		public function __get($var)
