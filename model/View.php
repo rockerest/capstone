@@ -60,16 +60,8 @@
 		private $itemid;
 		private $time;
 		
-		public function __construct($viewsid, $userid, $itemid, $time = null)
+		public function __construct($viewsid, $userid, $itemid, $time)
 		{
-			if( $time == null )
-			{
-				$time = $itemid;
-				$itemid = $userid;
-				$userid = $viewsid;
-				$viewsid = null;
-			}
-			
 			$this->viewsid = $viewsid;
 			$this->userid = $userid;
 			$this->itemid = $itemid;

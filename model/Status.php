@@ -48,13 +48,8 @@
 		private $statusid;
 		private $status;
 
-		public function __construct($statusid, $status = null)
+		public function __construct($statusid, $status)
 		{
-			if( $status == null )
-			{
-				$status = $statusid;
-				$statusid = null;
-			}
 			$this->statusid = $statusid;
 			$this->status = $status;
 		}

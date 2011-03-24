@@ -3,43 +3,7 @@
 	
 	require_once('Authentication.php');
 	require_once('Order.php');
-	
-	class Predict
-	{
-		private $user;
-		public function __construct($user)
-		{
-			$this->user = $user;
-		}
-		
-		public function users()
-		{
-		}
-		
-		public function items()
-		{
-		}
-		
-		public function rating( $item )
-		{
-			if( $item instanceof Item )
-			{
-				$it = $item;
-			}
-			elseif( is_integer( $item ) )
-			{
-				$it = Item::getByID( $item );
-			}
-			else
-			{
-				return false;
-			}
-		}
-		
-		private function normalize( $chars )
-		{
-		}
-	}
+	require_once('Predict.php');
 
 	class User
 	{
@@ -151,27 +115,8 @@
 		
 		private $Predict;
 		
-		public function __construct($userid, $fname, $lname, $auth = null, $favs = null)
+		public function __construct($userid, $fname, $lname, $auth, $favs)
 		{
-			if( $favs == null && $auth == null )
-			{
-				$auth = $lname;
-				$lname = $fname;
-				$fname = $userid;
-				$userid = null;
-			}
-			elseif( $favs == null )
-			{
-				if( !($auth instanceof Authentication) )
-				{
-					$favs = $auth;
-					$auth = $lname;
-					$lname = $fname;
-					$fname = $userid;
-					$userid = null;
-				}
-			}
-
 			$this->userid = $userid;
 			$this->fname = $fname;
 			$this->lname = $lname;

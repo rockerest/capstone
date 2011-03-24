@@ -54,37 +54,8 @@
 		private $user;
 		private $tables;
 
-		public function __construct($serverid, $isWorking = false, $user = null, $tables = null)
+		public function __construct($serverid, $isWorking, $user, $tables)
 		{
-			if( $user == null && $tables == null )
-			{
-				if( ($serverid instanceof User) && is_bool($isWorking) )
-				{
-					$user = $serverid;
-					$serverid = null;
-					$tables = null;
-				}
-				elseif( is_bool($serverid) && ($isWorking instanceof User) )
-				{
-					$user = $isWorking;
-					$isWorking = $serverid;
-					$serverid = null;
-				}
-				elseif( ($serverid instanceof User) && ($isWorking[0] instanceof Table) )
-				{
-					$user = $serverid;
-					$tables = $isWorking;
-					$serverid = null;
-					$isWorking = true;
-				}
-			}
-			elseif( $tables == null )
-			{
-				$tables = $user;
-				$user = $isWorking;
-				$isWorking = $serverid;
-				$serverid = null;
-			}
 			$this->serverid = $serverid;
 			$this->isWorking = $isWorking;
 			

@@ -52,15 +52,8 @@
 		
 		private $server;
 
-		public function __construct($tableid, $isAvailable, $server = null)
+		public function __construct($tableid, $isAvailable, $server)
 		{
-			if( $server == null )
-			{
-				$server = $isAvailable;
-				$isAvailable = $tableid;
-				$tableid = null;
-			}
-			
 			$this->tableid = $tableid;
 			$this->isAvailable = $isAvailable;
 			

@@ -29,7 +29,7 @@
 			$roleList = array();
 			foreach( $roles as $role )
 			{
-				array_push($roleList, new Role($role));
+				array_push($roleList, new Role($role['roleid'], $role['role']));
 			}
 			
 			if( count( $roleList ) > 1 )
@@ -49,10 +49,10 @@
 		private $roleid;
 		private $role;
 		
-		public function __construct($role)
+		public function __construct($roleid, $role)
 		{
-			$this->roleid = $role['roleid'];
-			$this->role = $role['role'];
+			$this->roleid = $roleid;
+			$this->role = $role;
 		}
 		
 		public function __get($var)
