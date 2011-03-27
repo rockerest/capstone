@@ -33,9 +33,7 @@
 			$oiObs = array();
 			foreach($ois as $oi)
 			{
-				$item = Item::getByID($oi['itemid']);
-				$cust = Customization::getByOrderItem($oi['order_itemid']);
-				array_push($oiObs, new Order_Item($oi, $item, $cust));
+				array_push($oiObs, new Order_Item($oi['order_itemid'], $oi['orderid'], $oi['itemid'], $oi['specialComment'], $oi['isCustomized']));
 			}
 
 			if( count( $oiObs ) > 1 )
@@ -56,17 +54,16 @@
 		private $orderid;
 		private $specialComment;
 		
-		private $item;
-		private $customizations;
+		private $itemid;
 		
-		public function __construct($oi, $item, $cust)
+		public function __construct($order_itemid, $orderid, $itemid, $specialComment, $isCustomized)
 		{
-			$this->order_itemid = $oi['order_itemid'];
-			$this->orderid = $oi['orderid'];
-			$this->specialComment = $oi['specialComment'];
+			$this->order_itemid = $order_itemid;
+			$this->orderid = $orderid;
+			$this->specialComment = $specialComment;
+			$this->isCustomized = $isCustomized;
 			
-			$this->item = $item;
-			$this->customizations = $cust;
+			$this->itemid = $itemid;
 		}
 		
 		public function __get($var)
@@ -74,6 +71,14 @@
 			if( $var == 'order' )
 			{
 				return Order::getByID($this->orderid);
+			}
+			elseif( $var == 'item' )
+			{
+				return Item::getByID($this->itemid);
+			}
+			elseif( $var == 'customizations' )
+			{
+				return Customization::getByOrderItem($this->order_itemis);
 			}
 			else
 			{

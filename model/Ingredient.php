@@ -70,18 +70,13 @@
 		{
 			global $db;
 			$ing = Ingredient::getByName($name);
-			if( $ings )
+			if( $ing )
 			{
 				return $ing;
 			}
 			else
 			{
-				$values = array(	'name' => $name,
-									'isVegetarian' => $isVeg,
-									'isAllergenic' => $isAll,
-									'canBeSide' => $side
-								);
-				$ing = new Ingredient($values);
+				$ing = new Ingredient(null, $name, $isVeg, $isAll, $side);
 				return $ing->save();
 			}
 		}
@@ -91,7 +86,7 @@
 			$ingObs = array();			
 			foreach($ingList as $ing)
 			{
-				array_push($ingObs, new Ingredient($ing));
+				array_push($ingObs, new Ingredient($ing['ingredientid'], $ing['name'], $ing['isVegetarian'], $ing['isAllergenic'], $ing['canBeSide']));
 			}
 			
 			if( count( $ingObs ) > 1 )
@@ -114,18 +109,27 @@
 		private $isAllergenic;
 		private $canBeSide;
 		
-		public function __construct($ing)
+		public function __construct($ingredientid, $name, $isVeg, $isAll, $side)
 		{
-			$this->ingredientid = isset($ing['ingredientid']) ? $ing['ingredientid'] : null;
-			$this->name = $ing['name'];
-			$this->isVegetarian = $ing['isVegetarian'];
-			$this->isAllergenic = $ing['isAllergenic'];
-			$this->canBeSide = $ing['canBeSide'];
+			$this->ingredientid = $ingredientid;
+			$this->name = $name
+			$this->isVegetarian = $isVeg;
+			$this->isAllergenic = $isAll;
+			$this->canBeSide = $side;
 		}
 		
 		public function __get($var)
 		{
 			return $this->$var;
+		}
+		
+		public function __set($name, $value)
+		{
+			if( $name != 'ingredientid' )
+			{
+				$this->$name = $value;
+				return $this->save();
+			}
 		}
 		
 		public function save()
@@ -141,6 +145,22 @@
 				if( $db->stat() )
 				{
 					$this->ingredientid = $db->last();
+					return $this;
+				}
+				else
+				{
+					return false;
+				}
+			}
+			else
+			{
+				//if ingredient exists and needs to be updated
+				$sql = "UPDATE ingredients SET name=?, isVegetarian=?, isAllergenic=?, canBeSide=? WHERE ingredientid=?";
+				$values = array($this->name, $this->isVegetarian, $this->isAllergenic, $this->canBeSide, $this->ingredientid);
+				$db->qwv($sql, $values);
+				
+				if( $db->stat() )
+				{
 					return $this;
 				}
 				else

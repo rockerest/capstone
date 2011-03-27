@@ -2,6 +2,7 @@
 	require_once('connect.php');
 	require_once('Modifier.php');
 	require_once('Ingredient.php');
+	require_once('Order_Item.php');
 	
 	class Customization
 	{
@@ -30,7 +31,6 @@
 				$customizationSQL = "SELECT * FROM customizations WHERE order_itemid=?";
 				$values = array($orderItem[0]['order_itemid']);
 				$customizations = $db->qwv($customizationSQL, $values);
-
 			}
 			return Customization::wrap($customizations);
 		}
@@ -40,9 +40,7 @@
 			$custObs = array();
 			foreach($custs as $cust)
 			{
-				$mod = Modifier::getByID($cust['modifierid']);
-				$ing = Ingredient::getByID($cust['ingredientid']);
-				array_push($custObs, new Customization($cust, $mod, $ing));
+				array_push($custObs, new Customization($cust['customizationid'], $cust['order_itemid'], $cust['modifierid'], $ingredient['ingredientid']));
 			}
 			
 			if( count( $custObs ) > 1 )
@@ -60,23 +58,38 @@
 		}
 
 		private $customizationid;
+		
 		private $order_itemid;
+		private $modifierid;
+		private $ingredientid;
 		
-		private $modifier;
-		private $ingredient;
-		
-		public function __construct($customization, $mod, $ing)
+		public function __construct($id, $oiid, $modid, $ingid)
 		{
-			$this->customizationid = $customization['customizationid'];
-			$this->order_itemid = $customization['order_itemid'];
+			$this->customizationid = $id;
 			
-			$this->modifier = $mod;
-			$this->ingredient = $ing;
+			$this->order_itemid = $oiid;
+			$this->modifierid = $modid;
+			$this->ingredientid = $ingid;
 		}
 		
 		public function __get($var)
 		{
-			return $this->$var;
+			if( $var == 'order_item' )
+			{
+				return Order_Item::getByID($this->order_itemid);
+			}
+			elseif( $var == 'modifier' )
+			{
+				return Modifier::getByID($this->modifierid);
+			}
+			elseif( $var == 'ingredient' )
+			{
+				return Ingredient::getByID($this->ingredientid);
+			}
+			else
+			{
+				return $this->$var;
+			}
 		}
 	}
 ?>

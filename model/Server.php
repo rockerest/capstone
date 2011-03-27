@@ -29,9 +29,7 @@
 			$serverObs = array();
 			foreach($servers as $server)
 			{
-				$user = User::getByID($server['userid']);
-				$tables = Table::getByServer($server['serverid']);
-				array_push($serverObs, new Server($server['serverid'], $server['isWorking'], $user, $tables));
+				array_push($serverObs, new Server($server['serverid'], $server['isWorking'], $server['userid']));
 			}
 			
 			if( count( $serverObs ) > 1 )
@@ -51,25 +49,31 @@
 		private $serverid;
 		private $isWorking;
 		
-		private $user;
-		private $tables;
+		private $userid;
 
-		public function __construct($serverid, $isWorking, $user, $tables)
+		public function __construct($serverid, $isWorking, $userid)
 		{
 			$this->serverid = $serverid;
 			$this->isWorking = $isWorking;
 			
-			$this->user = $user;
-			$this->tables = $tables;
+			$this->userid = $userid;
 		}
 		
 		public function __get($var)
 		{
 			if( $var == 'fname' || $var == 'lname' )
 			{
-				return $this->user->$var;
+				$usr = User::getByID($this->userid);
+				return $usr->$var;
 			}
-			return $this->$var;
+			elseif( $var == 'tables' )
+			{
+				return Table::getByServer($this->serverid);
+			}
+			else
+			{
+				return $this->$var;
+			}
 		}
 	}
 ?>

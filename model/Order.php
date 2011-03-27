@@ -24,17 +24,14 @@
 			$orders = $db->qwv($sql, $values);
 			return Order::wrap($orders);
 		}
-		
-		//
-		//	Gets active orders by User
-		//
+
 		public static function getActiveByUser($userid)
 		{
 			global $db;
 			$sql = "SELECT orderid FROM orders WHERE userid=? AND statusid!=4";
 			$values = array($userid);
 			$orders = $db->qwv($sql, $values);
-			return $orders[0];
+			return Order::wrap($orders);
 		}
 		
 		public static function getByUserFavorites($userid)
@@ -43,16 +40,7 @@
 			$sql = "SELECT * FROM orders WHERE orderid IN (SELECT orderid FROM users_have_favorite_orders WHERE userid=?)";
 			$values = array($userid);
 			$orders = $db->qwv($sql, $values);
-			$order = Order::wrap($orders);
-			
-			if( count($order) > 0 )
-			{
-				return $order;
-			}
-			else
-			{
-				return false;
-			}
+			return Order::wrap($orders);
 		}
 		
 		public static function create($tableid, $userid)
@@ -67,51 +55,73 @@
 			$orderObs = array();
 			foreach($orders as $order)
 			{
-				$table = Table::getByID($order['tableid']);
-				$user = User::getByID($order['userid']);
-				$status = Status::getByID($order['statusid']);
-				$items = Order_Item::getByOrder($order['orderid']);
-				array_push($orderObs, new Order($order, $items, $table, $user, $status));
+				array_push($orderObs, new Order($order['orderid'], $order['time'], $order['specialComment'], $order['tableid'], $order['userid'], $order['statusid']));
 			}
-			return $orderObs;
+			
+			if( count( $orderObs ) > 1 )
+			{
+				return $orderObs;
+			}
+			elseif( count( $orderObs ) == 1 )
+			{
+				return $orderObs[0];
+			}
+			else
+			{
+				return false;
+			}
 		}
 		
 		private $orderid;
 		private $time;
 		private $specialComment;
 		
-		private $table;
-		private $user;
-		private $status;
-		private $items;
+		private $tableid;
+		private $userid;
+		private $statusid;
 		
-		public function __construct($order, $itm, $tbl, $usr, $stat)
+		public function __construct($orderid, $time, $specialComment, $tableid, $userid, $statusid)
 		{
-			$this->orderid = isset($order['orderid']) ? $order['orderid'] : null;
-			$this->time = $order['time'];
-			$this->specialComment = isset($order['specialComment']) ? $order['specialComment'] : null;
+			$this->orderid = $orderid;
+			$this->time = $time;
+			$this->specialComment = $specialComment;
 		
-			$this->table = $tbl;
-			$this->user = $usr;
-			$this->status = isset($stat) ? $stat : Status::getByStatus('Submitted');
-			$this->items = isset($itm) ? $itm : null;
+			$this->tableid = $tableid;
+			$this->userid = $userid;
+			$this->statusid = $statusid;
 		}
 		
 		public function __get($var)
 		{
-			return $this->$var;
+			if( $var == 'table' )
+			{
+				return Table::getByID($this->tableid);
+			}
+			elseif( $var == 'user' )
+			{
+				return User::getByID($this->userid);
+			}
+			elseif( $var == 'status' )
+			{
+				return Status::getByID($this->statusid);
+			}
+			elseif( $var == 'items' )
+			{
+				return Order_Item::getByOrder($this->orderid);
+			}
+			else
+			{
+				return $this->$var;
+			}
 		}
 		
-		public function status($statusid)
+		public function __set($name, $val)
 		{
-			$this->status = Status::getByID($statusid);
-			return $this->save();
-		}
-				
-		public function comment($string)
-		{
-			$this->specialComment = $string;
-			return $this->save();
+			if( $name == 'status' || $name == 'specialComment' )
+			{
+				$this->$name = $val;
+				$this->save();
+			}
 		}
 		
 		public function addItem($itemid, $comment, $modifiers)
@@ -191,7 +201,7 @@
 			{
 				//add this order as a favorite for the user
 				$sql = "SELECT * FROM users_have_favorite_orders WHERE userid=? AND orderid=?";
-				$values = array($this->user->userid, $this->orderid);
+				$values = array($this->userid, $this->orderid);
 				$fav = $db->qwv($sql, $values);
 				if( count($fav) > 0 )
 				{
@@ -200,7 +210,7 @@
 				else
 				{
 					$sql = "INSERT INTO users_have_favorite_orders (userid, orderid) VALUES (?, ?)";
-					$values = array($this->user->userid, $this->orderid);
+					$values = array($this->userid, $this->orderid);
 					$db->qwv($sql, $values);
 					
 					if( $db->stat() )
@@ -217,7 +227,7 @@
 			{
 				//remove this order from the user's favorites
 				$sql = "SELECT * FROM users_have_favorite_orders WHERE userid=? AND orderid=?";
-				$values = array($this->user->userid, $this->orderid);
+				$values = array($this->userid, $this->orderid);
 				$fav = $db->qwv($sql, $values);
 				if( count($fav) == 0 )
 				{
@@ -226,7 +236,7 @@
 				else
 				{
 					$sql = "DELETE FROM users_have_favorite_orders WHERE userid=? AND orderid=? LIMIT 1";
-					$values = array($this->user->userid, $this->orderid);
+					$values = array($this->userid, $this->orderid);
 					$db->qwv($sql, $values);
 					
 					if( $db->stat() )
@@ -240,13 +250,7 @@
 				}
 			}
 		}
-		
-		public function refresh()
-		{
-			//reload all order_items in case any were added/deleted since object instantiation
-			$this->items = Order_Item::getByOrder($this->orderid);
-		}
-		
+
 		public function save()
 		{
 			global $db;
@@ -254,9 +258,9 @@
 			{
 				//if order is new and needs to be inserted
 				$sql = "INSERT INTO orders (tableid, userid, statusid, time, specialComment) VALUES (?, ?, ?, ?, ?)";
-				$values = array(	$this->table->tableid,
-									$this->user[0]->userid,
-									$this->status->statusid,
+				$values = array(	$this->tableid,
+									$this->userid,
+									$this->statusid,
 									$this->time,
 									$this->specialComment
 								);
@@ -276,7 +280,7 @@
 			{
 				//if the order exists and just needs to be updated
 				$sql = "UPDATE orders SET statusid=?, specialComment=? WHERE orderid=?";
-				$values = array(	$this->status->statusid,
+				$values = array(	$this->statusid,
 									$this->specialComment,
 									$this->orderid
 								);

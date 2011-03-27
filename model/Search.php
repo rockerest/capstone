@@ -28,7 +28,7 @@
 			$srchList = array();
 			foreach( $search as $srch )
 			{
-				array_push($srchList, new Search($srch['searchid'], $srch['string'], $srch['searched'], $srch['closestMatch']));
+				array_push($srchList, new Search($srch['searchid'], $srch['input'], $srch['searched'], $srch['closestMatch']));
 			}
 			
 			if( count( $srchList ) > 1 )
@@ -46,14 +46,14 @@
 		}
 		
 		private $searchid;
-		private $string;
+		private $input;
 		private $searched;
 		private $closestMatch;
 		
-		public function __construct($searchid, $string, $searched, $closestMatch)
+		public function __construct($searchid, $input, $searched, $closestMatch)
 		{
 			$this->searchid = $searchid;
-			$this->string = $string;
+			$this->input = $input;
 			$this->searched = $searched;
 			$this->closestMatch = $closestMatch;
 		}

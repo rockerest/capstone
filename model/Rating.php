@@ -50,10 +50,7 @@
 			$rateList = array();
 			foreach( $ratings as $rating )
 			{
-				//get comment from rating
-				$comment = Comment::getByID($rating['commentid']);
-				//add to the package
-				array_push($rateList, new Rating($rating['ratingid'], $rating['rating'], $rating['userid'], $rating['itemid'], $rating['time'], $comment));
+				array_push($rateList, new Rating($rating['ratingid'], $rating['rating'], $rating['userid'], $rating['itemid'], $rating['time'], $rating['commentid']));
 			}
 			
 			if( count($rateList) > 1 )
@@ -70,7 +67,7 @@
 			}
 		}
 
-		private $comment;
+		private $commentid;
 	
 		private $ratingid;
 		private $rating;
@@ -78,10 +75,9 @@
 		private $itemid;
 		private $time;
 		
-		public function __construct($ratingid, $rating, $userid, $itemid, $time, $comment)
+		public function __construct($ratingid, $rating, $userid, $itemid, $time, $commentid)
 		{
-			$this->comment = $comment;
-			
+			$this->commentid = $commentid;			
 			$this->ratingid = $ratingid;
 			$this->rating = $rating;
 			$this->userid = $userid;
@@ -91,7 +87,14 @@
 		
 		public function __get($var)
 		{
-			return $this->$var;
+			if( $var == 'comment' )
+			{
+				return Comment::getByID($this->commentid);
+			}
+			else
+			{
+				return $this->$var;
+			}
 		}
 	}
 ?>

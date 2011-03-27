@@ -37,34 +37,13 @@
 			$items = $db->qwv($sql, $values);
 			return $items;
 		}
-		public static function add($name, $description, $image, $price, $preptime, $cooklvl, $chars, $ings, $recs)
+		
+		public static function add($name, $description, $image, $price, $preptime, $cooklvl)
 		{
 			$item = Item::getByName($name);
 			if( !$item )
 			{
-				$item['name'] = $name;
-				$item['description'] = $description;
-				$item['image'] = $image;
-				$item['price'] = $price;
-				$item['prepTime'] = $preptime;
-				$item['hasCookLevels'] = $cooklvl;
-				
-				foreach( $chars as $char )
-				{
-					array_push($charList, Characteristic::add($char));
-				}
-				
-				foreach( $ings as $ing )
-				{
-					array_push($ingList, Ingredient::add($ing['name'], $ing['isVegetarian'], $ing['isAllergenic'], $ing['canBeSide']));
-				}
-				
-				foreach( $recs as $rec )
-				{
-					array_push($recList, Ingredient::add($ing['name'], $ing['isVegetarian'], $ing['isAllergenic'], $ing['canBeSide']));
-				}
-				
-				$item = new Item($item, $ingList, $recList, $charList);
+				$item = new Item(null, $name, $description, $image, $price, $preptime, $cooklvl);
 				return $item->save();
 			}
 			else
@@ -78,10 +57,7 @@
 			$itemList = array();
 			foreach( $items as $item )
 			{
-				$ingredients = Ingredient::getByItem($item['itemid']);
-				$recommendations = Ingredient::getRecommendedByItem($item['itemid']);
-				$characteristics = Characteristic::getByItem($item['itemid']);
-				array_push($itemList, new Item($item, $ingredients, $recommendations, $characteristics));
+				array_push($itemList, new Item($item['itemid'], $item['name'], $item['description'], $item['image'], $item['price'], $item['prepTime'], $item['hasCookLevels']));
 			}
 			
 			if( count( $itemList ) > 1 )
@@ -97,10 +73,6 @@
 				return false;
 			}
 		}
-
-		private $ingredients;
-		private $recommendations;
-		private $characteristics;
 		
 		private $itemid;
 		private $name;
@@ -110,24 +82,112 @@
 		private $prepTime;
 		private $hasCookLevels;
 		
-		public function __construct($item, $ing, $rec, $char)
+		public function __construct($itemid, $name, $description, $image, $price, $prepTime, $hasCookLevels)
 		{
-			$this->ingredients = $ing;
-			$this->recommendations = $rec;
-			$this->characteristics = $char;
-			
-			$this->itemid = isset($item['itemid']) ? $item['itemid'] : null;
-			$this->name = $item['name'];
-			$this->description = $item['description'];
-			$this->image = $item['image'];
-			$this->price = $item['price'];
-			$this->prepTime = $item['prepTime'];
-			$this->hasCookLevels = $item['hasCookLevels'];
+			$this->itemid = $itemid;
+			$this->name = $name;
+			$this->description = $description;
+			$this->image = $image;
+			$this->price = $price;
+			$this->prepTime = $prepTime;
+			$this->hasCookLevels = $hasCookLevels;
 		}
 		
 		public function __get($var)
 		{
-			return $this->$var;
+			if( $var == 'ingredients' )
+			{
+				return Ingredient::getByItem($this->itemid);
+			}
+			elseif( $var == 'recommendations' )
+			{
+				return Ingredient::getRecommendedByItem($this->itemid);
+			}
+			elseif( $var == 'characteristics' )
+			{
+				return Characteristic::getByItem($this->itemid);
+			}
+			else
+			{
+				return $this->$var;
+			}
+		}
+		
+		public function __set($name, $value)
+		{
+			if( $name != 'itemid' )
+			{
+				$this->$name = $value;
+				return $this->save();
+			}
+		}
+		
+		public function attach($type, $id = null)
+		{
+			if( $id == null )
+			{
+				if( $type instanceof Characteristic )
+				{
+					return addChar($type->characteristicid);
+				}
+				elseif( $type instanceof Ingredient )
+				{
+					return addIng($type->ingredientid);
+				}
+				else
+				{
+					return false;
+				}
+			}
+			elseif( strtolower($type) == 'characteristic' )
+			{
+				if( $id instanceof Characteristic )
+				{
+					return addChar( $id->characteristicid );
+				}
+				elseif( is_integer($id) )
+				{
+					return addChar( $id );
+				}
+				else
+				{
+					return false;
+				}
+			}
+			elseif( strtolower($type) == 'ingredient' )
+			{
+				if( $id instanceof Ingredient )
+				{
+					return addIng( $id->ingredientid );
+				}
+				elseif( is_integer($id) )
+				{
+					return addIng( $id );
+				}
+				else
+				{
+					return false;
+				}
+			}
+			elseif( strtolower($type) == 'recommendation' )
+			{
+				if( $id instanceof Ingredient )
+				{
+					return addRec( $id->ingredientid );
+				}
+				elseif( is_integer($id) )
+				{
+					return addRec( $id );
+				}
+				else
+				{
+					return false;
+				}
+			}
+			else
+			{
+				return false;
+			}
 		}
 		
 		public function save()
@@ -144,31 +204,6 @@
 				{
 					//set the itemid
 					$this->itemid = $db->last();
-					
-					//link the item to ingredients, characteristics
-					$sql = "INSERT INTO items_have_ingredients (ingredientid, itemid) VALUES (?, ?)";
-					$db->prep($sql);
-					foreach( $this->ingredients as $ing )
-					{
-						$db->qwv(null, array($ing['ingredientid'], $this->itemid));
-					}
-					
-					$sql = "INSERT INTO items_have_recommended_ingredients (ingredientid, itemid) VALUES (?, ?)";
-					$db->prep($sql);
-					foreach( $this->recommendations as $rec )
-					{
-						$db->qwv(null, array($rec['ingredientid'], $this->itemid));
-					}
-					
-					$sql = "INSERT INTO items_have_characteristics (characteristicid, itemid) VALUES (?, ?)";
-					$db->prep($sql);
-					foreach( $this->characteristics as $char )
-					{
-						$db->qwv(null, array($char['characteristicid'], $this->itemid));
-					}
-					
-					//This function should do a check to make sure everything inserted properly.  Return a warning to check/modify the item if something failed?
-					
 					return $this;
 				}
 				else
@@ -179,7 +214,46 @@
 			else
 			{
 				//if the object exists and is updated
+				$sql = "UPDATE items SET name=?, description=?, image=?, price=?, prepTime=?, hasCookLevels=? WHERE itemid=?";
+				$values = array( $this->name, $this->description, $this->image, $this->price, $this->prepTime, $this->hasCookLevels, $this->itemid);
+				$db->qwv($sql, $values);
+				
+				if( $db->stat() )
+				{
+					return $this;
+				}
+				else
+				{
+					return false;
+				}
 			}
+		}
+		
+		private function addChar($id)
+		{
+			$sql = "INSERT INTO items_have_characteristics (itemid, characteristicid) VALUES (?,?)";
+			$values = array($this->itemid, $id);
+			$db->qwv($sql, $values);
+			
+			return $db->stat();
+		}
+		
+		private function addIng($id)
+		{
+			$sql = "INSERT INTO items_have_ingredients (itemid, ingredientid) VALUES (?,?)";
+			$values = array($this->itemid, $id);
+			$db->qwv($sql, $values);
+			
+			return $db->stat();
+		}
+		
+		private function addRec($id)
+		{
+			$sql = "INSERT INTO items_have_recommendations (itemid, recommendationid) VALUES (?,?)";
+			$values = array($this->itemid, $id);
+			$db->qwv($sql, $values);
+			
+			return $db->stat();
 		}
 	}
 ?>

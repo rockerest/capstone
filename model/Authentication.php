@@ -34,19 +34,11 @@
 			$salt = substr(hash('whirlpool',rand(100000000000, 999999999999)), 0, 64);
 			$real_pass = hash('whirlpool', $salt.$pass);
 			
-			$object = array(	'identity'=>$ident,
-								'password'=>$real_pass,
-								'userid'=>$id,
-								'roleid'=>$roleid,
-								'salt'=>$salt
-							);
-			
-			$auth = Authentication::wrap($object);
-			$save = $auth[0]->save();
-			
+			$auth = Authentication::wrap(null, $ident, $salt, $real_pass, $id, $roleid);
+			$save = $auth->save();
 			if( $save )
 			{
-				return $auth[0];
+				return $auth;
 			}
 			else
 			{
@@ -79,8 +71,7 @@
 			$authList = array();
 			foreach( $auths as $auth )
 			{
-				$role = Role::getByID($auth['roleid']);
-				array_push($authList, new Authentication($auth, $role));
+				array_push($authList, new Authentication($auth['authenticationid'], $auth['identity'], $auth['salt'], $auth['password'], $auth['userid'], $auth['roleid']));
 			}
 			
 			if( count( $authList ) > 1 )
@@ -103,23 +94,53 @@
 		private $password;
 		
 		private $userid;
-		
-		private $role;
+		private $roleid;
 	
-		public function __construct($auth, $role)
+		public function __construct($id, $ident, $salt, $pass, $userid, $roleid)
 		{
-			$this->role = $role;
+			$this->roleid = $roleid;
+			$this->userid = $userid;
 			
-			$this->authenticationid = isset($auth['authenticationid']) ? $auth['authenticationid'] : null;
-			$this->userid = $auth['userid'];
-			$this->identity = $auth['identity'];
-			$this->salt = $auth['salt'];
-			$this->password = $auth['password'];
+			$this->authenticationid = $id;
+			$this->identity = $ident;
+			$this->salt = $salt;
+			$this->password = $pass;
 		}
 		
 		public function __get($var)
 		{
-			return $this->$var;
+			if( $var == 'role' )
+			{
+				return Role::getByID($this->roleid);
+			}
+			elseif( $var == 'user' )
+			{
+				return User::getByID($this->userid);
+			}
+			else
+			{
+				return $this->$var;
+			}
+		}
+		
+		public function __set($name, $value)
+		{
+			if( $name == 'salt' )
+			{
+				return false;
+			}
+			elseif( $name == 'password' )
+			{
+				$salt = substr(hash('whirlpool',rand(100000000000, 999999999999)), 0, 64);
+				$real_pass = hash('whirlpool', $salt.$value);
+				$this->salt = $salt;
+				$this->password = $real_pass;
+			}
+			else
+			{
+				$this->$name = $value;
+			}
+			return $this->save();
 		}
 		
 		public function save()
@@ -130,10 +151,17 @@
 				if( $this->allSet() )
 				{
 					$authSQL = "UPDATE authentication SET identity=?, salt=?, password=?, roleid=? WHERE authenticationid=? AND userid=?";
-					$values = array($this->identity, $this->salt, $this->password, $this->role[0]->roleid, $this->authenticationid, $this->userid);
+					$values = array($this->identity, $this->salt, $this->password, $this->roleid, $this->authenticationid, $this->userid);
 					$db->qwv($authSQL, $values);
 					
-					return $db->stat();
+					if( $db->stat() )
+					{
+						return $this;
+					}
+					else
+					{
+						return false;
+					}
 				}
 				else
 				{
@@ -145,15 +173,18 @@
 				if( $this->allSet() )
 				{
 					$authSQL = "INSERT INTO authentication (identity, salt, password, userid, roleid) VALUES (?,?,?,?,?)";
-					$values = array($this->identity, $this->salt, $this->password, $this->userid, $this->role[0]->roleid);
+					$values = array($this->identity, $this->salt, $this->password, $this->userid, $this->roleid);
 					$db->qwv($authSQL, $values);
 					
 					if( $db->stat() )
 					{
 						$this->authenticationid = $db->last();
+						return $this;
 					}
-					
-					return $db->stat();
+					else
+					{
+						return false;
+					}					
 				}
 				else
 				{
@@ -164,7 +195,7 @@
 		
 		private function allSet()
 		{
-			return isset($this->identity, $this->salt, $this->password, $this->role);
+			return isset($this->identity, $this->salt, $this->password, $this->roleid);
 		}
 	}
 ?>

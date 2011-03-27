@@ -32,7 +32,7 @@
 			$catList = array();
 			foreach( $categories as $cat )
 			{
-				array_push($catList, new Category($cat));
+				array_push($catList, new Category($cat['categoryid'], $cat['name'], $cat['number']));
 			}
 			
 			if( count( $catList ) > 1 )
@@ -53,11 +53,11 @@
 		private $name;
 		private $number;
 		
-		public function __construct($cat)
+		public function __construct($id, $name, $number)
 		{
-			$this->categoryid = $cat['categoryid'];
-			$this->name = $cat['name'];
-			$this->number = $cat['number'];
+			$this->categoryid = $id;
+			$this->name = $name;
+			$this->number = $number;
 		}
 		
 		public function __get($var)

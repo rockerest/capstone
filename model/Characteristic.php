@@ -50,7 +50,7 @@
 			$char = Characteristic::getByCharacteristic($characteristic);
 			if( !char )
 			{
-				$char = new Characteristic(array('characteristic' => $characteristic));
+				$char = new Characteristic(null, $characteristic));
 				return $char->save();
 			}
 			else
@@ -64,8 +64,7 @@
 			$charObs = array();			
 			foreach($chars as $char)
 			{
-				$tmp = new Characteristic($char);
-				array_push($charObs, $tmp);
+				array_push($charObs, new Characteristic($char['characteristicid'], $char['characteristic']));
 			}
 			
 			if( count( $charObs ) > 1 )
@@ -85,10 +84,10 @@
 		private $characteristicid;
 		private $characteristic;
 		
-		public function __construct($char)
+		public function __construct($id, $char)
 		{
-			$this->characteristicid = isset($char['characteristicid']) ? $char['characteristicid'] : null;
-			$this->characteristic = $char['characteristic'];
+			$this->characteristicid = $id;
+			$this->characteristic = $char;
 		}
 		
 		public function __get($var)
@@ -119,8 +118,18 @@
 			}
 			else
 			{
-				//if char has been updated and already exists
-				return false;
+				$sql = "UPDATE characteristics SET characteristic=? WHERE characteristicid=?";
+				$value = array($this->characteristic, $this->characteristicid);
+				$db->qwv($sql, $values);
+				
+				if( $db->stat() )
+				{
+					return $this;
+				}
+				else
+				{
+					return false;
+				}
 			}
 		}
 	}
