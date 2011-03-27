@@ -27,12 +27,11 @@
 			
 			if( $tmp )
 			{
-				$user = $tmp[0];
 				setSessionVar('active', true);
-				setSessionVar('fname', $user->fname);
-				setSessionVar('lname', $user->lname);
-				setSessionVar('roleid', $user->authentication[0]->role[0]->roleid);
-				setSessionVar('userid', $user->userid);
+				setSessionVar('fname', $tmp->fname);
+				setSessionVar('lname', $tmp->lname);
+				setSessionVar('roleid', $tmp->authentication->role->roleid);
+				setSessionVar('userid', $tmp->userid);
 				
 				kick(2, null, 0 );
 			}

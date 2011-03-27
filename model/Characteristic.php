@@ -50,7 +50,7 @@
 			$char = Characteristic::getByCharacteristic($characteristic);
 			if( !char )
 			{
-				$char = new Characteristic(null, $characteristic));
+				$char = new Characteristic(null, $characteristic);
 				return $char->save();
 			}
 			else

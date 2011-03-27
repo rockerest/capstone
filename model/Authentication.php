@@ -44,7 +44,7 @@
 			$salt = substr(hash('whirlpool',rand(100000000000, 999999999999)), 0, 64);
 			$real_pass = hash('whirlpool', $salt.$pass);
 			
-			$auth = Authentication::wrap(null, $ident, $salt, $real_pass, $id, $roleid);
+			$auth = new Authentication(null, $ident, $salt, $real_pass, $id, $roleid);
 			$save = $auth->save();
 			if( $save )
 			{

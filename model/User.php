@@ -108,7 +108,7 @@
 			{
 				return Order::getByUserFavorites($this->userid);
 			}
-			elseif( $var == 'authorization' )
+			elseif( $var == 'authentication' )
 			{
 				return Authentication::getByUserID($this->userid);
 			}
