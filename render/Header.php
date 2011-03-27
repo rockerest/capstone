@@ -29,7 +29,7 @@
 										"display" => array(
 														"Home",
 														"Menu",
-														"Pay",
+														"Order",
 														"OrderList",
 														"DBTEST",
 														"Item Upload",
@@ -39,7 +39,7 @@
 										"link" => array(
 														"/index.php",
 														"/menu.php",
-														"/checkout.php",
+														"/order.php",
 														"/_demo/orderlist.php",
 														"/_demo/dbtest.php",
 														"/_demo/uploadForm.php",
@@ -62,12 +62,18 @@
 				{
 					$tmpl->menu = array(
 										"display" => array(
+														"Order",
+														"Menu",														
 														"Logout"
 														),
 										"link" => array(
+														"/order.php",
+														"/menu.php",
 														"/login.php?action=logout"
 														),
 										"icon" => array(
+														null,
+														null,
 														"user"
 														)
 										);
@@ -76,16 +82,22 @@
 			else
 			{
 				$tmpl->menu = array(
-									"display" => array(
-													"Login"
-													),
-									"link" => array(
-													"/login.php"
-													),
-									"icon" => array(
-													"user"
-													)
-									);
+										"display" => array(
+														"Order",
+														"Menu",														
+														"Logout"
+														),
+										"link" => array(
+														"/order.php",
+														"/menu.php",
+														"/login.php?action=logout"
+														),
+										"icon" => array(
+														null,
+														null,
+														"user"
+														)
+										);
 			}
 			
 			$css = $tmpl->build('header.css');
