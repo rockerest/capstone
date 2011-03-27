@@ -120,7 +120,7 @@
 			if( $name == 'status' || $name == 'specialComment' )
 			{
 				$this->$name = $val;
-				$this->save();
+				return $this->save();
 			}
 		}
 		

@@ -19,36 +19,32 @@
 		
 		public static function add($fname, $lname, $ident, $pass, $roleid)
 		{
-			global $db;
-			$userSQL = "INSERT INTO users (fname, lname) VALUES(?,?)";
-			$values = array($fname, $lname);
-			$db->qwv($userSQL, $values);
+			$okay = Authentication::checkIdentity($ident);
 			
-			if( $db->stat() )
+			if( $okay === 0 )
 			{
-				$userid = $db->last();
-				$auth = Authentication::addForUser($userid, $ident, $pass, $roleid);
+				$user = new User(null, $fname, $lname);
+				$res = $user->save();
 				
-				if( $auth )
+				if( $res )
 				{
-					$object = array(	'userid'=>$userid,
-										'fname'=>$fname,
-										'lname'=>$lname
-									);
-					
-					return User::wrap(array($object));
-				}
-				else
-				{
-					$status = User::delete($db->last());
-					
-					if( $status )
+					$auth = Authentication::addForUser($res->userid, $ident, $pass, $roleid);
+					if( $auth )
 					{
-						return false;
+						return $res;
 					}
 					else
 					{
-						//you are just totally screwed
+						$status = User::delete($res->userid);
+						
+						if( $status )
+						{
+							return false;
+						}
+						else
+						{
+							//you are just totally screwed
+						}
 					}
 				}
 			}
@@ -131,7 +127,19 @@
 			global $db;
 			if( !isset($userid) )
 			{
-				return false;
+				$userSQL = "INSERT INTO users (fname, lname) VALUES(?,?)";
+				$values = array($this->fname, $this->lname);
+				$db->qwv($userSQL, $values);
+				
+				if( $db->stat() )
+				{
+					$this->userid = $db->last();
+					return $this;
+				}
+				else
+				{
+					return false;
+				}
 			}
 			else
 			{

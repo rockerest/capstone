@@ -112,7 +112,7 @@
 		public function __construct($ingredientid, $name, $isVeg, $isAll, $side)
 		{
 			$this->ingredientid = $ingredientid;
-			$this->name = $name
+			$this->name = $name;
 			$this->isVegetarian = $isVeg;
 			$this->isAllergenic = $isAll;
 			$this->canBeSide = $side;

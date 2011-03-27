@@ -29,6 +29,16 @@
 			}
 		}
 		
+		public static function checkIdentity($ident)
+		{
+			global $db;
+			$sql = "SELECT authenticationid FROM authentication WHERE identity=?";
+			$values = array($ident);
+			$res = $db->qwv($sql, $values);
+			
+			return count($res);
+		}
+		
 		public static function addForUser($id, $ident, $pass, $roleid)
 		{
 			$salt = substr(hash('whirlpool',rand(100000000000, 999999999999)), 0, 64);
