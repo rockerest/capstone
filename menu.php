@@ -3,70 +3,49 @@
 	require_once('Page.php');
 	require_once('Template.php');
 	require_once('Item.php');
+	require_once('Category.php');
 	
 	$page = new Page(0, "OrderUp - Menu");
 	$tmpl = new Template();
 	
-	$view = isset($_GET['cat']) ? $_GET['cat'] : -1;
+	$cat = isset($_GET['cat']) ? $_GET['cat'] : -1;
 	
-	if($view == "drinks")
+	if( $cat == -1 )
 	{
-		$tmpl->items = array_merge(
-						Item::getByCategory(11),
-						Item::getByCategory(2),
-						Item::getByCategory(12),
-						Item::getByCategory(13),
-						Item::getByCategory(14),
-						Item::getByCategory(6),
-						Item::getByCategory(7),
-						Item::getByCategory(8),
-						Item::getByCategory(9),
-						Item::getByCategory(10)
-						);
-	}
-	else if($view == "apps")
-	{
-		//pass back apps
-		$tmpl->items = Item::getByCategory(4);
-	}
-	else if($view == "entrees")
-	{
-		//pass back entrees
-		$tmpl->items = array_merge(
-						Item::getByCategory(1),
-						Item::getByCategory(15),
-						Item::getByCategory(16),
-						Item::getByCategory(17),
-						Item::getByCategory(18),
-						Item::getByCategory(19),
-						Item::getByCategory(21),
-						Item::getByCategory(22)
-						);
-	}
-	else if($view == "desserts")
-	{
-		//pass back desserts
-		$tmpl->items = Item::getByCategory(5);
-	}
-	else if($view == -1)
-	{
-		//hit with no category
+		$tmpl->cats = Category::getTopLevel();
+		if( $tmpl->cats instanceof Category )
+		{
+			$tmpl->cats = array( $tmpl->cats );
+		}
 	}
 	else
 	{
-		//don't know how you got here....
+		$tmpl->cats = Category::getByParent($cat);
+		if( !$tmpl->cats )
+		{
+			$tmpl->items = Item::getByCategory($cat);
+		}
+		elseif( $tmpl->cats instanceof Category )
+		{
+			$tmpl->items = Item::getByCategory($tmpl->cats->categoryid);
+		}
+		
+		if( $tmpl->items instanceof Item )
+		{
+			$tmpl->items = array( $tmpl->items );
+		}
 	}
 	
 	$page->run();
 	
 	$html = $tmpl->build('menu.html');
 	$css = $tmpl->build('menu.css');
-	$js = $tmpl->build('menu.js');
+	//$js = $tmpl->build('menu.js');
 	
 	$appContent = array(
 						'html'	=>	$html,
 						'css'	=>	array(	'code' => $css,
-											'link' => '/styles/menu.css'
+											'link' => 'menu'
 											),
 						'js' => $js
 						);

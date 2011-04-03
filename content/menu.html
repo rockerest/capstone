@@ -1,38 +1,22 @@
-
+<div id="button_container" class="clear">
 <?php
-if(isset($tmpl->items) && $tmpl->items!=-1)
-{
+	if( isset($tmpl->items) && count($tmpl->items) > 0 )
+	{
+		foreach( $tmpl->items as $item )
+		{
+			?>
+			<div class="url(item.php?id=<?= $item->itemid; ?>) div_link item big_button"><?= $item->name; ?></div>
+			<?
+		}
+	}
+	else
+	{
+		foreach( $tmpl->cats as $cat )
+		{
+			?>
+			<div class="url(menu.php?cat=<?= $cat->categoryid; ?>) div_link category big_button"><?= $cat->name; ?></div>
+			<?
+		}
+	}
 ?>
-<div id="item_list">
-<?
-foreach($tmpl->items as $item)
-{
-?>
-<div id="item_<?=$item['itemid']?>" class="url(item.php?id=<?=$item['itemid']?>) div_link item big_button">
-<?=$item['name']?>
-<!--<img src='images/<?=$item['image']?>' class="img_resize"/>-->
 </div>
-<?php
-}
-?>
-</div>
-<?
-} else {
-?>
-<div id="cat_list">
-<div id="drinks" class="url(menu.php?cat=drinks) div_link big_button">
-Drinks
-</div>
-<div id="apps" class="url(menu.php?cat=apps) div_link big_button">
-Appetizers
-</div>
-<div id="entrees" class="url(menu.php?cat=entrees) div_link big_button">
-Entrees
-</div>
-<div id="desserts" class="url(menu.php?cat=desserts) div_link big_button">
-Desserts
-</div>
-</div>
-<?php
-}
-?>

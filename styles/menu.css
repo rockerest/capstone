@@ -1,42 +1,9 @@
-#cat_list
-{
-width:25em;
-margin-left:auto;
-margin-right:auto;
+#button_container {
+	width: 48em;
+	margin: auto;
 }
-#drinks
-{
-float:left;
-margin-right:5em;
-margin-bottom:5em;
-}
-#apps
-{
-float:left;
-margin-bottom:5em;
-}
-#entrees
-{
-clear:both;
-float:left;
-margin-right:5em;
-}
-#desserts
-{
-float:left;
-}
-#item_list
-{
-width:50em;
-margin:auto;
-}
-.item
-{
-margin-right:2.5em;
-margin-bottom:2.5em;
-float:left;
-}
-.img_resize
-{
-width:100%;
+
+.item , .category{
+	margin: 1em;
+	float: left;
 }
