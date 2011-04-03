@@ -16,7 +16,7 @@
 	$appContent = array(
 						'html'	=>	$html,
 						'css'	=>	array(	'code' => $css,
-											'link' => '/styles/order.css'
+											'link' => 'order'
 											),
 						'js' => $js
 						);
