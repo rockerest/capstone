@@ -20,6 +20,7 @@
 	$tmpl->lname = isset($_GET['lname']) ? $_GET['lname'] : '';
 	
 	$tmpl->code = isset($_GET['code']) ? $_GET['code'] : -1;
+	$tmpl->fwd = isset($_GET['fwd']) ? $_GET['fwd'] : null;
 	
 	switch($tmpl->code)
 	{
@@ -59,6 +60,10 @@
 				$tmpl->css = "error";
 				$tmpl->message = "The user could not be created.  Please try again later.";
 				break;
+		case 10:
+				$tmpl->css = "alert";
+				$tmpl->message = "You must be authorized to perform that action.  Please log in.";
+				break;
 		case -1:
 		default:
 				$tmpl->css = "hide";
@@ -75,7 +80,7 @@
 	$appContent = array(
 						'html'	=>	$html,
 						'css'	=>	array(	'code' => $css,
-											'link' => '/styles/login.css'
+											'link' => 'login'
 											),
 						'js' => $js
 						);

@@ -7,6 +7,7 @@
 	setSession(0, '/');
 	
 	$action = isset($_GET['action']) ? $_GET['action'] : null;
+	$fwd = isset($_GET['fwd']) ? $_GET['fwd'] : null;
 	
 	$password = isset($_POST['pass']) ? $_POST['pass'] : null;
 	$identity = isset($_POST['email']) ? $_POST['email'] : null;
@@ -99,17 +100,24 @@
 	
 	function kick($page, $input, $code)
 	{
-		if( $page == 0 )
+		if( $fwd != null )
 		{
-			throw new RedirectBrowserException("/login.php?code=" . $code . "&identity=" . $input['identity']);
+			throw new RedirectBrowserException($fwd);
 		}
-		elseif( $page == 1 )
+		else
 		{
-			throw new RedirectBrowserException("/login.php?action=register&code=" . $code . "&identity=" . $input['identity'] . "&fname=" . $input['fname'] . "&lname=" . $input['lname']);
-		}
-		elseif( $page == 2 )
-		{
-			throw new RedirectBrowserException("/index.php?code=" . $code);
+			if( $page == 0 )
+			{
+				throw new RedirectBrowserException("/login.php?code=" . $code . "&identity=" . $input['identity']);
+			}
+			elseif( $page == 1 )
+			{
+				throw new RedirectBrowserException("/login.php?action=register&code=" . $code . "&identity=" . $input['identity'] . "&fname=" . $input['fname'] . "&lname=" . $input['lname']);
+			}
+			elseif( $page == 2 )
+			{
+				throw new RedirectBrowserException("/index.php?code=" . $code);
+			}
 		}
 	}
 ?>

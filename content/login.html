@@ -59,7 +59,7 @@ else
 {
 ?>
 <div id="login" class="center">
-	<form action="/components/Login.php?action=login" method="post" class="clear tall">
+	<form action="/components/Login.php?action=login<? if( $tmpl->fwd != null ){ print "&fwd=$tmpl->fwd"; } ?>" method="post" class="clear tall">
 		<fieldset>
 			<legend>Login Details</legend>
 			<label for="email">Email:</label>
