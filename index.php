@@ -4,19 +4,19 @@
 	require_once('Page.php');
 	require_once('Template.php');
 
-	$page = new Page(0, "OrderUp - a new way to improve your dining experience");
+	$page = new Page(0, "OrderUp - improve your dining");
 	$tmpl = new Template();
 	
 	$page->run();
 	
 	$html = $tmpl->build('index.html');
 	$css = $tmpl->build('index.css');
-	$js = $tmpl->build('index.js');
+	//$js = $tmpl->build('index.js');
 	
 	$appContent = array(
 						'html'	=>	$html,
 						'css'	=>	array(	'code' => $css,
-											'link' => '/styles/index.css'
+											'link' => 'index'
 											),
 						'js' => $js
 						);
