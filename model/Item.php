@@ -35,7 +35,7 @@
 			$sql = "SELECT * FROM items WHERE categoryid=?";
 			$values = array($category);
 			$items = $db->qwv($sql, $values);
-			return $items;
+			return Item::wrap($items);
 		}
 		
 		public static function add($name, $description, $image, $price, $preptime, $cooklvl)

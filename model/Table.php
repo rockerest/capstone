@@ -4,6 +4,15 @@
 	
 	class Table
 	{
+		public static function get()
+		{
+			global $db;
+			$sql = "SELECT * FROM tables";
+			$tables = $db->q($sql);
+			
+			return Table::wrap($tables);
+		}
+		
 		public static function getByID($id)
 		{
 			global $db;

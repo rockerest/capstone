@@ -13,6 +13,29 @@
 			return Category::wrap($cat);
 		}
 		
+		public static function getTopLevel()
+		{
+			global $db;
+			$sql = "SELECT * FROM categories WHERE number REGEXP '^[0-9]+$'";
+			$cats = $db->q($sql);
+			
+			return Category::wrap($cats);
+		}
+		
+		public static function getByParent($id)
+		{
+			global $db;
+			$sql = "SELECT number FROM categories WHERE categoryid=?";
+			$values = array($id);
+			$res = $db->qwv($sql, $values);
+
+			$sql = "SELECT * FROM categories WHERE number REGEXP CONCAT('^', ?, '[.]{1}[0-9]+$')";
+			$values = array( $res[0]['number'] );
+			$cats = $db->qwv($sql, $values);
+			
+			return Category::wrap($cats);
+		}
+		
 		public static function getByItem($id)
 		{
 			global $db;
