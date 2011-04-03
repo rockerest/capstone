@@ -27,9 +27,8 @@
 				{
 					$tmpl->menu = array(
 										"display" => array(
-														"Home",
-														"Menu",
 														"Order",
+														"Menu",
 														"OrderList",
 														"DBTEST",
 														"Item Upload",
@@ -37,9 +36,8 @@
 														"Logout"
 														),
 										"link" => array(
-														"/index.php",
-														"/menu.php",
 														"/order.php",
+														"/menu.php",
 														"/_demo/orderlist.php",
 														"/_demo/dbtest.php",
 														"/_demo/uploadForm.php",
@@ -47,7 +45,6 @@
 														"/login.php?action=logout"
 														),
 										'icon' => array(
-														null,
 														null,
 														null,
 														null,
@@ -85,12 +82,12 @@
 										"display" => array(
 														"Order",
 														"Menu",														
-														"Logout"
+														"Login"
 														),
 										"link" => array(
 														"/order.php",
 														"/menu.php",
-														"/login.php?action=logout"
+														"/login.php"
 														),
 										"icon" => array(
 														null,
@@ -100,11 +97,27 @@
 										);
 			}
 			
+			if( $_SERVER['SCRIPT_NAME'] != '/login.php' && !isset($_SESSION['umbrella']['tableid']) )
+			{
+				if( $_SESSION['roleid'] > 2 )
+				{
+					$loc = urlencode("login.php?code=11");
+					header('Location: login.php?action=logout&fwd='.$loc);
+				}
+				else
+				{
+					if( $_SERVER['SCRIPT_NAME'] != '/table.php' )
+					{
+						header('Location: table.php?code=0');
+					}
+				}
+			}
+			
 			$css = $tmpl->build('header.css');
 			$html = $tmpl->build('header.html');
 			//$js = $tmpl->build('header.js');
 			
-			$content = array('html' => $html, 'css' => array('code' => $css, 'link' => '/styles/header.css'), 'js' => $js);
+			$content = array('html' => $html, 'css' => array('code' => $css, 'link' => 'header'), 'js' => $js);
 			return $content;
 		}
 	}

@@ -1,0 +1,9 @@
+#table_container {
+	width: 48em;
+	margin: auto;
+}
+
+.table{
+	margin: 1em;
+	float: left;
+}

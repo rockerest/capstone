@@ -1,0 +1,22 @@
+<? if( $tmpl->code > -1 )
+{
+?>
+<div class="message-box center w50 bump <?= $tmpl->css; ?>">
+	<?= $tmpl->message; ?>
+</div>
+<?
+}
+?>
+
+<div id="table_conainer">
+<?php
+	foreach( $tmpl->tables as $table )
+	{
+		?>
+		<div class="url(/components/RegisterTable.php?id=<?= $table->tableid; ?>) div_link table big_button"><span><?= $table->tableid; ?></span></div>
+		<?
+	}	
+?>
+
+<div class="url(/components/RegisterTable.php?id=-1) div_link table big_button"><span>De-activate this device</span></div>
+</div>

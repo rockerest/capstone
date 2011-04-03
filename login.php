@@ -9,18 +9,21 @@
 	
 	$tmpl->action = isset($_GET['action']) ? $_GET['action'] : null;
 	
-	if( $tmpl->action == 'logout' )
-	{
-		session_destroy();
-		header('Location: /');
-	}
-	
 	$tmpl->identity = isset($_GET['identity']) ? $_GET['identity'] : '';
 	$tmpl->fname = isset($_GET['fname']) ? $_GET['fname'] : '';
 	$tmpl->lname = isset($_GET['lname']) ? $_GET['lname'] : '';
 	
 	$tmpl->code = isset($_GET['code']) ? $_GET['code'] : -1;
 	$tmpl->fwd = isset($_GET['fwd']) ? $_GET['fwd'] : null;
+	
+	if( $tmpl->action == 'logout' )
+	{
+		$tmp = $_SESSION['umbrella'];
+		session_destroy();
+		setSession(0,"/");
+		$_SESSION['umbrella'] = $tmp;
+		header('Location: /'.$fwd);
+	}
 	
 	switch($tmpl->code)
 	{
@@ -63,6 +66,10 @@
 		case 10:
 				$tmpl->css = "alert";
 				$tmpl->message = "You must be authorized to perform that action.  Please log in.";
+				break;
+		case 11:
+				$tmpl->css = "error";
+				$tmpl->message = "This device appears to be inactive.  Please log in with administrator privileges to activate this device.";
 				break;
 		case -1:
 		default:
