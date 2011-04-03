@@ -9,6 +9,7 @@
 	$tmpl = new Template();
 	
 	$cat = isset($_GET['cat']) ? $_GET['cat'] : -1;
+	$tmpl->code = -1;
 	
 	if( $cat == -1 )
 	{
@@ -20,9 +21,13 @@
 	}
 	else
 	{
+		$tmp = Category::getByID($cat);
+		$num = $tmp->number;
+		$tmpl->prev = Category::getByNumber(preg_replace('#\.[\d]+$#','',$num));
 		$tmpl->cats = Category::getByParent($cat);
-		if( !$tmpl->cats )
+		if( $tmpl->cats == false )
 		{
+			unset($tmpl->cats);
 			$tmpl->items = Item::getByCategory($cat);
 		}
 		elseif( $tmpl->cats instanceof Category )
@@ -33,6 +38,14 @@
 		if( $tmpl->items instanceof Item )
 		{
 			$tmpl->items = array( $tmpl->items );
+		}
+		
+		if( $tmpl->items === false )
+		{
+			unset($tmpl->items);
+			$tmpl->code = 0;
+			$tmpl->css = "error";
+			$tmpl->message = "There are no items to display.";
 		}
 	}
 	

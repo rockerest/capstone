@@ -1,22 +1,39 @@
+<? if( $tmpl->code > -1 )
+{
+?>
+<div class="message-box center w50 bump <?= $tmpl->css; ?>">
+	<?= $tmpl->message; ?>
+</div>
+<?
+}
+?>
+
 <div id="button_container" class="clear">
+
 <?php
 	if( isset($tmpl->items) && count($tmpl->items) > 0 )
 	{
 		foreach( $tmpl->items as $item )
 		{
 			?>
-			<div class="url(item.php?id=<?= $item->itemid; ?>) div_link item big_button"><?= $item->name; ?></div>
+			<div class="url(item.php?id=<?= $item->itemid; ?>) div_link item big_button"><span><?= $item->name; ?></span></div>
+			<?
+		}
+	}
+	elseif( isset($tmpl->cats) && count($tmpl->cats) > 0 )
+	{
+		foreach( $tmpl->cats as $cat )
+		{
+			?>
+			<div class="url(menu.php?cat=<?= $cat->categoryid; ?>) div_link category big_button"><span><?= $cat->name; ?></span></div>
 			<?
 		}
 	}
 	else
 	{
-		foreach( $tmpl->cats as $cat )
-		{
-			?>
-			<div class="url(menu.php?cat=<?= $cat->categoryid; ?>) div_link category big_button"><?= $cat->name; ?></div>
-			<?
-		}
+		?>
+		<div class="url(menu.php?cat=<?= $tmpl->prev->categoryid; ?>) div_link category big_button"><span>Previous Selection (<?= $tmpl->prev->name; ?>)</span></div>
+		<?
 	}
 ?>
 </div>
