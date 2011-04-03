@@ -13,6 +13,16 @@
 			return Category::wrap($cat);
 		}
 		
+		public static function getByNumber($num)
+		{
+			global $db;
+			$sql = "SELECT * FROM categories WHERE number=?";
+			$values = array($num);
+			$cat = $db->qwv($sql, $values);
+			
+			return Category::wrap($cat);
+		}
+		
 		public static function getTopLevel()
 		{
 			global $db;
