@@ -7,13 +7,19 @@
 	<!--<link rel="shortcut icon" href="../images/favicon.ico" type="image/x-icon" />
 	<link rel="icon" href="../images/favicon.ico" type="image/x-icon" />-->
 	
-	<link rel="stylesheet" href="/global/global.css" type="text/css" />
-	<link rel="stylesheet" href="/styles/local.css" type="text/css" />
+	<?php
+		$cssLinks = array(
+							"global",
+							"local",
+							$tmpl->headerContent['css']['link'],
+							$tmpl->appContent['css']['link'],
+							"css3buttons"
+						);
+						
+		$css = implode(",", $cssLinks);
+	?>
 		
-	<link rel="stylesheet" href="<?= $tmpl->headerContent['css']['link']; ?>" type="text/css" />
-	<link rel="stylesheet" href="<?= $tmpl->appContent['css']['link']; ?>" type="text/css" />
-	
-	<link rel="stylesheet" href="/styles/css3buttons.css" type="text/css" />
+	<link rel="stylesheet" href="/components/CSS.php?q=<?= $css; ?>" type="text/css" />
 
 	<title>
 		<?= $tmpl->title; ?>
@@ -42,18 +48,21 @@
 			It is recommended that you turn Javascript ON in your browser.
 		</div>
 	</noscript>
-	<script type="text/javascript" src="/global/global.js"></script>
 
 	<!--    Load Javascript Library - jQuery     -->
 	<script type="text/javascript" src="/jquery/jquery.js"></script>
 	
-	<!--    Load custom jQuery Plugins           -->
+	<!--	Load sitewide scripts				 -->
+	<script type="text/javascript" src="/global/global.js"></script>
+	<script type="text/javascript" src="/scripts/local.js"></script>
+	
+	<!--    Load custom jQuery Plugins           
 	<script type="text/javascript" src="/jquery/jquery.fadeDown.js"></script>
 	<script type="text/javascript" src="/jquery/jquery.idle.js"></script>
 
-	<!--    Load external jQuery plugins         -->
+	<!--    Load external jQuery plugins         
 	<script type="text/javascript" src="/jquery/jquery.event.hover.js"></script>
-	<script type="text/javascript" src="/jquery/jquery.easing.js"></script>
+	<script type="text/javascript" src="/jquery/jquery.easing.js"></script>-->
 
 	<script type="text/javascript">
 	$( document ).ready( function(){
