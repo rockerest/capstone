@@ -12,15 +12,20 @@
 	{
 		throw new RedirectBrowserException("table.php?code=1");
 	}
+	elseif( $id == -1 )
+	{
+		session_destroy();
+		throw new RedirectBrowserException("../login.php?action=logout");
+	}
 	
 	$table = Table::getByID($id);
 	if( $table instanceof Table )
 	{
 		$_SESSION['umbrella']['tableid'] = $table->tableid;
-		throw new RedirectBrowserException("/login.php?action=logout");
+		throw new RedirectBrowserException("../login.php?action=logout");
 	}
 	else
 	{
-		throw new RedirectBrowserException("table.php?code=1");
+		throw new RedirectBrowserException("../table.php?code=1");
 	}
 ?>
