@@ -13,6 +13,7 @@
 							"local",
 							$tmpl->headerContent['css']['link'],
 							$tmpl->appContent['css']['link'],
+							$tmpl->footerContent['css']['link'],
 							"css3buttons"
 						);
 						
@@ -39,7 +40,7 @@
 		<div id="push"></div>
 	</div>
 	<div id="footer">
-		OrderUp 2011 | Capstone 4980 | Group 6
+		<?= $tmpl->footerContent['html'] ."\n"; ?>
 	</div>
 	<noscript>
 		<div id="nojs" style="display: block;">
@@ -69,6 +70,7 @@
 	  <?php
 			print $tmpl->headerContent['js'] . "\n";
 			print $tmpl->appContent['js'] . "\n";
+			print $tmpl->footerContent['js'] . "\n";
 		?>
 								  });
 	</script>
