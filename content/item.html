@@ -9,44 +9,48 @@
 else
 {
 ?>
-<div id="curMenuItem">
-	<div id="curMenuItem_title">
+<div id="item">
+	<div id="title" class="message-box center clean">
 		<?= $tmpl->item->name; ?>
-		<span id="curMenuItem_title_rating">Rating:</span>*****
 	</div>
-	<div id="curMenuItem_pic">
-		<img src="images/<?= $tmpl->item->image; ?>" />
-	</div>
-	<div id="curMenuItem_desc">
-		<?= $tmpl->item->description; ?>
-	</div>
-	<div id="curMenuItem_price">
-		<?= $tmpl->item->price; ?>
+	<div id="container">
+		<div id="info" class="w70">
+			<div id="pic">
+				<img src="images/<?= $tmpl->item->image; ?>" />
+			</div>
+			<div id="desc" class="message-box info w75 center">
+				<?= $tmpl->item->description; ?>
+			</div>
+		</div>
+		
+		<div id="control" class="w30">
+			<form action="components/SubmitOrder.php?item=<?= $tmpl->item->itemid ?>" method="post">
+				<?
+				// don't show the ingredient list if the item IS the ingredient
+				if( is_array($tmpl->item->ingredients) )
+				{
+					?>
+					<div id="checkboxes">
+					<?
+					foreach($tmpl->item->ingredients as $ing)			
+					{				
+					?>			
+						<input type="checkbox" value="<?= $ing->ingredientid; ?>" name="ingredients[]" checked="true" /><?= $ing->name; ?><br />				
+					<?						
+					}
+					?>
+					</div>
+					<?
+				}
+				?>
+				<textarea name="message" class="bump follow">Special Comment</textarea>
+				<a href="#" class="big positive button"><span class="icon plus"></span>Add To Order $<?= $tmpl->item->price; ?></a>
+			</form>
+		</div>
 	</div>
 </div>
 
-<div id="ingredients_list">
-	<form action="components/SubmitOrder.php" method="post">
-		<?
-		// don't show the ingredient list if the item IS the ingredient
-		if( is_array($tmpl->item->ingredients) )
-		{
-			foreach($tmpl->item->ingredients as $ing)			
-			{				
-			?>			
-				<input type="checkbox" value="<?= $ing->ingredientid; ?>" name="ingredients[]" checked="true" /><?= $ing->name; ?><br />				
-			<?						
-			}
-		}
-		?>
-		<textarea name="message">Special Comment</textarea>
-		<br />
-		<input type="hidden" value="<?= $tmpl->item->itemid ?>" name="itemid" />
-		<input type="submit" value="Add To Order" id="addButton" name="add" />
-		<input type="submit" value="Review This Item" id="reviewButton" name="review" >
-	</form>
-	This form will submit via AJAX to an "Order.php" component.  The Order.php component will add it to their "cart" or order list, and they will remain on the page, or be redirected back to the menu if the AJAX returns a success.
-</div>
+
 <?
 }
 ?>

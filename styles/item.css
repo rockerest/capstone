@@ -1,0 +1,29 @@
+#info{
+	float: left;
+}
+
+#control{
+	margin-top: 3.5em;
+	float: left;
+}
+
+#control #checkboxes{
+	text-align: left;
+	padding-left: 1.2em;
+	line-height: 1.6em;
+	font-size: 1.1em;
+}
+
+#control #checkboxes input[type=checkbox]{
+	margin-left: -1.2em;
+}
+
+#control textarea{
+	width: 100%;
+	height: 10em;
+}
+
+#pic img{
+	height: 22em;
+}
+
