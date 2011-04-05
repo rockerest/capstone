@@ -38,12 +38,12 @@
 			return Item::wrap($items);
 		}
 		
-		public static function add($name, $description, $image, $price, $preptime, $cooklvl)
+		public static function add($name, $categoryid, $description, $image, $price, $preptime, $cooklvl)
 		{
 			$item = Item::getByName($name);
 			if( !$item )
 			{
-				$item = new Item(null, $name, $description, $image, $price, $preptime, $cooklvl);
+				$item = new Item(null, $name, $categoryid, $description, $image, $price, $preptime, $cooklvl);
 				return $item->save();
 			}
 			else
@@ -57,7 +57,7 @@
 			$itemList = array();
 			foreach( $items as $item )
 			{
-				array_push($itemList, new Item($item['itemid'], $item['name'], $item['description'], $item['image'], $item['price'], $item['prepTime'], $item['hasCookLevels']));
+				array_push($itemList, new Item($item['itemid'], $item['name'], $item['categoryid'], $item['description'], $item['image'], $item['price'], $item['prepTime'], $item['hasCookLevels']));
 			}
 			
 			if( count( $itemList ) > 1 )
@@ -76,16 +76,18 @@
 		
 		private $itemid;
 		private $name;
+		private $categoryid;
 		private $description;
 		private $image;
 		private $price;
 		private $prepTime;
 		private $hasCookLevels;
 		
-		public function __construct($itemid, $name, $description, $image, $price, $prepTime, $hasCookLevels)
+		public function __construct($itemid, $name, $catgeoryid, $description, $image, $price, $prepTime, $hasCookLevels)
 		{
 			$this->itemid = $itemid;
 			$this->name = $name;
+			$this->categoryid = $categoryid;
 			$this->description = $description;
 			$this->image = $image;
 			$this->price = $price;
@@ -106,6 +108,10 @@
 			elseif( $var == 'characteristics' )
 			{
 				return Characteristic::getByItem($this->itemid);
+			}
+			elseif( $var == 'category' )
+			{
+				return Category::getByID($this->categoryid);
 			}
 			else
 			{
