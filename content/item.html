@@ -18,7 +18,7 @@ else
 			<div id="pic">
 				<img src="images/<?= $tmpl->item->image; ?>" />
 			</div>
-			<div id="desc" class="message-box info w75 center">
+			<div id="desc" class="message-box info w75 center bump">
 				<?= $tmpl->item->description; ?>
 			</div>
 		</div>
@@ -35,8 +35,8 @@ else
 					foreach($tmpl->item->ingredients as $ing)			
 					{				
 					?>			
-						<input type="checkbox" value="<?= $ing->ingredientid; ?>" name="ingredients[]" checked="true" /><?= $ing->name; ?><br />				
-					<?						
+						<label><input type="checkbox" value="<?= $ing->ingredientid; ?>" name="ingredients[]" checked="checked" /><?= $ing->name; ?></label><br />				
+					<?
 					}
 					?>
 					</div>
