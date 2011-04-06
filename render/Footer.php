@@ -17,7 +17,7 @@
 		{
 			$tmpl = new Template();
 			
-			$css = $tmpl->build('footer.css');
+			//$css = $tmpl->build('footer.css');
 			$html = $tmpl->build('footer.html');
 			//$js = $tmpl->build('footer.js');
 			

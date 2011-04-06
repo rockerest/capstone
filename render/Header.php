@@ -46,7 +46,7 @@
 														),
 										'icon' => array(
 														null,
-														null,
+														'book',
 														null,
 														null,
 														null,
@@ -70,7 +70,7 @@
 														),
 										"icon" => array(
 														null,
-														null,
+														'book',
 														"user"
 														)
 										);
@@ -91,7 +91,7 @@
 														),
 										"icon" => array(
 														null,
-														null,
+														'book',
 														"user"
 														)
 										);
