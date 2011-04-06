@@ -40,15 +40,21 @@ a:hover{
 	-moz-border-radius: .125em;
 	-webkit-border-radius: .125em;
 	border-radius: .125em;
+	
+	cursor: pointer;
 }
 
-.big_button:hover{
+.big_button:hover, .big_button:focus{
 	background-color: #2D7DC5;
 	
 	color: #FFFFFF;
 	text-shadow: -1px -1px 0 rgba(0,0,0,0.3);
+}
 
-	cursor: pointer;
+.big_button:active{
+	-webkit-box-shadow: inset 2px 2px 1px #145791;
+	-moz-box-shadow: inset 2px 2px 1px #145791;
+	box-shadow: inset 2px 2px 1px #145791; 
 }
 
 .big_button span{
