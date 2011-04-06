@@ -83,7 +83,7 @@
 		private $prepTime;
 		private $hasCookLevels;
 		
-		public function __construct($itemid, $name, $catgeoryid, $description, $image, $price, $prepTime, $hasCookLevels)
+		public function __construct($itemid, $name, $categoryid, $description, $image, $price, $prepTime, $hasCookLevels)
 		{
 			$this->itemid = $itemid;
 			$this->name = $name;

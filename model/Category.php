@@ -97,5 +97,20 @@
 		{
 			return $this->$var;
 		}
+		
+		public function getParent()
+		{
+			global $db;
+			
+			$nums = explode(".", $this->number);
+			array_pop($nums);
+			$number = implode(".", $nums);
+			
+			$sql = "SELECT * FROM categories WHERE number=?";
+			$values = array( $number );
+			$cat = $db->qwv($sql, $values);
+			
+			return Category::wrap($cat);
+		}
 	}
 ?>
