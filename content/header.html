@@ -12,12 +12,12 @@
 			if( $_SESSION['roleid'] < 3 )
 			{
 				?>
-				<a href="#" id="hide-2" class="okay">Manager</a>
+				<a href="#" id="hide-2" class="error">Manager</a>
 				<?
 				if( $_SESSION['roleid'] < 2 )
 				{
 				?>
-				<a href="#" id="hide-1" class="okay">Admin</a>
+				<a href="#" id="hide-1" class="error">Admin</a>
 				<?
 				}
 			}
