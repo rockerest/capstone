@@ -9,7 +9,15 @@
 ?>
 
 <div id="breadcrumb" class="follow">
-	<?= $tmpl->breadcrumb; ?>
+	<?php
+		if( $_SESSION['active'] && $_SESSION['roleid'] < 3 )
+		{
+		?>
+		<a href="item.php?action=add" class="button"><span class="icon plus"></span>Add new item</a>
+		<?
+		}
+		print $tmpl->breadcrumb;
+	?>
 </div>
 <div id="button_container" class="clear">
 

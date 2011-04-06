@@ -1,5 +1,5 @@
 <?php
-	set_include_path('global:jquery:backbone:components:content:render:model:scripts:styles:images');
+	set_include_path('backbone:components:content:render:model:scripts:styles:images');
 	
 	require_once('Item.php');
 	require_once('Page.php');
@@ -11,6 +11,7 @@
 	$tmpl = new Template();
 
 	$tmpl->itemid = isset($_GET['id']) ? $_GET['id'] : -1;
+	$tmpl->action = isset($_GET['action']) ? $_GET['action'] : null;
 	$tmp = Item::getByID($tmpl->itemid);
 	
 	if( $tmp )

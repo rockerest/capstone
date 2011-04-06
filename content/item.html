@@ -1,10 +1,42 @@
 <? if( $tmpl->code > -1 )
 {
-?>
-<div class="message-box center w50 follow <?= $tmpl->css; ?>">
-	<?= $tmpl->message; ?>
-</div>
-<?
+	if( $tmpl->action == null )
+	{
+	?>
+	<div class="message-box center w50 follow <?= $tmpl->css; ?>">
+		<?= $tmpl->message; ?>
+	</div>
+	<?
+	}
+	elseif( $tmpl->action == 'add' )
+	{
+	?>
+		<form action="components/AddItem.php" method="post" enctype="multipart/form-data">
+			<label for="name">Name:</label><input type="text" name="name" id="name" />
+			<br />
+			<label for="item_desc">Description:</label></td><td><input type="text" name="item_desc" id="item_desc" />
+			<br />
+			<label for="item_image">Image</label></td><td><input type="file" name="item_image" id="item_image" />
+			<br />
+			<label for="item_preptime">Prep Time:</label></td><td><input type="text" name="item_preptime" id="item_preptime" />
+			<br />
+			<label for="item_item_hasCookLevels">Has cook levels?:</label></td><td><input type="text" name="item_hasCookLevels" id="item_hasCookLevels" />
+			<br />
+			Item Ingredients
+			<br />
+			Item Characteristics
+			<br />
+			<label for="item_category_name">Category Name:</label></td><td><input type="text" name="item_category_name" id="item_category_name" />
+			<br />
+			Category Child Of || Top Level
+			<br />
+			<button type="submit" class="big primary button"><span class="plus icon"></span>Create New Item</button>
+
+			</table>
+
+		</form>
+	<?
+	}
 }
 else
 {
