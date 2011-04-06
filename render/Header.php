@@ -3,6 +3,8 @@
 	require_once('Session.php');
 	setSession(0,"/");
 	
+	require_once('Navigation.php');
+	
 	class Header
 	{
 		private $cur_page;
@@ -23,78 +25,27 @@
 			
 			if( $_SESSION['active'] )
 			{
-				if( $_SESSION['roleid'] == 1 )
-				{
-					$tmpl->menu = array(
-										"display" => array(
-														"Order",
-														"Menu",
-														"OrderList",
-														"DBTEST",
-														"Item Upload",
-														"Create Users",
-														"Logout"
-														),
-										"link" => array(
-														"/order.php",
-														"/menu.php",
-														"/_demo/orderlist.php",
-														"/_demo/dbtest.php",
-														"/_demo/uploadForm.php",
-														"/login.php?action=register",
-														"/login.php?action=logout"
-														),
-										'icon' => array(
+				$tmpl->menu = Navigation::getByRole($_SESSION['roleid']);
+				array_push($tmpl->menu, new Navigation(
 														null,
-														'book',
-														null,
-														null,
-														null,
-														null,
-														'user'
-														)
-										);
-				}
-				else
-				{
-					$tmpl->menu = array(
-										"display" => array(
-														"Order",
-														"Menu",														
-														"Logout"
-														),
-										"link" => array(
-														"/order.php",
-														"/menu.php",
-														"/login.php?action=logout"
-														),
-										"icon" => array(
-														null,
-														'book',
-														"user"
-														)
-										);
-				}
+														"Logout",
+														"/login.php?action=logout",
+														'user',
+														4,
+														0
+														));
 			}
 			else
 			{
-				$tmpl->menu = array(
-										"display" => array(
-														"Order",
-														"Menu",														
-														"Login"
-														),
-										"link" => array(
-														"/order.php",
-														"/menu.php",
-														"/login.php"
-														),
-										"icon" => array(
+				$tmpl->menu = Navigation::getByRole(4);
+				array_push($tmpl->menu, new Navigation(
 														null,
-														'book',
-														"user"
-														)
-										);
+														"Login",
+														"/login.php",
+														'user',
+														4,
+														0
+														));
 			}
 			
 			if( $_SERVER['SCRIPT_NAME'] != '/login.php' && !isset($_SESSION['umbrella']['tableid']) )
@@ -115,7 +66,7 @@
 			
 			$css = $tmpl->build('header.css');
 			$html = $tmpl->build('header.html');
-			//$js = $tmpl->build('header.js');
+			$js = $tmpl->build('header.js');
 			
 			$content = array('html' => $html, 'css' => array('code' => $css, 'link' => 'header'), 'js' => $js);
 			return $content;

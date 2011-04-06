@@ -9,32 +9,36 @@
 	
 	<div id="headNav">
 		<?php
-			$display = $tmpl->menu['display'];
-			$links = $tmpl->menu['link'];
-			$icons = $tmpl->menu['icon'];
-			
-			$count = 0;
-			foreach( $display as $string )
+			if( $_SESSION['roleid'] < 3 )
 			{
-				if( $count == $tmpl->cur_page )
+				?>
+				<a href="#" id="hide-2" class="okay">Manager</a>
+				<?
+				if( $_SESSION['roleid'] < 2 )
 				{
-					$class = " current";
+				?>
+				<a href="#" id="hide-1" class="okay">Admin</a>
+				<?
 				}
-				else
+			}
+			
+			foreach( $tmpl->menu as $nav )
+			{
+				if( $nav->icon != null )
 				{
-					$class = "";
-				}
-				
-				if( isset($icons[$count]) && $icons[$count] != "" )
-				{
-					$span = "<span class=\"icon " . $icons[$count] . "\"></span>";
+					$span = "<span class=\"icon ".$nav->icon."\"></span>";
 				}
 				else
 				{
 					$span = "";
 				}
+				
+				if( $nav->display == "Order" && (!isset($_SESSION['orderid']) || $_SESSION['orderid'] < 1) )
+				{
+					continue;
+				}
 			?>
-			<a href="<?= $links[$count]; ?>" class="big button"><?= $span; ?><?= $string; ?></a>
+			<a href="<?= $nav->link; ?>" class="big button rid-<?= $nav->roleid; ?>"><?= $span; ?><?= $nav->display; ?></a>
 			<?
 			$count++;
 			}
