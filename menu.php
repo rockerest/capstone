@@ -5,6 +5,8 @@
 	require_once('Item.php');
 	require_once('Category.php');
 	
+	require_once('Breadcrumb.php');
+	
 	$page = new Page(0, "OrderUp - Menu");
 	$tmpl = new Template();
 	
@@ -14,6 +16,7 @@
 	if( $cat == -1 )
 	{
 		$tmpl->cats = Category::getTopLevel();
+		$tmp->categoryid = -1;
 		if( $tmpl->cats instanceof Category )
 		{
 			$tmpl->cats = array( $tmpl->cats );
@@ -48,6 +51,10 @@
 			$tmpl->message = "There are no items to display.";
 		}
 	}
+	
+	//set breadcrumb
+	$bc = new Breadcrumb('menu', $tmp->categoryid);
+	$tmpl->breadcrumb = $bc->path;
 	
 	$page->run();
 	

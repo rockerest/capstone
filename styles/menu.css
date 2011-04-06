@@ -1,3 +1,10 @@
+#breadcrumb{
+	border-bottom: .0625em solid #EEEEEE;
+	width: 62.5em;
+	padding-bottom: .5em;
+	left: -2em;
+}
+
 #button_container {
 	width: 48em;
 	margin: auto;

@@ -1,7 +1,7 @@
 <? if( $tmpl->code > -1 )
 {
 ?>
-<div class="message-box center w50 bump <?= $tmpl->css; ?>">
+<div class="message-box center w50 follow <?= $tmpl->css; ?>">
 	<?= $tmpl->message; ?>
 </div>
 <?
@@ -9,7 +9,11 @@
 else
 {
 ?>
-<div id="item">
+
+<div id="breadcrumb" class="follow">
+	<?= $tmpl->breadcrumb; ?>
+</div>
+<div id="item" class="clear">
 	<div id="title" class="message-box center clean">
 		<?= $tmpl->item->name; ?>
 	</div>
@@ -44,7 +48,7 @@ else
 				}
 				?>
 				<textarea name="message" class="bump follow">Special Comment</textarea>
-				<a href="#" class="big positive button"><span class="icon plus"></span>Add To Order $<?= $tmpl->item->price; ?></a>
+				<a href="#" class="big positive button"><span class="icon plus"></span>Add To Order: $<?= $tmpl->item->price; ?></a>
 			</form>
 		</div>
 	</div>

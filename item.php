@@ -5,6 +5,8 @@
 	require_once('Page.php');
 	require_once('Template.php');
 	
+	require_once('Breadcrumb.php');
+	
 	$page = new Page(1, "OrderUp - Item Review");
 	$tmpl = new Template();
 
@@ -18,6 +20,10 @@
 		$tmpl->code = -1;
 		$tmpl->message = "Should not display";
 		$tmpl->css = "info";
+		
+		//set breadcrumb
+		$bc = new Breadcrumb('item', $tmp->itemid);
+		$tmpl->breadcrumb = $bc->path;
 	}
 	else
 	{
@@ -25,7 +31,7 @@
 		$tmpl->message = "Could not find item.";
 		$tmpl->css = "error";
 	}
-
+	
 	$page->run();
 	
 	$html = $tmpl->build('item.html');

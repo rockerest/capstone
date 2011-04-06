@@ -1,13 +1,16 @@
 <? if( $tmpl->code > -1 )
 {
 ?>
-<div class="message-box center w50 bump <?= $tmpl->css; ?>">
+<div class="message-box center w50 follow <?= $tmpl->css; ?>">
 	<?= $tmpl->message; ?>
 </div>
 <?
 }
 ?>
 
+<div id="breadcrumb" class="follow">
+	<?= $tmpl->breadcrumb; ?>
+</div>
 <div id="button_container" class="clear">
 
 <?php
@@ -28,12 +31,6 @@
 			<div class="url(menu.php?cat=<?= $cat->categoryid; ?>) div_link category big_button"><span><?= $cat->name; ?></span></div>
 			<?
 		}
-	}
-	else
-	{
-		?>
-		<div class="url(menu.php?cat=<?= $tmpl->prev->categoryid; ?>) div_link category big_button"><span>Previous Selection (<?= $tmpl->prev->name; ?>)</span></div>
-		<?
 	}
 ?>
 </div>
