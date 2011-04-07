@@ -1,13 +1,8 @@
 #header{
 	height: 3.125em;
-	border-bottom: .0125em solid #D5DCE9;
-	padding: .3125em;
-	
-	background: #F1F1F1;
-	background: -moz-linear-gradient(top, #FFFFFF 0%, #E5ECF9 100%);
-	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#FFFFFF), color-stop(100%,#E5ECF9));
-	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#FFFFFF', endColorstr='#E5ECF9',GradientType=0 );
-	
+	margin-bottom:2.125em;
+	background-image:url('/images/header.png');
+	border-bottom:1px solid #333;
 	color: #555555;
 	line-height: 3em;
 }
@@ -16,7 +11,13 @@
 	float: left;
 	font-size: 3em;
 }
-
+#logo_pic
+{
+		background-image:url('/images/order_colored.png');
+		width:200px;
+		height:92px;
+		z-index:10000;
+}
 #searchBar{
 	float: left;
 	margin: .1em 1em auto auto;

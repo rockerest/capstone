@@ -1,5 +1,5 @@
 <div id="logo">
-	<a href="/">OrderUp</a>
+	<a href="/"><div id="logo_pic"></div></a>
 </div>
 
 <div id="headContent">
@@ -9,7 +9,7 @@
 	
 	<div id="headNav">
 		<?php
-			if( $_SESSION['roleid'] < 3 )
+			if($_SESSION['roleid'] && $_SESSION['roleid'] < 3 )
 			{
 				?>
 				<a href="#" id="hide-2" class="error">Manager</a>
