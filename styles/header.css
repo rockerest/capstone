@@ -1,10 +1,13 @@
 #header{
-	height: 3.125em;
-	margin-bottom:2.125em;
 	color: #555555;
+	
+	height: 3.125em;
 	line-height: 3em;
+	
+	margin-bottom: 2.125em;
 	border-bottom: .0625em solid #C5CAE8;
 	padding: .3125em;
+	
 	background: #F1F1F1;
 	background: -moz-linear-gradient(top, #FFFFFF 0%, #E5ECF9 100%);
 	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#FFFFFF), color-stop(100%,#E5ECF9));	
@@ -15,13 +18,28 @@
 	float: left;
 	font-size: 3em;
 }
+
 #logo_pic
 {
-		background-image:url('/images/order_colored.png');
-		width:200px;
-		height:92px;
-		z-index:10000;
+	background-image:url('/images/order_colored.png');
+	
+	height: 74px;
+    width: 152px;
+	left: 0.19em;
+    top: 0.22em;
+	
+	z-index:10000;
 }
+
+#transparent{
+	background-color: rgba(229, 236, 249, 0.75);
+    float: left;
+    height: 0.02em;
+    left: 0.25em;
+    top: 1.14em;
+    width: 2em;
+}
+
 #searchBar{
 	float: left;
 	margin: .1em 1em auto auto;
