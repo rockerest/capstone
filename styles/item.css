@@ -34,3 +34,47 @@
 	height: 22em;
 }
 
+#add #prep{
+	width: 2em;
+	text-align: right;
+}
+
+#add{
+	width: 100%;
+}
+
+#add fieldset{
+	float: left;
+	
+	margin-right: .5em;
+	margin-top: 1em;
+	padding-top: .5em;
+	width: 26.6em;
+}
+
+#add label{
+	margin-bottom: .1em;
+	display: inline-block;
+}
+
+#add input[type="text"], #add input[type="file"], #add textarea, #add a.y{
+	margin-left: 3.4em;
+}
+
+#add input[type="text"]{
+	width: 28em;
+}
+
+#add textarea{
+	width: 28.8em;
+}
+
+#add #add_char, #add #add_ing{
+	float: right;
+}
+
+#add #submit{
+	width: 100%;
+	float: left;
+	margin-top: 3em;
+}
