@@ -31,7 +31,7 @@
 	z-index:10000;
 }
 
-#transparent{
+#transparency{
 	background-color: rgba(229, 236, 249, 0.75);
     float: left;
     height: 0.02em;
