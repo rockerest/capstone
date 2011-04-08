@@ -3,40 +3,14 @@
 <table>
 <th>OrderId</th><th>Item Name</th><th>Table Number</th><th>User</th><th>Status</th><th>Time Submitted</th><th>Special Comment</th>
 <?php
-
-foreach($tmpl->active_order_items as $active_order_item)
+var_dump($tmpl->active_order_objects);
+foreach($tmpl->active_order_objects as $active_order_object)
 {
 ?>
 <tr>
-<td><?=$active_order_item->orderid?></td>
-<td><?=$active_order_item->item->name?></td>
-<td><?=$tmpl->active_order->table->tableid?></td>
-<td><?=$tmpl->active_order->user[0]->fname?></td>
-<td><?=$tmpl->active_order->status->status?></td>
-<td><?=$tmpl->active_order->time?></td>
-<td><?=$tmpl->active_order->specialComment?></td>
+<td><?=$active_order_object->orderid?></td>
 </tr>
 <?}?>
 </table>
 
-<h1>Past Orders</h1>
-<table>
-<th>OrderId</th><th>Item Name</th><th>Table Number</th><th>User</th><th>Status</th><th>Time Submitted</th><th>Special Comment</th>
-<?php
-foreach($tmpl->past_orders as $past_order_items)
-{
-	foreach($past_order_items->items as $past_order_item)
-	{
-	?>
-	<tr>
-	<td><?=$past_order_items->orderid?></td>
-	<td><?=$past_order_item->item->name?></td>
-	<td><?=$past_order_items->table->tableid?></td>
-	<td><?=$past_order_items->user[0]->fname?></td>
-	<td><?=$past_order_items->status->status?></td>
-	<td><?=$past_order_items->time?></td>
-	<td><?=$past_order_items->specialComment?></td>
-	</tr>
-<?}}?>
-</table>
 </div>

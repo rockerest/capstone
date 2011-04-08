@@ -75,3 +75,24 @@ a:hover{
 	height: 3em;
 	padding-top: 1em;
 }
+
+form {
+	text-align: center;
+}
+
+fieldset{
+	border: .0625em solid #5555AA;
+	padding: 1em;
+	padding-top: 0;
+	text-align: left;
+}
+
+fieldset legend{
+	margin: auto auto auto -.5em;
+	padding: .25em .5em;
+	background-color: #AAAAAA;
+	
+	-moz-border-radius: .5em;
+	-webkit-border-radius: .5em;
+	border-radius: .5em;
+}

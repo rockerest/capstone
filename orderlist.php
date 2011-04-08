@@ -9,27 +9,23 @@
 	$tmpl = new Template();
 	
 	$userid = $_SESSION['userid'];
+	$active_order_objects = array();
+	$inactive_order_objects = array();
 	
-	if(Order::getActiveByUser($userid))
+	//get all active orders
+	if(Order::getAllActive())
 	{
-		$active_order_ids = Order::getActiveByUser($userid);
-		$tmpl->active_order = Order::getById($active_order_ids['orderid']);
-		$tmpl->active_order_items = Order_Item::getByOrder($active_order_ids['orderid']);
+			$active_order_objects = Order::getAllActive();
 	}
 	
-	if(Order::getByUser($userid))
+	//get all inactive orders
+	if(Order::getAllInactive())
 	{
-		$past_order_ids = Order::getByUser($userid);
-		//var_dump($past_order_ids);
-		$past_order_objs = array();
-		foreach($past_order_ids as $past_order_obj)
-		{
-			array_push($past_order_objs, $past_order_obj);
-		}
-		$tmpl->past_orders = $past_order_objs;
-		//$tmpl->past_order_items = Order_Item::getByOrder($past_order_ids['orderid']);
+			$inactive_order_objects = Order::getAllInactive();
 	}
 	
+	$tmpl->active_order_objects = $active_order_objects;
+	$tmpl->inactive_order_objects = $inactive_order_objects;
 	$page->run();
 	
 	$html = $tmpl->build('orderlist.html');

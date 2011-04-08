@@ -7,12 +7,26 @@
 	
 	require_once('Breadcrumb.php');
 	
-	$page = new Page(1, "OrderUp - Item Review");
 	$tmpl = new Template();
 
 	$tmpl->itemid = isset($_GET['id']) ? $_GET['id'] : -1;
 	$tmpl->action = isset($_GET['action']) ? $_GET['action'] : null;
 	$tmp = Item::getByID($tmpl->itemid);
+	
+	switch( $tmpl->action )
+	{
+		case 'add':
+					$page = new Page(1, "OrderUp - Create New Item");
+					break;
+		case 'edit':
+					$page = new Page(1, "OrderUp - Edit Existing Item");
+					break;
+		case null:
+		default:
+					$page = new Page(1, "OrderUp - View Item");
+					break;
+		
+	}
 	
 	if( $tmp )
 	{
@@ -37,7 +51,7 @@
 	
 	$html = $tmpl->build('item.html');
 	$css = $tmpl->build('item.css');	
-	//$js = $tmpl->build('item.js');
+	$js = $tmpl->build('item.js');
 	
 	$appContent = array(
 						'html'	=>	$html,

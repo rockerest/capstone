@@ -34,6 +34,24 @@
 			return Order::wrap($orders);
 		}
 		
+		public static function getAllActive()
+		{
+			global $db;
+			$sql = "SELECT * FROM orders WHERE statusid!=4";
+			$values = array($userid);
+			$orders = $db->qwv($sql, $values);
+			return Order::wrap($orders);
+		}
+		
+		public static function getAllInactive()
+		{
+			global $db;
+			$sql = "SELECT * FROM orders WHERE statusid=4";
+			$values = array($userid);
+			$orders = $db->qwv($sql, $values);
+			return Order::wrap($orders);
+		}
+		
 		public static function getByUserFavorites($userid)
 		{
 			global $db;

@@ -1,37 +1,23 @@
-#login{
-	width: 28em;
-	margin: 1em auto auto auto;
-}
-
-#login input[type='text'], #login input[type='password']{
-	width: 28em;
-}
-
-form {
-	text-align: center;
+form{
 	width: 25em;
 }
 
-fieldset{
-	border: .0625em solid #5555AA;
-	padding: 1em;
-	padding-top: 0;
-	text-align: left;
+input[type='text'], input[type='password']{
+	width: 28em;
 }
 
-fieldset legend{
-	margin: auto auto auto -.5em;
-	padding: .25em .5em;
-	background-color: #AAAAAA;
-	
-	-moz-border-radius: .5em;
-	-webkit-border-radius: .5em;
-	border-radius: .5em;
+textarea{
+	width: 28.7em;
 }
 
-#login label{
+label{
 	margin: 1em auto auto auto;
 	display: inline-block;
+}
+
+#login{
+	width: 28em;
+	margin: 1em auto auto auto;
 }
 
 #submit_button{
