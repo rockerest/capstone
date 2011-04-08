@@ -1,0 +1,22 @@
+
+#footer_content
+{	
+	height:1em;
+	width:20em;
+	margin-left:auto;
+	margin-right:auto;
+	background: white;
+	padding: 10px;
+	border: .0625em solid #C5CAE8;
+	-moz-border-radius: .5em;
+	-webkit-border-radius: .5em;
+	border-radius: .5em;
+	color: #C5CAE8;
+}
+.footer_logo
+{
+	background-image:url('/images/footer_logo.png');
+	height: 1em;
+	width:1em;
+	float:left;
+}
