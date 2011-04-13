@@ -21,11 +21,11 @@
 			$res = $item->delete();
 			if( $res )
 			{
-				throw new RedirectBrowserException("../item.php?code=1");
+				throw new RedirectBrowserException("../item.php?code=10");
 			}
 			else
 			{
-				throw new RedirectBrowserException("../item.php?code=2&id=$id");
+				throw new RedirectBrowserException("../item.php?code=11&id=$id");
 			}
 		}
 	}

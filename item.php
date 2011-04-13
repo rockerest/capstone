@@ -51,15 +51,15 @@
 			$tmpl->message = "Could not find item.";
 			$tmpl->css = "error";
 			break;
-		case 1:
+		case 10:
 			$tmpl->message = "Deleting item succeeded.";
 			$tmpl->css = "okay";
 			break;
-		case 2:
+		case 11:
 			$tmpl->message = "Deleting item failed.";
 			$tmpl->css = "error";
 			break;
-		case 3:
+		case 13:
 			$tmpl->message = "Adding item succeeded.";
 			$tmpl->css = "okay";
 			break;

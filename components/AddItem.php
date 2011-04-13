@@ -112,11 +112,11 @@
 		
 		$data['id'] = $newItem->itemid;
 		
-		kick(2, $data, 3);
+		kick(2, $data, 13);
 	}
 	else
 	{
-		kick(1, $data, 9);
+		kick(1, $data, 14);
 	}
 	
 	function kick( $to, $data, $code )
