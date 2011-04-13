@@ -11,7 +11,8 @@
 
 	$tmpl->itemid = isset($_GET['id']) ? $_GET['id'] : -1;
 	$tmpl->action = isset($_GET['action']) ? $_GET['action'] : null;
-	$tmp = Item::getByID($tmpl->itemid);
+	$tmpl->code = isset($_GET['code']) ? $_GET['code'] : -1;
+	$tmpl->item = $tmp = Item::getByID($tmpl->itemid);
 	
 	switch( $tmpl->action )
 	{
@@ -21,6 +22,9 @@
 		case 'edit':
 					$page = new Page(1, "OrderUp - Edit Existing Item");
 					break;
+		case 'delete':
+					$page = new Page(1, "OrderUp - Delete Existing Item");
+					break;
 		case null:
 		default:
 					$page = new Page(1, "OrderUp - View Item");
@@ -28,23 +32,39 @@
 		
 	}
 	
-	if( $tmp )
+	if( !$tmpl->item )
 	{
-		$tmpl->item = $tmp;
-		
-		$tmpl->code = -1;
-		$tmpl->message = "Should not display";
-		$tmpl->css = "info";
-		
-		//set breadcrumb
-		$bc = new Breadcrumb('item', $tmp->itemid);
-		$tmpl->breadcrumb = $bc->path;
+		if( $tmpl->code == -1 && $tmpl->action == null )
+		{
+			$tmpl->code = 0;
+		}
+		unset($tmpl->item);
 	}
 	else
 	{
-		$tmpl->code = 0;
-		$tmpl->message = "Could not find item.";
-		$tmpl->css = "error";
+		$tmpl->breadcrumb = new Breadcrumb('item', $tmpl->item->itemid);
+	}
+	
+	switch( $tmpl->code )
+	{
+		case 0:
+			$tmpl->message = "Could not find item.";
+			$tmpl->css = "error";
+			break;
+		case 1:
+			$tmpl->message = "Deleting item succeeded.";
+			$tmpl->css = "okay";
+			break;
+		case 2:
+			$tmpl->message = "Deleting item failed.";
+			$tmpl->css = "error";
+			break;
+		case 3:
+			$tmpl->message = "Adding item succeeded.";
+			$tmpl->css = "okay";
+			break;
+		default:
+			break;
 	}
 	
 	$page->run();

@@ -60,10 +60,20 @@
 		public static function getByName($ingredient)
 		{
 			global $db;
-			$sql = "SELECT FROM ingredients WHERE LOWER(name)=?";
+			$sql = "SELECT * FROM ingredients WHERE LOWER(name)=?";
 			$values = array(strtolower($ingredient));
 			$ings = $db->qwv($sql, $values);
 			return Ingredient::wrap($ings);
+		}
+		
+		public static function getBySearch($str)
+		{
+			global $db;
+			$sql = "SELECT * FROM ingredients WHERE name LIKE ?";
+			$values = array("%" . $str . "%");
+			$res = $db->qwv($sql, $values);
+			
+			return Ingredient::wrap($res);
 		}
 		
 		public static function add($name, $isVeg, $isAll, $side)
@@ -168,6 +178,36 @@
 					return false;
 				}
 			}
+		}
+		
+		public function delete()
+		{
+			global $db;
+			$sql = "DELETE FROM ingredients WHERE ingredientid=?";
+			$values = array($this->ingredientid);
+			$db->qwv($sql, $values);
+			
+			return $db->stat();
+		}
+		
+		public function deleteLink($itemid)
+		{
+			global $db;
+			$sql = "DELETE FROM items_have_ingredients WHERE ingredientid=? AND itemid=?";
+			$values = array($this->ingredientid, $itemid);
+			$db->qwv($sql, $values);
+			
+			return $db->stat();
+		}
+		
+		public function deleteRec($itemid)
+		{
+			global $db;
+			$sql = "DELETE FROM items_have_recommended_ingredients WHERE ingredientid=? AND itemid=?";
+			$values = array($this->ingredientid, $itemid);
+			$db->qwv($sql, $values);
+			
+			return $db->stat();
 		}
 	}
 ?>

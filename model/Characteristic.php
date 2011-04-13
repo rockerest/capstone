@@ -35,6 +35,16 @@
 			return Characteristic::wrap($characteristics);
 		}
 		
+		public static function getBySearch($str)
+		{
+			global $db;
+			$sql = "SELECT * FROM characteristics WHERE characteristic LIKE ?";
+			$values = array("%" . $str . "%");
+			$res = $db->qwv($sql, $values);
+			
+			return Characteristic::wrap($res);
+		}
+		
 		public static function getByCharacteristic($string)
 		{
 			global $db;
@@ -131,6 +141,16 @@
 					return false;
 				}
 			}
+		}
+		
+		public function deleteLink($itemid)
+		{
+			global $db;
+			$sql = "DELETE FROM items_have_characteristics WHERE characteristicid=? AND itemid=?";
+			$values = array($this->characteristicid, $itemid);
+			$db->qwv($sql, $values);
+			
+			return $db->stat();
 		}
 	}
 ?>

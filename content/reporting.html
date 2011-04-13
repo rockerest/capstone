@@ -1,0 +1,38 @@
+<?php
+if(isset($_GET['report']))
+{
+?>
+<span id="report_title">Item Frequency Report</span>
+<div id="report_body">
+	<p>Choose Items to the left and click 'Update' to view how frequently an item is ordered.</p>
+	<div id="report_opts">	
+		<a class="button" id="add_item_selector" href="#"><span class="icon plus"></span>Add Item</a>
+		<form action="reporting.php" method="post" id="report_form" name="report_form">
+			<?php
+			for($i=0; $i<3; $i++)
+			{
+				print "<select id=\"item".$i."\" class=\"item_selects\">";
+				foreach($tmpl->items as $item)
+				{
+					?>
+					<option value="<?=$tmpl->item_counts[$item->itemid]?>" id="<?=$item->name?>"><?=$item->name?></option>
+					<?
+				}
+				print "</select><br/>";
+			}
+			?>
+		</form>
+		<a class="button" id="update_form" href="#"><span class="icon rightarrow"></span>Update</a>
+	</div>
+	<div id="placeholder"></div>
+</div>
+<?
+}
+else
+{
+?>
+<p>Choose a report:</p>
+<ul>
+<li><a href="?report=itemfrequency">Item Frequency Report</a></li>
+</ul>
+<?}?>
