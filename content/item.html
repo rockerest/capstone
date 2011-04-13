@@ -1,63 +1,19 @@
-<? if( $tmpl->code > -1 )
-{
-	if( $tmpl->action == null )
-	{
-	?>
-	<div class="message-box center w50 follow <?= $tmpl->css; ?>">
-		<?= $tmpl->message; ?>
-	</div>
-	<?
-	}
-	elseif( $tmpl->action == 'add' )
-	{
-	?>
-		<form id="add" action="components/AddItem.php" method="post" enctype="multipart/form-data" class="center clear">
-			<fieldset>
-				<legend>Basic Information</legend>
-				<label for="name">Name</label><br />
-				<input type="text" name="name" id="name"/><br />
-				<label for="desc">Description</label><br />
-				<textarea name="desc" id="desc"></textarea><br />
-				<label for="cat">Category</label><br />
-				<input type="text" name="cat" id="cat"/><br />
-				<label for="image">Image</label><br />
-				<input type="file" name="image" id="image"/><br />
-				<label for="prep">Prep Time</label><br />
-				<input type="text" name="prep" id="prep"/>&nbsp;minutes.<br />
-				<label for="lvls">Has cook levels?</label><br />
-				<div class="hide">
-					<input type="radio" name="lvl" id="lvl_yes" value="1" />
-					<input type="radio" name="lvl" id="lvl_no" value="0" />
-				</div>
-				<a href="#" class="left positive button y"><span class="icon check"></span>Yes</a>
-				<a href="#" class="right negative button n"><span class="cross icon"></span>&nbsp;No</a>
-			</fieldset>
-			<fieldset>
-				<legend>Ingredients</legend>
-				<label>Name</label><br />
-				<input type="text" name="ing[]" />
-				<a href="#" id="add_ing" class="button bump"><span class="icon plus"></span>Add Ingredient Row</a>
-			</fieldset>
-			<fieldset class="clear">
-				<legend>Characteristics</legend>
-				<label>Characteristic</label><br />
-				<input type="text" name="char[]" />
-				<a href="#" id="add_char" class="button bump"><span class="icon plus"></span>Add Characteristic Row</a>
-			</fieldset>
-			<div id="submit">
-				<button type="submit" class="big primary button center"><span class="plus icon"></span>Create New Item</button>
-			</div>
-		</form>
-	<?
-	}
-}
-else
+<?
+if( $tmpl->code > -1 )
 {
 ?>
+<div class="message-box center w50 follow <?= $tmpl->css; ?>">
+	<?= $tmpl->message; ?>
+</div>
+<?
+}
 
+if( $tmpl->item && $tmpl->action != 'delete' && $tmpl->action != 'edit' )
+{
+?>
 <div id="breadcrumb" class="follow">
 	<?
-		print $tmpl->breadcrumb;
+		print $tmpl->breadcrumb->path;
 		if( $_SESSION['active'] && $_SESSION['roleid'] < 3 )
 		{
 		?>
@@ -67,48 +23,122 @@ else
 		}
 	?>
 </div>
-<div id="item" class="clear">
-	<div id="title" class="message-box center clean">
-		<?= $tmpl->item->name; ?>
-	</div>
-	<div id="container">
-		<div id="info" class="w70">
-			<div id="pic">
-				<img src="images/<?= $tmpl->item->image; ?>" />
+<?
+}
+
+if( $tmpl->action == 'add' )
+{
+?>
+	<form id="add" action="components/AddItem.php" method="post" enctype="multipart/form-data" class="center clear">
+		<fieldset>
+			<legend>Basic Information</legend>
+			<label for="name">Name</label>
+			<br />
+			<input type="text" id="name" name="name" />
+			<br />
+			<label for="desc">Description</label>
+			<br />
+			<textarea name="desc" id="desc"></textarea>
+			<br />
+			<label for="cat">Category</label>
+			<br />
+			<input type="text" name="cat" id="cat"/>
+			<br />
+			<label for="image">Image</label>
+			<br />
+			<input type="file" name="image" id="image"/>
+			<br />
+			<label for="prep">Prep Time</label>
+			<br />
+			<input type="text" name="prep" id="prep"/>&nbsp;minutes.
+			<br />
+			<label for="lvls">Has cook levels?</label>
+			<br />
+			<div class="hide">
+				<input type="radio" name="lvl" id="lvl_yes" value="1" />
+				<input type="radio" name="lvl" id="lvl_no" value="0" />
 			</div>
-			<div id="desc" class="message-box info w75 center bump">
-				<?= $tmpl->item->description; ?>
-			</div>
+			<a href="#" class="left positive button y"><span class="icon check"></span>Yes</a>
+			<a href="#" class="right negative button n"><span class="cross icon"></span>&nbsp;No</a>
+			<br />
+			<label for="price">Menu Price</label>
+			<br />
+			<input type="text" name="price" id="price"/>
+			<br />
+		</fieldset>
+		<fieldset>
+			<legend>Ingredients</legend>
+			<label>Name</label><br />
+			<input type="text" name="ing" id="ings" />
+		</fieldset>
+		<fieldset class="clear">
+			<legend>Characteristics</legend>
+			<label>Characteristic</label><br />
+			<input type="text" name="char" id="chars" />
+		</fieldset>
+		<div id="submit">
+			<button type="submit" class="big primary button center"><span class="plus icon"></span>Create New Item</button>
 		</div>
-		
-		<div id="control" class="w30">
-			<form action="components/SubmitOrder.php?item=<?= $tmpl->item->itemid ?>" method="post">
-				<?
-				// don't show the ingredient list if the item IS the ingredient
-				if( is_array($tmpl->item->ingredients) )
-				{
-					?>
-					<div id="checkboxes">
+	</form>
+<?
+}
+elseif( $tmpl->action == 'delete' )
+{
+?>
+	<form id="delete" action="components/DeleteItem.php?id=<?= $tmpl->itemid; ?>" method="post">
+		<h2>Are you quite sure you want to delete this item?</h2>
+		<h3 class="bump">This action is not reversible.</h3>
+		<a href="item.php?id=<?= $tmpl->itemid; ?>" class="big primary positive left button bump" id="no"><span class="cross icon"></span>No, go back!</a>
+		<button type="submit" class="negative right button bump" id="yes"><span class="check icon"></span>Yes, get rid of it!</a>
+	</form>
+<?
+}
+else
+{
+	if( $tmpl->item )
+	{
+	?>
+	<div id="item" class="clear">
+		<div id="title" class="message-box center clean">
+			<?= $tmpl->item->name; ?>
+		</div>
+		<div id="container">
+			<div id="info" class="w70">
+				<div id="pic">
+					<img src="images/<?= $tmpl->item->image; ?>" />
+				</div>
+				<div id="desc" class="message-box info w75 center bump">
+					<?= $tmpl->item->description; ?>
+				</div>
+			</div>
+			
+			<div id="control" class="w30">
+				<form action="components/SubmitOrder.php?item=<?= $tmpl->item->itemid ?>" method="post">
 					<?
-					foreach($tmpl->item->ingredients as $ing)			
-					{				
-					?>			
-						<label><input type="checkbox" value="<?= $ing->ingredientid; ?>" name="ingredients[]" checked="checked" /><?= $ing->name; ?></label><br />				
-					<?
+					// don't show the ingredient list if the item IS the ingredient
+					if( is_array($tmpl->item->ingredients) )
+					{
+						?>
+						<div id="checkboxes">
+						<?
+						foreach($tmpl->item->ingredients as $ing)			
+						{				
+						?>			
+							<label><input type="checkbox" value="<?= $ing->ingredientid; ?>" name="ingredients[]" checked="checked" /><?= $ing->name; ?></label><br />				
+						<?
+						}
+						?>
+						</div>
+						<?
 					}
 					?>
-					</div>
-					<?
-				}
-				?>
-				<textarea name="message" class="bump follow">Special Comment</textarea>
-				<a href="#" class="big positive button"><span class="icon plus"></span>Add To Order: $<?= $tmpl->item->price; ?></a>
-			</form>
+					<textarea name="message" class="bump follow">Special Comment</textarea>
+					<a href="#" class="big positive button"><span class="icon plus"></span>Add To Order: $<?= $tmpl->item->price; ?></a>
+				</form>
+			</div>
 		</div>
 	</div>
-</div>
-
-
-<?
+	<?
+	}
 }
 ?>

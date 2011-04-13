@@ -34,47 +34,57 @@
 	height: 22em;
 }
 
-#add #prep{
-	width: 2em;
-	text-align: right;
-}
+/* add item form */
+	#add{
+		width: 100%;
+	}
 
-#add{
-	width: 100%;
-}
+	#add fieldset{
+		float: left;
+		
+		margin-right: .5em;
+		margin-top: 1em;
+		padding-top: .5em;
+		width: 26.6em;
+	}
 
-#add fieldset{
-	float: left;
+	#add label{
+		margin-bottom: .1em;
+		display: inline-block;
+	}
+
+	#add input[type="text"], #add input[type="file"], #add textarea, #add a.y{
+		margin-left: 3.4em;
+		margin-bottom: 1em;
+	}
 	
-	margin-right: .5em;
-	margin-top: 1em;
-	padding-top: .5em;
-	width: 26.6em;
-}
+	/* prep & price fields */
+	#add #prep{
+		width: 2em;
+		text-align: right;
+	}
+	
+	#add #price{
+		width: 4em;
+		text-align: right;
+	}
+	/* end prep & price fields */
 
-#add label{
-	margin-bottom: .1em;
-	display: inline-block;
-}
+	#add input[type="text"]{
+		width: 28em;
+	}
 
-#add input[type="text"], #add input[type="file"], #add textarea, #add a.y{
-	margin-left: 3.4em;
-}
+	#add textarea{
+		width: 28.8em;
+	}
 
-#add input[type="text"]{
-	width: 28em;
-}
+	#add #submit{
+		width: 100%;
+		float: left;
+		margin-top: 3em;
+	}
+/* ------------- */
 
-#add textarea{
-	width: 28.8em;
-}
+/* delete item form */
 
-#add #add_char, #add #add_ing{
-	float: right;
-}
-
-#add #submit{
-	width: 100%;
-	float: left;
-	margin-top: 3em;
-}
+/* ---------------- */
