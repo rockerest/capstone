@@ -37,7 +37,7 @@
 			$values = array($id);
 			$order_items = $db->qwv($order_itemSQL, $values);
 			
-			return count($order_items);
+			return intval($order_items);
 		}
 		
 		public static function wrap($ois)

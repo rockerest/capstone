@@ -29,7 +29,7 @@ $( '#add_item_selector' ).click(function(){
 		{
 			?>
 				option = document.createElement('option');
-				option.value = "<?=$item->itemid?>";
+				option.value = "<?=$tmpl->item_counts[$item->itemid]?>";
 				option.id = "<?=$item->name?>";
 				option.innerHTML = "<?=$item->name?>";
 				sel.options.add(option);
