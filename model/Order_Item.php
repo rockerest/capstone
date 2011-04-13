@@ -28,6 +28,18 @@
 			return Order_Item::wrap($order_items);
 		}
 		
+		//for reporting purposes
+		public static function getOrderCount($id)
+		{
+			global $db;
+			//get order items from database
+			$order_itemSQL = "SELECT * FROM order_items WHERE itemid=?";
+			$values = array($id);
+			$order_items = $db->qwv($order_itemSQL, $values);
+			
+			return count($order_items);
+		}
+		
 		public static function wrap($ois)
 		{
 			$oiObs = array();
