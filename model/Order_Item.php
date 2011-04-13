@@ -32,12 +32,11 @@
 		public static function getOrderCount($id)
 		{
 			global $db;
-			//get order items from database
-			$order_itemSQL = "SELECT * FROM order_items WHERE itemid=?";
+			$order_itemSQL = "SELECT COUNT(*) as 'num' FROM order_items WHERE itemid=?";
 			$values = array($id);
 			$order_items = $db->qwv($order_itemSQL, $values);
 			
-			return intval($order_items);
+			return intval($order_items[0]['num']);
 		}
 		
 		public static function wrap($ois)

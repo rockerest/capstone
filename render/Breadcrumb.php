@@ -65,6 +65,15 @@
 					$this->path = '<a href="menu.php" class="button"><span class="icon book"></span>Menu</a>';
 				}
 			}
+			elseif( $type == 'report' )
+			{
+				$report_name = $id == 0 ? 'Item Frequency' : 'Another report??';
+				$this->path = '<a href="reporting.php" class="button"><span class="icon book"></span>Reports</a>';
+				if($id != null)
+				{
+					$this->path .= '<a href="reporting.php?report='.$report_name.'" class="button"><span class="icon clock"></span>'.$report_name.'</a>';
+				}
+			}
 		}
 		
 		public function __get($name)

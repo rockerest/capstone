@@ -24,5 +24,16 @@
 #update_form, #add_item_selector
 {
 	margin:10px 20px 10px auto;
-	
+}
+#breadcrumb
+{
+	border-bottom: .0625em solid #EEEEEE;
+	width: 62.5em;
+	padding-bottom: .5em;
+	left: -2em;
+}
+.item 
+{
+	margin: 1em;
+	float: left;
 }

@@ -1,28 +1,43 @@
 <?php
-if(isset($_GET['report']))
+if( !$_SESSION['active'] || $_SESSION['roleid'] > 2 )
+{
+	?>
+	<div class="error">
+		You must be logged in as an administrator to do this.
+	</div>
+	<?
+}
+else
 {
 ?>
-<span id="report_title">Item Frequency Report</span>
+<div id="breadcrumb" class="follow">
+<?=$tmpl->breadcrumb?>
+</div>
+<?
+if(isset($_GET['report']) && $_GET['report']==0)
+{
+?>
 <div id="report_body">
-	<p>Choose Items to the left and click 'Update' to view how frequently an item is ordered.</p>
 	<div id="report_opts">	
-		<a class="button" id="add_item_selector" href="#"><span class="icon plus"></span>Add Item</a>
+
 		<form action="reporting.php" method="post" id="report_form" name="report_form">
 			<?php
 			for($i=0; $i<3; $i++)
 			{
-				print "<select id=\"item".$i."\" class=\"item_selects\">";
+				$selected_index = 0;
+				print "<select class=\"item_selects\">";
 				foreach($tmpl->items as $item)
 				{
 					?>
-					<option value="<?=$tmpl->item_counts[$item->itemid]?>" id="<?=$item->name?>"><?=$item->name?></option>
+					<option value="<?=$tmpl->item_counts[$item->itemid]?>" id="<?=$item->name?>" <?=$selected_index==$i?'selected':''?>><?=$item->name?></option>
 					<?
+					$selected_index++;
 				}
-				print "</select><br/>";
+				print "</select>";
 			}
 			?>
 		</form>
-		<a class="button" id="update_form" href="#"><span class="icon rightarrow"></span>Update</a>
+		<a class="button" id="add_item_selector" href="#"><span class="icon plus"></span>Add Item</a>
 	</div>
 	<div id="placeholder"></div>
 </div>
@@ -31,8 +46,5 @@ if(isset($_GET['report']))
 else
 {
 ?>
-<p>Choose a report:</p>
-<ul>
-<li><a href="?report=itemfrequency">Item Frequency Report</a></li>
-</ul>
-<?}?>
+<div class="url(reporting.php?report=0) div_link item big_button"><span>Item Frequency</span></div>
+<?}}?>
