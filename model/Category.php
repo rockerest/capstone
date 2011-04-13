@@ -13,6 +13,26 @@
 			return Category::wrap($cat);
 		}
 		
+		public static function getByName($name)
+		{
+			global $db;
+			$sql = "SELECT * FROM categories WHERE LOWER(name)=?";
+			$values = array(strtolower($name));
+			$res = $db->qwv($sql, $values);
+			
+			return Category::wrap($res);
+		}
+		
+		public static function getBySearch($str)
+		{
+			global $db;
+			$sql = "SELECT * FROM categories WHERE name LIKE ?";
+			$values = array("%" . $str . "%");
+			$res = $db->qwv($sql, $values);
+			
+			return Category::wrap($res);
+		}
+		
 		public static function getByNumber($num)
 		{
 			global $db;

@@ -29,6 +29,16 @@
 			return Item::wrap($items);
 		}
 		
+		public static function getBySearch($str)
+		{
+			global $db;
+			$sql = "SELECT * FROM items WHERE name LIKE ?";
+			$values = array("%" . $str . "%");
+			$res = $db->qwv($sql, $values);
+			
+			return Item::wrap($res);
+		}
+		
 		public static function getByCategory($category)
 		{
 			global $db;
@@ -134,11 +144,11 @@
 			{
 				if( $type instanceof Characteristic )
 				{
-					return addChar($type->characteristicid);
+					return $this->addChar($type->characteristicid);
 				}
 				elseif( $type instanceof Ingredient )
 				{
-					return addIng($type->ingredientid);
+					return $this->addIng($type->ingredientid);
 				}
 				else
 				{
@@ -149,11 +159,11 @@
 			{
 				if( $id instanceof Characteristic )
 				{
-					return addChar( $id->characteristicid );
+					return $this->addChar( $id->characteristicid );
 				}
 				elseif( is_integer($id) )
 				{
-					return addChar( $id );
+					return $this->addChar( $id );
 				}
 				else
 				{
@@ -164,11 +174,11 @@
 			{
 				if( $id instanceof Ingredient )
 				{
-					return addIng( $id->ingredientid );
+					return $this->addIng( $id->ingredientid );
 				}
 				elseif( is_integer($id) )
 				{
-					return addIng( $id );
+					return $this->addIng( $id );
 				}
 				else
 				{
@@ -179,11 +189,11 @@
 			{
 				if( $id instanceof Ingredient )
 				{
-					return addRec( $id->ingredientid );
+					return $this->addRec( $id->ingredientid );
 				}
 				elseif( is_integer($id) )
 				{
-					return addRec( $id );
+					return $this->addRec( $id );
 				}
 				else
 				{
@@ -202,8 +212,8 @@
 			if( $this->itemid == null )
 			{
 				//if the item object is new and needs to be inserted
-				$sql = "INSERT INTO items (name, description, image, price, prepTime, hasCookLevels) VALUES (?, ?, ?, ?, ?, ?)";
-				$values = array( $this->name, $this->description, $this->image, $this->price, $this->prepTime, $this->hasCookLevels );
+				$sql = "INSERT INTO items (name, categoryid, description, image, price, prepTime, hasCookLevels) VALUES (?, ?, ?, ?, ?, ?, ?)";
+				$values = array( $this->name, $this->categoryid, $this->description, $this->image, $this->price, $this->prepTime, $this->hasCookLevels );
 				$db->qwv($sql, $values);
 				
 				if( $db->stat() )
@@ -220,8 +230,8 @@
 			else
 			{
 				//if the object exists and is updated
-				$sql = "UPDATE items SET name=?, description=?, image=?, price=?, prepTime=?, hasCookLevels=? WHERE itemid=?";
-				$values = array( $this->name, $this->description, $this->image, $this->price, $this->prepTime, $this->hasCookLevels, $this->itemid);
+				$sql = "UPDATE items SET name=?, categoryid=?, description=?, image=?, price=?, prepTime=?, hasCookLevels=? WHERE itemid=?";
+				$values = array( $this->name, $this->categoryid, $this->description, $this->image, $this->price, $this->prepTime, $this->hasCookLevels, $this->itemid);
 				$db->qwv($sql, $values);
 				
 				if( $db->stat() )
@@ -235,8 +245,38 @@
 			}
 		}
 		
+		public function delete()
+		{
+			global $db;
+			
+			$chars = is_array($this->characteristics) ? $this->characteristics : is_bool($this->characteristics) ? array() : array($this->characteristics);
+			$recs = is_array($this->recommendations) ? $this->recommendations : is_bool($this->recommendations) ? array() : array($this->recommendations);
+			$ings = is_array($this->ingredients) ? $this->ingredients : is_bool($this->ingredients) ? array() : array($this->ingredients);
+			foreach( $chars as $char )
+			{
+				$char->deleteLink($this->itemid);
+			}
+			
+			foreach( $recs as $rec )
+			{
+				$rec->deleteRec($this->itemid);
+			}
+			
+			foreach( $ings as $ing )
+			{
+				$ing->deleteLink($this->itemid);
+			}
+			
+			$sql = "DELETE FROM items WHERE itemid=?";
+			$values = array($this->itemid);
+			$db->qwv($sql, $values);
+			
+			return $db->stat();
+		}
+		
 		private function addChar($id)
 		{
+			global $db;
 			$sql = "INSERT INTO items_have_characteristics (itemid, characteristicid) VALUES (?,?)";
 			$values = array($this->itemid, $id);
 			$db->qwv($sql, $values);
@@ -246,6 +286,7 @@
 		
 		private function addIng($id)
 		{
+			global $db;
 			$sql = "INSERT INTO items_have_ingredients (itemid, ingredientid) VALUES (?,?)";
 			$values = array($this->itemid, $id);
 			$db->qwv($sql, $values);
@@ -255,6 +296,7 @@
 		
 		private function addRec($id)
 		{
+			global $db;
 			$sql = "INSERT INTO items_have_recommendations (itemid, recommendationid) VALUES (?,?)";
 			$values = array($this->itemid, $id);
 			$db->qwv($sql, $values);
