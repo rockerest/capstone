@@ -249,9 +249,10 @@
 		{
 			global $db;
 			
-			$chars = is_array($this->characteristics) ? $this->characteristics : is_bool($this->characteristics) ? array() : array($this->characteristics);
-			$recs = is_array($this->recommendations) ? $this->recommendations : is_bool($this->recommendations) ? array() : array($this->recommendations);
-			$ings = is_array($this->ingredients) ? $this->ingredients : is_bool($this->ingredients) ? array() : array($this->ingredients);
+			$chars = is_array($this->characteristics) ? $this->characteristics : (is_bool($this->characteristics) ? array() : array($this->characteristics));
+			$recs = is_array($this->recommendations) ? $this->recommendations : (is_bool($this->recommendations) ? array() : array($this->recommendations));
+			$ings = is_array($this->ingredients) ? $this->ingredients : (is_bool($this->ingredients) ? array() : array($this->ingredients));
+			
 			foreach( $chars as $char )
 			{
 				$char->deleteLink($this->itemid);
