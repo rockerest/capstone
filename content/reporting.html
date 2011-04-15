@@ -1,0 +1,50 @@
+<?php
+if( !$_SESSION['active'] || $_SESSION['roleid'] > 2 )
+{
+	?>
+	<div class="error">
+		You must be logged in as an administrator to do this.
+	</div>
+	<?
+}
+else
+{
+?>
+<div id="breadcrumb" class="follow">
+<?=$tmpl->breadcrumb?>
+</div>
+<?
+if(isset($_GET['report']) && $_GET['report']==0)
+{
+?>
+<div id="report_body">
+	<div id="report_opts">	
+
+		<form action="reporting.php" method="post" id="report_form" name="report_form">
+			<?php
+			for($i=0; $i<3; $i++)
+			{
+				$selected_index = 0;
+				print "<select class=\"item_selects\">";
+				foreach($tmpl->items as $item)
+				{
+					?>
+					<option value="<?=$tmpl->item_counts[$item->itemid]?>" id="<?=$item->name?>" <?=$selected_index==$i?'selected':''?>><?=$item->name?></option>
+					<?
+					$selected_index++;
+				}
+				print "</select>";
+			}
+			?>
+		</form>
+		<a class="button" id="add_item_selector" href="#"><span class="icon plus"></span>Add Item</a>
+	</div>
+	<div id="placeholder"></div>
+</div>
+<?
+}
+else
+{
+?>
+<div class="url(reporting.php?report=0) div_link item big_button"><span>Item Frequency</span></div>
+<?}}?>

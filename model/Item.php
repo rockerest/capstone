@@ -20,6 +20,18 @@
 			return Item::wrap($item);
 		}
 		
+		//for reporting purposes
+		public static function getAll()
+		{
+			global $db;
+			//get raw item stuff (items table only)
+			$itemSQL = "SELECT * FROM items";
+			$values = array();
+			$item = $db->qwv($itemSQL, $values);
+			
+			return Item::wrap($item);
+		}
+		
 		public static function getByName($name)
 		{
 			global $db;

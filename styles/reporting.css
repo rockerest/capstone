@@ -1,0 +1,39 @@
+#placeholder
+{
+	float:left;
+	width:600px;
+	height:300px;
+}
+#report_title
+{
+	text-align:center;
+	font-size:3em;
+}
+#report_opts
+{
+	float:left;
+	width:150px;
+	margin-right:15px;
+	text-align:right;
+}
+#report_body
+{
+	width:765px;
+	margin: 25px auto auto auto;
+}
+#update_form, #add_item_selector
+{
+	margin:10px 20px 10px auto;
+}
+#breadcrumb
+{
+	border-bottom: .0625em solid #EEEEEE;
+	width: 62.5em;
+	padding-bottom: .5em;
+	left: -2em;
+}
+.item 
+{
+	margin: 1em;
+	float: left;
+}

@@ -3,14 +3,41 @@
 <table>
 <th>OrderId</th><th>Item Name</th><th>Table Number</th><th>User</th><th>Status</th><th>Time Submitted</th><th>Special Comment</th>
 <?php
-var_dump($tmpl->active_order_objects);
+if(!is_array($tmpl->active_order_items))
+{
+	//single order in system
+	if(!is_array($tmpl->active_items))
+	{
+		//single item on order
+		print "<tr><td>";
+		print $tmpl->active_order_items->orderid;
+		print "</td><td>";
+		print $tmpl->active_items->name;
+		print "</td></tr>";
+	}
+	else
+	{
+		//deal with array of order items
+		foreach($tmpl->active_items as $active_item)
+		{
+			print "<tr><td>";
+			print $tmpl->active_order_items->orderid;
+			print "</td><td>";
+			print $active_item->name;
+			print "</td></tr>";
+		}
+	}
+}
+else
+{
+//multiple orders
 foreach($tmpl->active_order_objects as $active_order_object)
 {
 ?>
 <tr>
 <td><?=$active_order_object->orderid?></td>
 </tr>
-<?}?>
+<?}}?>
 </table>
 
 </div>

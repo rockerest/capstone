@@ -12,6 +12,7 @@ require_once('../backbone/capstone.db');
 $d = new Database($user, $pass, $dbname, $host, 'mysql');
 $total = 0;
 
+
 $q = "SELECT * FROM items";
 		$menu_items = $d->q($q);
 		foreach($menu_items as $menu_item)
