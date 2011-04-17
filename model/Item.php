@@ -280,6 +280,9 @@
 				$ing->deleteLink($this->itemid);
 			}
 			
+			//delete image
+			unlink($this->image);
+			
 			$sql = "DELETE FROM items WHERE itemid=?";
 			$values = array($this->itemid);
 			$db->qwv($sql, $values);

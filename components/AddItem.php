@@ -44,7 +44,7 @@
 	}
 	
 	//check for existing name
-	$item = Item::getByName($date['name']);
+	$item = Item::getByName($data['name']);
 	if( $item )
 	{
 		kick(1, $data, 9);
@@ -67,8 +67,11 @@
 	
 	if( $data['img'] == '' || $data['img'] == null )
 	{
-		//only kick for image if it's not supported.
-		//kick(1, $data, 3);
+		$type = $_FILES['image']['type'] );
+		if( $type != 'image/png' && $type != 'image/gif' && $type != 'image/jpeg' )
+		{
+			kick(1, $data, 3);
+		}	
 	}
 	
 	if( $data['prep'] == '' || $data['prep'] == null || !is_numeric($data['prep']) )
@@ -96,8 +99,54 @@
 		kick(1, $data, 8);
 	}
 	
-	//if it's all okay data
-	$newItem = Item::add($data['name'], intval($data['cat'][0]), $data['desc'], $data['img'], floatval($data['price']), intval($data['prep']), intval($data['lvl']));
+	//if it's all okay data:
+	
+	//get the image name
+	$fn = pathinfo( $_FILES['image']['name'] );
+	$svFn = time() . "." . $fn['extension'];
+	
+	//get the image destination
+	$cat = $data['cat'][0];
+	$cats = array();
+	while( $cat )
+	{
+		array_push($cats, $cat);
+		$cat = $cat->getParent();
+	}
+	
+	$cats = array_reverse($cats);
+	
+	$dest = "images/";
+	foreach( $cats as $cat )
+	{
+		$dest .= $cat->name . "/";
+	}
+	
+	//check image destination
+	if ( !is_dir($dest) )
+	{
+		if( !mkdir($dest, 01755, true) )
+		{
+			//failed to create folder
+			kick(1, $data, 14);
+		}
+		else
+		{
+			//set permissions (since a umask could mess up the mkdir)
+			chmod($dest, 01755);
+		}
+	}
+	
+	//create full save location
+	$svDBFn = $dest . $svFn;
+	
+	//move the image
+	if( !move_uploaded_file( $_FILES['image']['tmp_name'], $svDBFn ) )
+	{
+		kick(1, $data, 15);
+	}
+	
+	$newItem = Item::add($data['name'], intval($data['cat'][0]), $data['desc'], $svDBFn, floatval($data['price']), intval($data['prep']), intval($data['lvl']));
 	if( $newItem instanceof Item )
 	{
 		foreach( $data['ing'] as $ing )
