@@ -67,7 +67,7 @@
 	
 	if( $data['img'] == '' || $data['img'] == null )
 	{
-		$type = $_FILES['image']['type'] );
+		$type = $_FILES['image']['type'];
 		if( $type != 'image/png' && $type != 'image/gif' && $type != 'image/jpeg' )
 		{
 			kick(1, $data, 3);
@@ -106,26 +106,32 @@
 	$svFn = time() . "." . $fn['extension'];
 	
 	//get the image destination
-	$cat = $data['cat'][0];
-	$cats = array();
+	$cat = Category::getByID($data['cat'][0]);
+
+	$cats = array($cat);
 	while( $cat )
 	{
-		array_push($cats, $cat);
 		$cat = $cat->getParent();
+		if( $cat )
+		{
+			array_push($cats, $cat);
+		}
 	}
 	
 	$cats = array_reverse($cats);
 	
-	$dest = "images/";
+	$dest = "";
 	foreach( $cats as $cat )
 	{
 		$dest .= $cat->name . "/";
 	}
 	
+	$sysDest = "../images/" . $dest;
+	
 	//check image destination
-	if ( !is_dir($dest) )
+	if ( !is_dir($sysDest) )
 	{
-		if( !mkdir($dest, 01755, true) )
+		if( !mkdir($sysDest, 01755, true) )
 		{
 			//failed to create folder
 			kick(1, $data, 14);
@@ -133,7 +139,7 @@
 		else
 		{
 			//set permissions (since a umask could mess up the mkdir)
-			chmod($dest, 01755);
+			chmod($sysDest, 01755);
 		}
 	}
 	
@@ -141,7 +147,7 @@
 	$svDBFn = $dest . $svFn;
 	
 	//move the image
-	if( !move_uploaded_file( $_FILES['image']['tmp_name'], $svDBFn ) )
+	if( !move_uploaded_file( $_FILES['image']['tmp_name'], "../images/" . $svDBFn ) )
 	{
 		kick(1, $data, 15);
 	}

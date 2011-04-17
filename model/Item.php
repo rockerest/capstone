@@ -281,7 +281,10 @@
 			}
 			
 			//delete image
-			unlink($this->image);
+			if ( !@unlink("../images/" . $this->image) )
+			{
+				//deleting file failed.  Tits.
+			}
 			
 			$sql = "DELETE FROM items WHERE itemid=?";
 			$values = array($this->itemid);
