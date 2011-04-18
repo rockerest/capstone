@@ -1,29 +1,84 @@
-<div>
-<h1>Active Order</h1>
-<table>
-<th>OrderId</th><th>Item Name</th><th>Table Number</th><th>User</th><th>Status</th><th>Time Submitted</th><th>Special Comment</th>
 <?php
-if(!is_array($tmpl->active_order_items))
+if(true)
+{?>
+<h1>Active Order - Waiter</h1>
+<div id="table_holder">
+<table id="sort">
+<thead unselectable="on">
+<th>OrderId</th><th>Table Number</th><th>User</th><th>Special Comment</th><th>Time Submitted</th><th>Status</th><th></th><th></th>
+</thead>
+<?php
+	if(!is_array($tmpl->active_order_objects))
+	{
+		//single order
+		print "<tr class=\"status".$tmpl->active_order_objects->statusid."\"><td>";
+		print $tmpl->active_order_objects->orderid;
+		print "</td><td>";
+		print $tmpl->active_order_objects->tableid;
+		print "</td><td>";
+		print $tmpl->active_order_objects->userid;
+		print "</td><td>";
+		print $tmpl->active_order_objects->specialComment;
+		print "</td><td>";
+		print date("g:i (A) m/d/y", $tmpl->active_order_objects->time);
+		print "</td><td class=\"status_id_order_".$tmpl->active_order_objects->orderid."\">";
+		print $tmpl->active_order_objects->statusid;
+		print "</td><td>";
+		print "<a class=\"button increase_status\" href=\"#\" id=\"".$tmpl->active_order_objects->orderid."\"><span class=\"icon uparrow\"></span>Increase Status</a>";
+		print "</td><td>";
+		print "<a class=\"button decrease_status\" href=\"#\" id=\"".$tmpl->active_order_objects->orderid."\"><span class=\"icon downarrow\"></span>Decrease Status</a>";
+		print "</td></tr>";
+	}
+	else
+	{
+		//multiple orders
+	}
+?>
+</table>
+</div>
+<?php
+}
+else
+{
+?>
+<h1>Active Order - Cook</h1>
+<div id="table_holder">
+<table id="sort">
+<thead unselectable="on">
+<th>OrderId</th><th>Item Name</th><th>Table Number</th><th>User</th><th>Special Comment</th><th>Time Submitted</th><th>Status</th><th></th><th></th>
+</thead>
+<?php
+if(!is_array($tmpl->active_order_objects))
 {
 	//single order in system
 	if(!is_array($tmpl->active_items))
 	{
 		//single item on order
-		print "<tr><td>";
-		print $tmpl->active_order_items->orderid;
-		print "</td><td>";
-		print $tmpl->active_items->name;
-		print "</td></tr>";
+		
 	}
 	else
 	{
 		//deal with array of order items
 		foreach($tmpl->active_items as $active_item)
 		{
-			print "<tr><td>";
-			print $tmpl->active_order_items->orderid;
+			print "<tr class=\"status".$active_item['status']."\"><td>";
+			print $active_item['orderid'];
 			print "</td><td>";
-			print $active_item->name;
+			print $active_item['name'];
+			print "</td><td>";
+			print $active_item['tablenumber'];
+			print "</td><td>";
+			print $active_item['user'];
+			print "</td><td>";
+			print $active_item['specialComment'];
+			print "</td><td>";
+			print $active_item['time'];
+			print "</td><td>";
+			print $active_item['status'];
+			print "</td><td>";
+			print "<a class=\"button increase_status\" href=\"#\" id=\"".$active_item['itemid']."\"><span class=\"icon uparrow\"></span>Increase Status</a>";
+			print "</td><td>";
+			print "<a class=\"button decrease_status\" href=\"#\" id=\"".$active_item['itemid']."\"><span class=\"icon downarrow\"></span>Decrease Status</a>";
 			print "</td></tr>";
 		}
 	}
@@ -41,3 +96,4 @@ foreach($tmpl->active_order_objects as $active_order_object)
 </table>
 
 </div>
+<?}?>

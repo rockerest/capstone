@@ -18,15 +18,62 @@
 	//get all active orders
 	if(Order::getAllActive())
 	{
+			//get all active orders
 			$active_order_objects = Order::getAllActive();
-			$active_order_items = Order_Item::getById($active_order_objects->orderid);
-			if(is_array($active_order_items))
+			
+			//multiple orders
+			if(is_array($active_order_objects))
 			{
+				foreach($active_order_objects as $active_order_object)
+				{
+					$active_order_items = Order_Item::getByOrder($active_order_object->orderid);
 				
+					//multiple items on order
+					if(is_array($active_order_items))
+					{
+						foreach($active_order_items as $active_order_item)
+						{
+							array_push($active_items, Item::getByID($active_order_item->itemid));
+						}
+					}
+					
+					//one item on order
+					else
+					{
+					
+					}
+				}
+
 			}
+			//one order in system
 			else
 			{
-				$active_items = Item::getByID($active_order_items->itemid);
+				$active_order_items = Order_Item::getByOrder($active_order_objects->orderid);
+				
+				//multiple items on order
+				if(is_array($active_order_items))
+				{
+					foreach($active_order_items as $active_order_item)
+					{
+						$thisitem = array(	'orderid' => $active_order_item->orderid,
+											'name' => Item::getByID($active_order_item->itemid)->name,
+											'specialComment' => Order::getByID($active_order_item->orderid)->specialComment,
+											'tablenumber' => Order::getByID($active_order_item->orderid)->tableid,
+											'time' => date("g:i (A) m/d/y", Order::getByID($active_order_item->orderid)->time),
+											'status' => Order::getByID($active_order_item->orderid)->statusid,
+											'user' => Order::getByID($active_order_item->orderid)->userid,
+											'itemid' => $active_order_item->itemid
+						);
+						array_push($active_items, $thisitem);
+					}
+				}
+				
+				//one item on order
+				else
+				{
+				
+				}
+				
 			}
 	}
 	
@@ -43,8 +90,8 @@
 	$page->run();
 	
 	$html = $tmpl->build('orderlist.html');
-	//$css = $tmpl->build('orderlist.css');
-	//$js = $tmpl->build('orderlist.js');
+	$css = $tmpl->build('orderlist.css');
+	$js = $tmpl->build('orderlist.js');
 	
 	$appContent = array(
 						'html'	=>	$html,

@@ -1,0 +1,47 @@
+#table_holder
+{
+	width:95%;
+	margin-left:auto;
+	margin-right:auto;
+}
+#sort
+{
+	width:100%;
+}
+table, tr
+{
+border: .0625em solid #333;
+border-collapse: collapse;
+}
+td
+{
+padding:2px;
+}
+th
+{
+padding:2px;
+border: 1px solid #666;
+}
+tr
+{
+font-size:.8em;
+}
+tr.status0
+{
+background-color:#8AEB96;
+}
+tr.status2
+{
+background-color:#8AEB96;
+font-weight: strong;
+}
+tr.status3
+{
+background-color:#8AB4EB;
+}
+tr.status4
+{
+background-color:#EB8A8A;
+color:#666;
+font-style: strikethrough;
+}
