@@ -94,7 +94,7 @@
 		public static function create($tableid, $userid)
 		{
 			$order['time'] = time();
-			$ord = new Order($order, null, Table::getByID($tableid), User::getByID($userid), null);
+			$ord = new Order(null, $order, null, Table::getByID($tableid), User::getByID($userid), 1);
 			return $ord->save();
 		}
 		
