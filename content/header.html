@@ -33,11 +33,6 @@
 				{
 					$span = "";
 				}
-				
-				if( $nav->display == "Order" && (!isset($_SESSION['orderid']) || $_SESSION['orderid'] < 1) )
-				{
-					continue;
-				}
 			?>
 			<a href="<?= $nav->link; ?>" class="big button rid-<?= $nav->roleid; ?>"><?= $span; ?><?= $nav->display; ?></a>
 			<?
