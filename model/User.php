@@ -5,7 +5,7 @@
 	require_once('Order.php');
 	require_once('Predict.php');
 
-	class User
+	class User extends Base
 	{
 		public static function getByID($id)
 		{
@@ -15,6 +15,16 @@
 			$user = $db->qwv($userSQL, $values);
 			
 			return User::wrap($user);
+		}
+		
+		public static function getByTable($id)
+		{
+			global $db;
+			$sql = "SELECT * FROM users WHERE LOWER(fname)='table' AND lname=?";
+			$values = array($id);
+			$res = $db->qwv($sql, $values);
+			
+			return User::wrap($res);
 		}
 		
 		public static function add($fname, $lname, $ident, $pass, $roleid)
@@ -77,18 +87,7 @@
 				array_push($userList, new User($user['userid'], $user['fname'], $user['lname']));
 			}
 			
-			if( count( $userList ) > 1 )
-			{
-				return $userList;
-			}
-			elseif( count( $userList ) == 1 )
-			{
-				return $userList[0];
-			}
-			else
-			{
-				return false;
-			}
+			return sendback($userList);
 		}
 		
 		private $userid;

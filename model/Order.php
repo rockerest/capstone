@@ -25,28 +25,32 @@
 			return Order::wrap($orders);
 		}
 		
-		public static getPendingByUser($userid)
+		//where $statuses is an array of ints: array(4, 9);
+		public static getForStatusesByUser($userid, $statuses)
 		{
-			$orders = Order::getByUser($userid);
-			
-			if( $orders instanceof Order && $orders->statusid == 1 )
+			$prelimOrders = Order::getByUser($userid);
+			if( $prelimOrders instanceof Order && in_array($prelimOrders->statusid, $statuses, true) )
 			{
-				return $orders;
+				return $prelimOrders;
 			}
 			else
 			{
-				if( is_array($orders) )
+				if( is_array($prelimOrders) )
 				{
-					$pending = array();
-					foreach( $orders as $order )
+					$tmp = array();
+					foreach( $prelimOrders as $order )
 					{
-						if( $order->statusid == 1 )
+						if( in_array($order->statusid, $statuses, true) )
 						{
-							array_push($pending, $order);
+							array_push($tmp, $order);
 						}
 					}
 					
-					return sendback($pending);
+					return sendback($tmp);
+				}
+				else
+				{
+					return false;
 				}
 			}
 		}
@@ -217,8 +221,6 @@
 						}
 					}
 				}
-				
-				$this->refresh();
 				return $this;
 			}
 			else
