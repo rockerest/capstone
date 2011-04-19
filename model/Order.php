@@ -5,7 +5,7 @@
 	require_once('Table.php');
 	require_once('Order_Item.php');
 	
-	class Order
+	class Order extends Base
 	{
 		public static function getByID($id)
 		{
@@ -24,11 +24,37 @@
 			$orders = $db->qwv($sql, $values);
 			return Order::wrap($orders);
 		}
+		
+		public static getPendingByUser($userid)
+		{
+			$orders = Order::getByUser($userid);
+			
+			if( $orders instanceof Order && $orders->statusid == 1 )
+			{
+				return $orders;
+			}
+			else
+			{
+				if( is_array($orders) )
+				{
+					$pending = array();
+					foreach( $orders as $order )
+					{
+						if( $order->statusid == 1 )
+						{
+							array_push($pending, $order);
+						}
+					}
+					
+					return sendback($pending);
+				}
+			}
+		}
 
 		public static function getActiveByUser($userid)
 		{
 			global $db;
-			$sql = "SELECT orderid FROM orders WHERE userid=? AND statusid!=4";
+			$sql = "SELECT orderid FROM orders WHERE userid=? AND statusid!=4 AND statusid!=9";
 			$values = array($userid);
 			$orders = $db->qwv($sql, $values);
 			return Order::wrap($orders);
@@ -37,7 +63,7 @@
 		public static function getAllActive()
 		{
 			global $db;
-			$sql = "SELECT * FROM orders WHERE statusid!=4";
+			$sql = "SELECT * FROM orders WHERE statusid!=4 AND statusid!=9";
 			$values = array($userid);
 			$orders = $db->qwv($sql, $values);
 			return Order::wrap($orders);
@@ -46,7 +72,7 @@
 		public static function getAllInactive()
 		{
 			global $db;
-			$sql = "SELECT * FROM orders WHERE statusid=4";
+			$sql = "SELECT * FROM orders WHERE statusid=4 OR statusid=9";
 			$values = array($userid);
 			$orders = $db->qwv($sql, $values);
 			return Order::wrap($orders);
@@ -76,18 +102,7 @@
 				array_push($orderObs, new Order($order['orderid'], $order['time'], $order['specialComment'], $order['tableid'], $order['userid'], $order['statusid']));
 			}
 			
-			if( count( $orderObs ) > 1 )
-			{
-				return $orderObs;
-			}
-			elseif( count( $orderObs ) == 1 )
-			{
-				return $orderObs[0];
-			}
-			else
-			{
-				return false;
-			}
+			return sendback($orderObs);
 		}
 		
 		private $orderid;
