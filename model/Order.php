@@ -29,7 +29,7 @@
 		public static function getForStatusesByUser($userid, $statuses)
 		{
 			$prelimOrders = Order::getByUser($userid);
-			if( $prelimOrders instanceof Order && in_array($prelimOrders->statusid, $statuses, true) )
+			if( $prelimOrders instanceof Order && in_array($prelimOrders->statusid, $statuses) )
 			{
 				return $prelimOrders;
 			}
@@ -40,7 +40,7 @@
 					$tmp = array();
 					foreach( $prelimOrders as $order )
 					{
-						if( in_array($order->statusid, $statuses, true) )
+						if( in_array($order->statusid, $statuses) )
 						{
 							array_push($tmp, $order);
 						}
