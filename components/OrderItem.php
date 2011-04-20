@@ -7,19 +7,21 @@
 	require_once('Session.php');
 	setSession(0, '/');
 	
-	$json = isset($_POST['json']) ? $_POST['json'] : null;
+	$id = isset($_POST['id']) ? $_POST['id'] : null;
+	$comment = isset($_POST['comment']) ? $_POST['comment'] : null;
+	$modifiers = isset($_POST['modifiers']) ? $_POST['modifiers'] : null;
 	
 	if( !isset($_SESSION['userid']) || $_SESSION['userid'] == null || $_SESSION['userid'] < 1 )
 	{
 		throw new RedirectBrowserException("../login.php?code=10");
 	}
 	
-	if( $json != null )
+	if( $id != null && $comment != null )
 	{
-		$post = json_decode($json, true);
-		$id = $post['id'];
-		$comment = $post['comment'];
-		$modifiers = $post['modifiers'];
+		if( $comment == "Special Comment" )
+		{
+			$comment = '';
+		}
 		
 		$editable = Order::getForStatusesByUser($_SESSION['userid'], array(1, 2, 3));
 		
@@ -31,7 +33,7 @@
 				$word = $editable->statusid == 1 ? "pending" : "current";
 				if( $editable->addItem($id, $comment, $modifiers) )
 				{
-					print jsonify(true, "The item was added to your " . $word . " order.", json_encode(array("items" => count($editable->items))));
+					print jsonify(true, "The item was added to your " . $word . " order.", count($editable->items));
 				}
 				else
 				{
@@ -73,7 +75,7 @@
 				
 				if( $pref->addItem($id, $comment, $modifiers) )
 				{
-					print jsonify(true, "The item was added to your " . $word . " order.", json_encode(array("items" => count($pref->items))));
+					print jsonify(true, "The item was added to your " . $word . " order.", count($pref->items));
 				}
 				else
 				{
@@ -88,7 +90,7 @@
 			{
 				if( $no->addItem($id, $comment, $modifiers) )
 				{
-					print jsonify(true, "The item was added to a new order.", json_encode(array("items" => count($no->items))));
+					print jsonify(true, "The item was added to a new order.", count($no->items));
 				}
 				else
 				{
@@ -106,7 +108,7 @@
 		print jsonify(false, "There was an error adding this item to your order.");
 	}
 	
-	function jsonify($stat, $msg, $data)
+	function jsonify($stat, $msg, $data = null)
 	{
 		$ret = array(	"status" => $stat,
 						"message" => $msg,
