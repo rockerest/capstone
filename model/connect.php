@@ -3,4 +3,6 @@
 	require_once('capstone.db');
 	
 	$db = new Database($user, $pass, $dbname, $host, 'mysql');
+	
+	require_once('Base.php');
 ?>

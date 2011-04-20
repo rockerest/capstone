@@ -1,7 +1,8 @@
 <?php
 if(true)
+//-------------  waiter view  -------------------
 {?>
-<h1>Active Order - Waiter</h1>
+<h1>Active Orders - Waiter</h1>
 <div id="table_holder">
 <table id="sort">
 <thead unselectable="on">
@@ -35,11 +36,45 @@ if(true)
 	}
 ?>
 </table>
+<h1>Inactive Orders - Waiter</h1>
+<table id="sort2">
+<thead unselectable="on">
+<th>OrderId</th><th>Table Number</th><th>User</th><th>Special Comment</th><th>Time Submitted</th><th>Status</th><th></th><th></th>
+<?php
+
+	if(!is_array($tmpl->inactive_order_objects))
+	{
+		//single inactive order
+		print "<tr class=\"status".$tmpl->inactive_order_objects->statusid."\"><td>";
+		print $tmpl->inactive_order_objects->orderid;
+		print "</td><td>";
+		print $tmpl->inactive_order_objects->tableid;
+		print "</td><td>";
+		print $tmpl->inactive_order_objects->userid;
+		print "</td><td>";
+		print $tmpl->inactive_order_objects->specialComment;
+		print "</td><td>";
+		print date("g:i (A) m/d/y", $tmpl->inactive_order_objects->time);
+		print "</td><td class=\"status_id_order_".$tmpl->inactive_order_objects->orderid."\">";
+		print $tmpl->inactive_order_objects->statusid;
+		print "</td><td>";
+		print "<a class=\"button increase_status\" href=\"#\" id=\"".$tmpl->inactive_order_objects->orderid."\"><span class=\"icon uparrow\"></span>Increase Status</a>";
+		print "</td><td>";
+		print "<a class=\"button decrease_status\" href=\"#\" id=\"".$tmpl->inactive_order_objects->orderid."\"><span class=\"icon downarrow\"></span>Decrease Status</a>";
+		print "</td></tr>";
+	}
+	else
+	{
+		//multiple inactive orders
+	}
+?>
+</table>
 </div>
 <?php
 }
 else
 {
+// ------------- cook view ----------------
 ?>
 <h1>Active Order - Cook</h1>
 <div id="table_holder">

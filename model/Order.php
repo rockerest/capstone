@@ -5,7 +5,7 @@
 	require_once('Table.php');
 	require_once('Order_Item.php');
 	
-	class Order
+	class Order extends Base
 	{
 		public static function getByID($id)
 		{
@@ -24,6 +24,7 @@
 			$orders = $db->qwv($sql, $values);
 			return Order::wrap($orders);
 		}
+<<<<<<< HEAD
 	
 		//update an order by id, to a new status
 		public static function updateByID($id, $newstatus)
@@ -34,10 +35,43 @@
 			return $db->qwv($orderSQL, $values);
 		}
 			
+=======
+		
+		//where $statuses is an array of ints: array(4, 9);
+		public static getForStatusesByUser($userid, $statuses)
+		{
+			$prelimOrders = Order::getByUser($userid);
+			if( $prelimOrders instanceof Order && in_array($prelimOrders->statusid, $statuses, true) )
+			{
+				return $prelimOrders;
+			}
+			else
+			{
+				if( is_array($prelimOrders) )
+				{
+					$tmp = array();
+					foreach( $prelimOrders as $order )
+					{
+						if( in_array($order->statusid, $statuses, true) )
+						{
+							array_push($tmp, $order);
+						}
+					}
+					
+					return sendback($tmp);
+				}
+				else
+				{
+					return false;
+				}
+			}
+		}
+
+>>>>>>> 0c39751e8be7046851964bf671e5cbadd0b0d63f
 		public static function getActiveByUser($userid)
 		{
 			global $db;
-			$sql = "SELECT orderid FROM orders WHERE userid=? AND statusid!=4";
+			$sql = "SELECT orderid FROM orders WHERE userid=? AND statusid!=4 AND statusid!=9";
 			$values = array($userid);
 			$orders = $db->qwv($sql, $values);
 			return Order::wrap($orders);
@@ -46,7 +80,7 @@
 		public static function getAllActive()
 		{
 			global $db;
-			$sql = "SELECT * FROM orders WHERE statusid!=4";
+			$sql = "SELECT * FROM orders WHERE statusid!=4 AND statusid!=9";
 			$values = array($userid);
 			$orders = $db->qwv($sql, $values);
 			return Order::wrap($orders);
@@ -55,7 +89,7 @@
 		public static function getAllInactive()
 		{
 			global $db;
-			$sql = "SELECT * FROM orders WHERE statusid=4";
+			$sql = "SELECT * FROM orders WHERE statusid=4 OR statusid=9";
 			$values = array($userid);
 			$orders = $db->qwv($sql, $values);
 			return Order::wrap($orders);
@@ -85,18 +119,7 @@
 				array_push($orderObs, new Order($order['orderid'], $order['time'], $order['specialComment'], $order['tableid'], $order['userid'], $order['statusid']));
 			}
 			
-			if( count( $orderObs ) > 1 )
-			{
-				return $orderObs;
-			}
-			elseif( count( $orderObs ) == 1 )
-			{
-				return $orderObs[0];
-			}
-			else
-			{
-				return false;
-			}
+			return sendback($orderObs);
 		}
 		
 		private $orderid;
@@ -211,8 +234,6 @@
 						}
 					}
 				}
-				
-				$this->refresh();
 				return $this;
 			}
 			else

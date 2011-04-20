@@ -12,6 +12,10 @@ $(document).ready(function() {
 	$("#sort tbody").sortable({
 	  helper: fixHelper
 	}).disableSelection();
+	
+	$("#sort2 tbody").sortable({
+	  helper: fixHelper
+	}).disableSelection();
 });
 
 function update_status(orderid, status){
@@ -58,6 +62,7 @@ $( '.increase_status' ).click(function(){
 		$(this).parent().parent().removeClass('status3');
 		$(this).parent().parent().addClass('status4');
 		update_status($(this).attr('id'), 4);
+		$(this).parent().parent().fadeOut(4000);
 	}
 	else if($(this).parent().parent().attr('class')=='status0')
 	{

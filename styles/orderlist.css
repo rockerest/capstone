@@ -16,11 +16,13 @@ border-collapse: collapse;
 td
 {
 padding:2px;
+text-align:center;
 }
 th
 {
 padding:2px;
 border: 1px solid #666;
+text-align:center;
 }
 tr
 {
