@@ -119,12 +119,12 @@ else
 					if( is_array($tmpl->item->ingredients) )
 					{
 						?>
-						<div id="checkboxes">
+						<div id="ingredients">
 						<?
 						foreach($tmpl->item->ingredients as $ing)			
 						{				
 						?>			
-							<label><input type="checkbox" value="<?= $ing->ingredientid; ?>" name="ingredients[]" checked="checked" /><?= $ing->name; ?></label><br />				
+							<label><input type="checkbox" value="<?= $ing->ingredientid; ?>" checked="checked" /><?= $ing->name; ?></label><br />				
 						<?
 						}
 						?>
