@@ -1,2 +1,100 @@
-<h1>THIS PAGE SHOULD NOT BE IN THE NAVBAR</h2>
-This page should be accessible from any point, so that the cutomer can review their order, and submit it to the kitchen if they so desire.
+<div id="pending" class="section bump follow">
+	<div class="message-box clean center w50">
+		Pending Orders
+	</div>
+<?php
+if( $tmpl->pending )
+{
+	foreach( $tmpl->pending as $order )
+	{
+	?>
+	<div class="order follow">
+		<table class="w90 center bump follow">
+			<thead>
+				<tr>
+					<th>Item Category</th>
+					<th>Item</th>
+					<th>Comment</th>
+					<th>Price</th>
+				</tr>
+			</thead>
+			<tbody>
+		<?
+			$items = $order->items;
+			if( $items )
+			{
+				if( !is_array($items) )
+				{
+					$items = array($items);
+				}
+				$sum = 0.00;
+				foreach( $items as $item )
+				{
+				?>
+				<tr class="item">
+					<td><?= $item->item->category->name; ?></td>
+					<td><?= $item->item->name; ?></td>
+					<td><?= $item->specialComment; ?></td>
+					<td>$<?= $item->item->price; ?></td>
+				</tr>
+				<?
+				$sum += $item->item->price;
+				}
+			}
+		?>
+			</tbody>
+			<tfoot>
+				<tr>
+					<td colspan="3"></td>
+					<td>$<?= $sum; ?></td>
+				</tr>
+			</tfoot>
+		</table>
+	</div>
+	<?
+	}
+}
+else
+{
+?>
+	<span class="message-box alert center w50 bump">You do not currently have any unsubmitted orders.</span>
+<?
+}
+?>
+</div>
+
+<div id="current" class="section follow">
+	<div class="message-box clean center w50">
+		Current Orders
+	</div>
+<?php
+if( $tmpl->current )
+{
+
+}
+else
+{
+?>
+	<span class="message-box alert center w50 bump">You do not currently have any submitted orders.</span>
+<?
+}
+?>
+</div>
+
+<div id="past" class="section follow">
+	<div class="message-box clean center w50">
+		Past Orders
+	</div>
+<?php
+if( $tmpl->past )
+{
+	
+}
+else
+{
+?>
+	<span class="message-box alert center w50 bump">You do not currently have any completed orders.</span>
+<?
+}
+?>
+</div>
