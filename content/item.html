@@ -113,18 +113,18 @@ else
 			</div>
 			
 			<div id="control" class="w30">
-				<form action="components/SubmitOrder.php?item=<?= $tmpl->item->itemid ?>" method="post">
+				<form action="components/OrderItem.php?id=<?= $tmpl->item->itemid ?>" method="post">
 					<?
 					// don't show the ingredient list if the item IS the ingredient
 					if( is_array($tmpl->item->ingredients) )
 					{
 						?>
-						<div id="checkboxes">
+						<div id="ingredients">
 						<?
 						foreach($tmpl->item->ingredients as $ing)			
 						{				
 						?>			
-							<label><input type="checkbox" value="<?= $ing->ingredientid; ?>" name="ingredients[]" checked="checked" /><?= $ing->name; ?></label><br />				
+							<label><input type="checkbox" value="<?= $ing->ingredientid; ?>" checked="checked" /><?= $ing->name; ?></label><br />				
 						<?
 						}
 						?>
@@ -133,7 +133,7 @@ else
 					}
 					?>
 					<textarea name="message" class="bump follow">Special Comment</textarea>
-					<a href="#" class="big positive button"><span class="icon plus"></span>Add To Order: $<?= $tmpl->item->price; ?></a>
+					<button type="button" id="AddItemToOrder" class="big positive button"><span class="icon plus"></span>Add To Order: $<?= $tmpl->item->price; ?></button>
 				</form>
 			</div>
 		</div>

@@ -1,44 +1,28 @@
 <?php
 	set_include_path('../backbone:../global:../jquery:../components:../content:../images:../model:../render:../scripts:../styles');
-	
 	require_once('RedirectBrowserException.php');
-	require_once('Session.php');
 	require_once('Order.php');
+
+	require_once('Session.php');
 	setSession(0, '/');
 	
-	if(isset($_POST['add']))
+	$id = isset($_POST['id']) ? $_POST['id'] : null;
+	
+	if( !isset($_SESSION['userid']) || $_SESSION['userid'] == null || $_SESSION['userid'] < 1 )
 	{
-		//order table vars
-		$tableid = 1;
-		$userid = $_SESSION['userid'];
-		$statusid = 1;
-		$time = time();
-		$specialcomment = $_POST['message'];
-
-		//order_items table vars
-		$orderid;
-		$item_id = $_POST['itemid'];
-		$isCustomized = 0;
-		$modifiers;
-
-		
-		//check to see if order is active
-		if(Order::getActiveByUser($userid))
-		{
-			//if active, add to it 
-			$active_order_ids = Order::getActiveByUser($userid);
-			$active_order = Order::getByID($active_order_ids['orderid']);
-			$active_order->addItem($item_id, $specialcomment, $modifiers);
-			throw new RedirectBrowserException("/orderlist.php");
-		}
-		else
-		{
-			//else, we must create an order and add items to it
-			$active_order = Order::create($tableid, $userid);
-			$active_order->addItem($item_id, $specialcomment, $modifiers);
-			throw new RedirectBrowserException("/orderlist.php");
-		}
-
+		throw new RedirectBrowserException("../login.php?code=10");
 	}
-
+	
+	$order = Order::getByID($id);
+	
+	if( $order->userid == $_SESSION['userid'] && $order->statusid == 1)
+	{
+		$order->statusid = 2;
+		
+		print true;
+	}
+	else
+	{
+		print false;
+	}
 ?>

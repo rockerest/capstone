@@ -38,10 +38,10 @@
 =======
 		
 		//where $statuses is an array of ints: array(4, 9);
-		public static getForStatusesByUser($userid, $statuses)
+		public static function getForStatusesByUser($userid, $statuses)
 		{
 			$prelimOrders = Order::getByUser($userid);
-			if( $prelimOrders instanceof Order && in_array($prelimOrders->statusid, $statuses, true) )
+			if( $prelimOrders instanceof Order && in_array($prelimOrders->statusid, $statuses) )
 			{
 				return $prelimOrders;
 			}
@@ -52,13 +52,13 @@
 					$tmp = array();
 					foreach( $prelimOrders as $order )
 					{
-						if( in_array($order->statusid, $statuses, true) )
+						if( in_array($order->statusid, $statuses) )
 						{
 							array_push($tmp, $order);
 						}
 					}
 					
-					return sendback($tmp);
+					return Order::sendback($tmp);
 				}
 				else
 				{
@@ -106,8 +106,7 @@
 		
 		public static function create($tableid, $userid)
 		{
-			$order['time'] = time();
-			$ord = new Order($order, null, Table::getByID($tableid), User::getByID($userid), null);
+			$ord = new Order(null, time(), null, $tableid, $userid, 1);
 			return $ord->save();
 		}
 		
@@ -119,7 +118,7 @@
 				array_push($orderObs, new Order($order['orderid'], $order['time'], $order['specialComment'], $order['tableid'], $order['userid'], $order['statusid']));
 			}
 			
-			return sendback($orderObs);
+			return Order::sendback($orderObs);
 		}
 		
 		private $orderid;
@@ -167,7 +166,7 @@
 		
 		public function __set($name, $val)
 		{
-			if( $name == 'status' || $name == 'specialComment' )
+			if( $name == 'statusid' || $name == 'specialComment' )
 			{
 				$this->$name = $val;
 				return $this->save();

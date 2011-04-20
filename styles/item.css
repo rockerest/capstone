@@ -14,14 +14,14 @@
 	float: left;
 }
 
-#control #checkboxes{
+#control #ingredients{
 	text-align: left;
 	padding-left: 1.2em;
 	line-height: 1.6em;
 	font-size: 1.1em;
 }
 
-#control #checkboxes input[type=checkbox]{
+#control #ingredients input[type=checkbox]{
 	margin-left: -1.2em;
 }
 

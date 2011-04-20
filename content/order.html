@@ -1,2 +1,203 @@
-<h1>THIS PAGE SHOULD NOT BE IN THE NAVBAR</h2>
-This page should be accessible from any point, so that the cutomer can review their order, and submit it to the kitchen if they so desire.
+<div id="pending" class="section bump follow">
+	<div class="message-box clean center w50">
+		Pending Orders
+	</div>
+<?php
+if( $tmpl->pending )
+{
+	foreach( $tmpl->pending as $order )
+	{
+	?>
+	<div class="order follow">
+		<table class="w90 center bump follow">
+			<thead>
+				<tr>
+					<th>Item Category</th>
+					<th>Item</th>
+					<th>Comment</th>
+					<th>Price</th>
+					<th>Control</th>
+				</tr>
+			</thead>
+			<tbody>
+		<?
+			$items = $order->items;
+			if( $items )
+			{
+				if( !is_array($items) )
+				{
+					$items = array($items);
+				}
+				$sum = 0.00;
+				foreach( $items as $item )
+				{
+				?>
+				<tr class="item">
+					<td><?= $item->item->category->name; ?></td>
+					<td><?= $item->item->name; ?></td>
+					<td><?= $item->specialComment; ?></td>
+					<td>$<?= $item->item->price; ?></td>
+					<td>Print Controls</td>
+				</tr>
+				<?
+				$sum += $item->item->price;
+				}
+			}
+		?>
+			</tbody>
+			<tfoot>
+				<tr>
+					<td colspan="3"></td>
+					<td>$<?= $sum; ?></td>
+					<td><button type="button" class="primary positive elevate_order" data-id="<?= $order->orderid; ?>"><span class="icon check"></span>Submit this order</button></td>
+				</tr>
+			</tfoot>
+		</table>
+	</div>
+	<?
+	}
+}
+else
+{
+?>
+	<div class="message-box alert center w50 bump follow">You do not currently have any unsubmitted orders.</div>
+<?
+}
+?>
+</div>
+
+<div id="current" class="section follow">
+	<div class="message-box clean center w50">
+		Current Orders
+	</div>
+<?php
+if( $tmpl->current )
+{
+	foreach( $tmpl->current as $order )
+	{
+	?>
+	<div class="order follow">
+		<table class="w90 center bump follow">
+			<thead>
+				<tr>
+					<th>Item Category</th>
+					<th>Item</th>
+					<th>Comment</th>
+					<th>Price</th>
+					<th>Control</th>
+				</tr>
+			</thead>
+			<tbody>
+		<?
+			$items = $order->items;
+			if( $items )
+			{
+				if( !is_array($items) )
+				{
+					$items = array($items);
+				}
+				$sum = 0.00;
+				foreach( $items as $item )
+				{
+				?>
+				<tr class="item">
+					<td><?= $item->item->category->name; ?></td>
+					<td><?= $item->item->name; ?></td>
+					<td><?= $item->specialComment; ?></td>
+					<td>$<?= $item->item->price; ?></td>
+					<td>Print Controls</td>
+				</tr>
+				<?
+				$sum += $item->item->price;
+				}
+			}
+		?>
+			</tbody>
+			<tfoot>
+				<tr>
+					<td colspan="3"></td>
+					<td>$<?= $sum; ?></td>
+					<td></td>
+				</tr>
+			</tfoot>
+		</table>
+	</div>
+	<?
+	}
+}
+else
+{
+?>
+	<div class="message-box alert center w50 bump follow">You do not currently have any submitted orders.</div>
+<?
+}
+?>
+</div>
+
+<div id="past" class="section follow">
+	<div class="message-box clean center w50">
+		Past Orders
+	</div>
+<?php
+if( $tmpl->past )
+{
+	foreach( $tmpl->past as $order )
+	{
+	?>
+	<div class="order follow">
+		<table class="w90 center bump follow">
+			<thead>
+				<tr>
+					<th>Item Category</th>
+					<th>Item</th>
+					<th>Comment</th>
+					<th>Price</th>
+					<th>Control</th>
+				</tr>
+			</thead>
+			<tbody>
+		<?
+			$items = $order->items;
+			if( $items )
+			{
+				if( !is_array($items) )
+				{
+					$items = array($items);
+				}
+				$sum = 0.00;
+				foreach( $items as $item )
+				{
+				?>
+				<tr class="item">
+					<td><?= $item->item->category->name; ?></td>
+					<td><?= $item->item->name; ?></td>
+					<td><?= $item->specialComment; ?></td>
+					<td>$<?= $item->item->price; ?></td>
+					<td>Print Controls</td>
+				</tr>
+				<?
+				$sum += $item->item->price;
+				}
+			}
+		?>
+			</tbody>
+			<tfoot>
+				<tr>
+					<td colspan="3"></td>
+					<td>$<?= $sum; ?></td>
+					<td><button type="button" class="primary positive re_order" data-id="<?= $order->orderid; ?>"><span class="icon check"></span>Order this again</button></td>
+				</tr>
+			</tfoot>
+		</table>
+	</div>
+	<?
+	}
+}
+else
+{
+?>
+	<div class="message-box alert center w50 bump follow">You do not currently have any completed orders.</div>
+<?
+}
+?>
+</div>

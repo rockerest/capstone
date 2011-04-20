@@ -117,3 +117,35 @@ $( '#delete #no' ).click(function(){
 	history.go(-1);
 	return false;
 });
+
+$( '#AddItemToOrder' ).click(function(){
+	var ingredients = $( '#ingredients input[type="checkbox"]' ),
+		modifiers = new Array(),
+		obj,
+		json;
+		
+		$.each( ingredients, function(i, cb){
+			if( $(ingredients[i]).is(":not(:checked)") )
+			{
+				obj = {
+						"ingredientid" : $(ingredients[i]).attr('value'),
+						"modifiers" : [3] //this would include any modifiers on the page.  Right now, just doing "hold" or regular.
+					};
+				modifiers.push(obj);
+			}
+		});
+	
+	json = {
+				"id" : $(this).closest('form').attr('action').replace(/^.*id=(\d+)$/, "$1"),
+				"comment" : $(this).prev().val().replace(/\n/gim, "<br />"),
+				"modifiers" : modifiers
+			};
+	$.ajax({
+		type : "POST",
+		url : "components/OrderItem.php",
+		data : json,
+		success : function(data){
+			console.log(data);
+		}
+	});
+});
