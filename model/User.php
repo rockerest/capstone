@@ -87,7 +87,7 @@
 				array_push($userList, new User($user['userid'], $user['fname'], $user['lname']));
 			}
 			
-			return sendback($userList);
+			return User::sendback($userList);
 		}
 		
 		private $userid;

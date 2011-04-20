@@ -26,7 +26,7 @@
 		}
 		
 		//where $statuses is an array of ints: array(4, 9);
-		public static getForStatusesByUser($userid, $statuses)
+		public static function getForStatusesByUser($userid, $statuses)
 		{
 			$prelimOrders = Order::getByUser($userid);
 			if( $prelimOrders instanceof Order && in_array($prelimOrders->statusid, $statuses, true) )
@@ -46,7 +46,7 @@
 						}
 					}
 					
-					return sendback($tmp);
+					return Order::sendback($tmp);
 				}
 				else
 				{
@@ -106,7 +106,7 @@
 				array_push($orderObs, new Order($order['orderid'], $order['time'], $order['specialComment'], $order['tableid'], $order['userid'], $order['statusid']));
 			}
 			
-			return sendback($orderObs);
+			return Order::sendback($orderObs);
 		}
 		
 		private $orderid;
