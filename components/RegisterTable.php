@@ -8,9 +8,14 @@
 	
 	$id = isset( $_GET['id'] ) ? $_GET['id'] : null;
 	
+	if( !$_SESSION['active'] || $_SESSION['roleid'] > 2 )
+	{
+		throw new RedirectBrowserException("../index.php");
+	}
+	
 	if( $id == null )
 	{
-		throw new RedirectBrowserException("table.php?code=1");
+		throw new RedirectBrowserException("../table.php?code=1");
 	}
 	elseif( $id == -1 )
 	{
