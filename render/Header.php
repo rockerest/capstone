@@ -1,5 +1,6 @@
 <?php
 	require_once('Template.php');
+	require_once('User.php');
 	require_once('Session.php');
 	setSession(0,"/");
 	
@@ -23,6 +24,11 @@
 			$tmpl = new Template();
 			$tmpl->curr = $this->cur_page;
 			
+			if( isset($_SESSION['umbrella']['tableid']) && !isset($_SESSION['userid']) )
+			{
+				$this->setGuest($_SESSION['umbrella']['tableid']);
+			}
+			
 			if( $_SERVER['QUERY_STRING'] != null )
 			{
 				$qs = $_SERVER['QUERY_STRING'];
@@ -37,9 +43,12 @@
 				//array of available testing tables
 				$tables = array(1);				
 				
-				if( in_array(hexdec($vals['hor']) / 1000, $tables) )
+				$tid = hexdec($vals['hor']) / 1000;
+				if( in_array($tid, $tables) )
 				{
-					$_SESSION['umbrella']['tableid'] = hexdec($vals['hor'] / 1000);
+					
+					$_SESSION['umbrella']['tableid'] = $tid;
+					$this->setGuest($tid);
 					header('Location: index.php');
 				}
 			}
@@ -91,6 +100,18 @@
 			
 			$content = array('html' => $html, 'css' => array('code' => $css, 'link' => 'header'), 'js' => $js);
 			return $content;
+		}
+		
+		public function setGuest($tableid)
+		{
+			$tblUser = User::getByTable($tableid);
+			if( $tblUser )
+			{
+				//$_SESSION['active'] = true;
+				//    Because only truly logged in users are "active"
+				$_SESSION['roleid'] = 4;
+				$_SESSION['userid'] = $tblUser->userid;
+			}
 		}
 	}
 

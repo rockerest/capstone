@@ -12,16 +12,9 @@
 	$tmpl = new Template();
 	
 	$page->run();
-	
-	if( isset($_SESSION['userid']) && $_SESSION['userid'] > 0 )
-	{
-		$id = $_SESSION['userid'];
-	}
-	else
-	{
-		$tblUser = User::getByTable($_SESSION['umbrella']['tableid']);
-		$id = $_SESSION['userid'] = $tblUser->userid;
-	}
+
+	$id = $_SESSION['userid'];
+
 	$pending = Order::getForStatusesByUser($id, array(1));
 	$current = Order::getForStatusesByUser($id, array(2, 3, 4, 5, 7, 8, 9, 10));
 	$past = Order::getForStatusesByUser($id, array(6, 11));
