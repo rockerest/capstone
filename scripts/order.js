@@ -9,3 +9,17 @@ var alternateRows = function()
 }
 
 alternateRows();
+
+$( '.elevate_order' ).click( function(){
+	var id = $(this).attr('data-id');
+	$.ajax({
+		type : "POST",
+		data : {"id" : id},
+		url : "components/SubmitOrder.php",
+		success : function(){
+			var order = $(this).closest('.order');
+			$(this).remove();
+			order.appendTo('#current');
+		}
+	});
+});

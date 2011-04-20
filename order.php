@@ -23,15 +23,12 @@
 		$id = $_SESSION['userid'] = $tblUser->userid;
 	}
 	$pending = Order::getForStatusesByUser($id, array(1));
+	$current = Order::getForStatusesByUser($id, array(2, 3, 4, 5, 7, 8, 9, 10));
+	$past = Order::getForStatusesByUser($id, array(6, 11));
 	
-	if( is_array($pending) )
-	{
-		$tmpl->pending = $pending;
-	}
-	elseif( $pending instanceof Order )
-	{
-		$tmpl->pending = array($pending);
-	}
+	$tmpl->pending = getOrderArray($pending);
+	$tmpl->current = getOrderArray($current);
+	$tmpl->past = getOrderArray($past);
 	
 	$html = $tmpl->build('order.html');
 	$css = $tmpl->build('order.css');
@@ -46,4 +43,20 @@
 						);
 
 	print $page->build($appContent);
+	
+	function getOrderArray($orders)
+	{
+		if( is_array($orders) )
+		{
+			return $orders;
+		}
+		elseif( $orders instanceof Order )
+		{
+			return array($orders);
+		}
+		else
+		{
+			return array();
+		}
+	}
 ?>

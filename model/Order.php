@@ -153,7 +153,7 @@
 		
 		public function __set($name, $val)
 		{
-			if( $name == 'status' || $name == 'specialComment' )
+			if( $name == 'statusid' || $name == 'specialComment' )
 			{
 				$this->$name = $val;
 				return $this->save();

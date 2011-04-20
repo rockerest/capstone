@@ -16,6 +16,7 @@ if( $tmpl->pending )
 					<th>Item</th>
 					<th>Comment</th>
 					<th>Price</th>
+					<th>Control</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -36,6 +37,7 @@ if( $tmpl->pending )
 					<td><?= $item->item->name; ?></td>
 					<td><?= $item->specialComment; ?></td>
 					<td>$<?= $item->item->price; ?></td>
+					<td>Print Controls</td>
 				</tr>
 				<?
 				$sum += $item->item->price;
@@ -47,6 +49,7 @@ if( $tmpl->pending )
 				<tr>
 					<td colspan="3"></td>
 					<td>$<?= $sum; ?></td>
+					<td><button type="button" class="primary positive elevate_order" data-id="<?= $order->orderid; ?>"><span class="icon check"></span>Submit this order</button></td>
 				</tr>
 			</tfoot>
 		</table>
@@ -57,7 +60,7 @@ if( $tmpl->pending )
 else
 {
 ?>
-	<span class="message-box alert center w50 bump">You do not currently have any unsubmitted orders.</span>
+	<div class="message-box alert center w50 bump follow">You do not currently have any unsubmitted orders.</div>
 <?
 }
 ?>
@@ -70,12 +73,62 @@ else
 <?php
 if( $tmpl->current )
 {
-
+	foreach( $tmpl->current as $order )
+	{
+	?>
+	<div class="order follow">
+		<table class="w90 center bump follow">
+			<thead>
+				<tr>
+					<th>Item Category</th>
+					<th>Item</th>
+					<th>Comment</th>
+					<th>Price</th>
+					<th>Control</th>
+				</tr>
+			</thead>
+			<tbody>
+		<?
+			$items = $order->items;
+			if( $items )
+			{
+				if( !is_array($items) )
+				{
+					$items = array($items);
+				}
+				$sum = 0.00;
+				foreach( $items as $item )
+				{
+				?>
+				<tr class="item">
+					<td><?= $item->item->category->name; ?></td>
+					<td><?= $item->item->name; ?></td>
+					<td><?= $item->specialComment; ?></td>
+					<td>$<?= $item->item->price; ?></td>
+					<td>Print Controls</td>
+				</tr>
+				<?
+				$sum += $item->item->price;
+				}
+			}
+		?>
+			</tbody>
+			<tfoot>
+				<tr>
+					<td colspan="3"></td>
+					<td>$<?= $sum; ?></td>
+					<td></td>
+				</tr>
+			</tfoot>
+		</table>
+	</div>
+	<?
+	}
 }
 else
 {
 ?>
-	<span class="message-box alert center w50 bump">You do not currently have any submitted orders.</span>
+	<div class="message-box alert center w50 bump follow">You do not currently have any submitted orders.</div>
 <?
 }
 ?>
@@ -88,12 +141,62 @@ else
 <?php
 if( $tmpl->past )
 {
-	
+	foreach( $tmpl->past as $order )
+	{
+	?>
+	<div class="order follow">
+		<table class="w90 center bump follow">
+			<thead>
+				<tr>
+					<th>Item Category</th>
+					<th>Item</th>
+					<th>Comment</th>
+					<th>Price</th>
+					<th>Control</th>
+				</tr>
+			</thead>
+			<tbody>
+		<?
+			$items = $order->items;
+			if( $items )
+			{
+				if( !is_array($items) )
+				{
+					$items = array($items);
+				}
+				$sum = 0.00;
+				foreach( $items as $item )
+				{
+				?>
+				<tr class="item">
+					<td><?= $item->item->category->name; ?></td>
+					<td><?= $item->item->name; ?></td>
+					<td><?= $item->specialComment; ?></td>
+					<td>$<?= $item->item->price; ?></td>
+					<td>Print Controls</td>
+				</tr>
+				<?
+				$sum += $item->item->price;
+				}
+			}
+		?>
+			</tbody>
+			<tfoot>
+				<tr>
+					<td colspan="3"></td>
+					<td>$<?= $sum; ?></td>
+					<td><button type="button" class="primary positive re_order" data-id="<?= $order->orderid; ?>"><span class="icon check"></span>Order this again</button></td>
+				</tr>
+			</tfoot>
+		</table>
+	</div>
+	<?
+	}
 }
 else
 {
 ?>
-	<span class="message-box alert center w50 bump">You do not currently have any completed orders.</span>
+	<div class="message-box alert center w50 bump follow">You do not currently have any completed orders.</div>
 <?
 }
 ?>
