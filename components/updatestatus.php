@@ -4,7 +4,9 @@
 	
 	if($_GET['orderid']!='' && $_GET['newstatus'] != '')
 	{
-			print Order::updateByID($_GET['orderid'], $_GET['newstatus']);
+			$order = Order::getByID($_GET['orderid']);
+			$order->statusid = $_GET['newstatus'];
+			print $order;
 	}
 	
 

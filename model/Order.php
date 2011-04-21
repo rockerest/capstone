@@ -24,18 +24,6 @@
 			$orders = $db->qwv($sql, $values);
 			return Order::wrap($orders);
 		}
-<<<<<<< HEAD
-	
-		//update an order by id, to a new status
-		public static function updateByID($id, $newstatus)
-		{
-			global $db;
-			$orderSQL = "UPDATE orders SET statusid=? WHERE orderid=?";
-			$values = array($newstatus, $id);
-			return $db->qwv($orderSQL, $values);
-		}
-			
-=======
 		
 		//where $statuses is an array of ints: array(4, 9);
 		public static function getForStatusesByUser($userid, $statuses)
@@ -67,7 +55,6 @@
 			}
 		}
 
->>>>>>> 0c39751e8be7046851964bf671e5cbadd0b0d63f
 		public static function getActiveByUser($userid)
 		{
 			global $db;

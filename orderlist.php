@@ -19,6 +19,7 @@
 	if(Order::getAllActive())
 	{
 			//get all active orders
+			//This is the only line needed for the waiter screen to function
 			$active_order_objects = Order::getAllActive();
 			
 			//multiple orders
@@ -26,54 +27,47 @@
 			{
 				foreach($active_order_objects as $active_order_object)
 				{
+					//for each order, get all items on that order
 					$active_order_items = Order_Item::getByOrder($active_order_object->orderid);
-				
+					
 					//multiple items on order
 					if(is_array($active_order_items))
 					{
 						foreach($active_order_items as $active_order_item)
 						{
-							array_push($active_items, Item::getByID($active_order_item->itemid));
-						}
-					}
-					
-					//one item on order
-					else
-					{
-					
-					}
-				}
-
-			}
-			//one order in system
-			else
-			{
-				$active_order_items = Order_Item::getByOrder($active_order_objects->orderid);
-				
-				//multiple items on order
-				if(is_array($active_order_items))
-				{
-					foreach($active_order_items as $active_order_item)
-					{
-						$thisitem = array(	'orderid' => $active_order_item->orderid,
+							$thisitem = array(	'orderid' => $active_order_item->orderid,
 											'name' => Item::getByID($active_order_item->itemid)->name,
 											'specialComment' => Order::getByID($active_order_item->orderid)->specialComment,
 											'tablenumber' => Order::getByID($active_order_item->orderid)->tableid,
 											'time' => date("g:i (A) m/d/y", Order::getByID($active_order_item->orderid)->time),
 											'status' => Order::getByID($active_order_item->orderid)->statusid,
 											'user' => Order::getByID($active_order_item->orderid)->userid,
-											'itemid' => $active_order_item->itemid
-						);
-						array_push($active_items, $thisitem);
+											'itemid' => $active_order_item->itemid,
+											'catid' => Item::getByID($active_order_item->itemid)->categoryid
+							);
+							array_push($active_items, $thisitem);
+						}
+					}
+					else
+					{
+						//single item on order
+						$thisitem = array(	'orderid' => $active_order_items->orderid,
+											'name' => Item::getByID($active_order_items->itemid)->name,
+											'specialComment' => Order::getByID($active_order_items->orderid)->specialComment,
+											'tablenumber' => Order::getByID($active_order_items->orderid)->tableid,
+											'time' => date("g:i (A) m/d/y", Order::getByID($active_order_items->orderid)->time),
+											'status' => Order::getByID($active_order_items->orderid)->statusid,
+											'user' => Order::getByID($active_order_items->orderid)->userid,
+											'itemid' => $active_order_items->itemid,
+											'catid' => Item::getByID($active_order_items->itemid)->categoryid
+							);
+							array_push($active_items, $thisitem);
 					}
 				}
-				
-				//one item on order
-				else
-				{
-				
-				}
-				
+			}
+			else
+			{
+				$active_items = $active_order_items;
 			}
 	}
 	

@@ -67,7 +67,11 @@
 			}
 			elseif( $type == 'report' )
 			{
-				$report_name = $id == 0 ? 'Item Frequency' : 'Another report??';
+				switch($id)
+				{
+					case 0: $report_name = 'Item Frequency'; break;
+					case 1: $report_name = 'Orders per Hour'; break;
+				}
 				$this->path = '<a href="reporting.php" class="button"><span class="icon book"></span>Reports</a>';
 				if($id != null)
 				{

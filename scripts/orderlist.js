@@ -41,8 +41,6 @@ function update_status(orderid, status){
 
 	ajaxRequest.onreadystatechange = function(){
 		if(ajaxRequest.readyState == 4){
-			var ob = eval(ajaxRequest.responseText)
-			
 			$(".status_id_order_" + orderid).text(status);
 		}
 	}
@@ -62,7 +60,7 @@ $( '.increase_status' ).click(function(){
 		$(this).parent().parent().removeClass('status3');
 		$(this).parent().parent().addClass('status4');
 		update_status($(this).attr('id'), 4);
-		$(this).parent().parent().fadeOut(4000);
+		$('#sort2 tr:last').after($(this).parent().parent());
 	}
 	else if($(this).parent().parent().attr('class')=='status0')
 	{
@@ -90,5 +88,6 @@ $( '.decrease_status' ).click(function(){
 		$(this).parent().parent().removeClass('status4');
 		$(this).parent().parent().addClass('status3');
 		update_status($(this).attr('id'), 3);
+		$('#sort thead').after($(this).parent().parent());
 	}
 });

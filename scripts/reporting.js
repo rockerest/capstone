@@ -2,6 +2,7 @@ $(document).ready(function() {
 	update(<?=$tmpl->report_type?>);
 });
 
+
 $( '.item_selects' ).live('change', (function(){
 	update(<?=$tmpl->report_type?>);
 }));
@@ -43,5 +44,19 @@ function update(type)
 		});
 		
 		$.plot($("#placeholder"), [{data: d1, bars: { show: true }}], {xaxis: {ticks: ticks_arr}});
+	}
+	else if(type==1)
+	{
+		var d1 = [];
+		var ticks_arr = [[0,"12:00am"],[3,"3:00"],[6,"6:00"], [9,"9:00"], [12, "12:00pm"], [15, "3:00"], [18, "6:00"], [21, "9:00"]];
+		<?php
+			for($i=0; $i<24; $i++)
+			{
+				$val = $tmpl->order_times[$i]=='' ? 0 : $tmpl->order_times[$i];
+				print "d1.push([$i, $val]);";
+			}
+		?>
+		
+		 $.plot($("#hourly_placeholder"), [{data: d1}], {xaxis: {ticks: ticks_arr}});
 	}
 }

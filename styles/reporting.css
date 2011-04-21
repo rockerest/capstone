@@ -1,8 +1,8 @@
 #placeholder
 {
 	float:left;
-	width:600px;
-	height:300px;
+	width:37.5em;
+	height:18.75em;
 }
 #report_title
 {
@@ -12,28 +12,34 @@
 #report_opts
 {
 	float:left;
-	width:150px;
-	margin-right:15px;
+	width:9.375em;
+	margin-right:0.938em;
 	text-align:right;
 }
 #report_body
 {
-	width:765px;
-	margin: 25px auto auto auto;
+	width:47.813em;
+	margin: 1.563em auto auto auto;
 }
 #update_form, #add_item_selector
 {
-	margin:10px 20px 10px auto;
+	margin:.625em 1.250em .625em auto;
 }
 #breadcrumb
 {
 	border-bottom: .0625em solid #EEEEEE;
 	width: 62.5em;
 	padding-bottom: .5em;
+	margin-bottom:1em;
 	left: -2em;
 }
 .item 
 {
 	margin: 1em;
 	float: left;
+}
+#hourly_placeholder
+{
+	width:47em;
+	height:25em;
 }

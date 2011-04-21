@@ -1,8 +1,12 @@
+<div class='center' id="buttons">
+<a class="button" id="add_item_selector" href="?view=cook"><span class="icon menu"></span>Cook View</a>
+<a class="button" id="add_item_selector" href="?view=waiter"><span class="icon menu"></span>Waiter View</a>
+</div>
 <?php
-if(true)
+if(isset($_GET['view']) && $_GET['view']==waiter)
 //-------------  waiter view  -------------------
 {?>
-<h1>Active Orders - Waiter</h1>
+<div class='message-box clean center w50'>Active Orders</div>
 <div id="table_holder">
 <table id="sort">
 <thead unselectable="on">
@@ -32,11 +36,30 @@ if(true)
 	}
 	else
 	{
-		//multiple orders
+		foreach($tmpl->active_order_objects as $active_order_object)
+		{
+			print "<tr class=\"status".$active_order_object->statusid."\"><td>";
+			print $active_order_object->orderid;
+			print "</td><td>";
+			print $active_order_object->tableid;
+			print "</td><td>";
+			print $active_order_object->userid;
+			print "</td><td>";
+			print $active_order_object->specialComment;
+			print "</td><td>";
+			print date("g:i (A) m/d/y", $active_order_object->time);
+			print "</td><td class=\"status_id_order_".$active_order_object->orderid."\">";
+			print $active_order_object->statusid;
+			print "</td><td>";
+			print "<a class=\"button increase_status\" href=\"#\" id=\"".$active_order_object->orderid."\"><span class=\"icon uparrow\"></span>Increase Status</a>";
+			print "</td><td>";
+			print "<a class=\"button decrease_status\" href=\"#\" id=\"".$active_order_object->orderid."\"><span class=\"icon downarrow\"></span>Decrease Status</a>";
+			print "</td></tr>";
+		}
 	}
 ?>
 </table>
-<h1>Inactive Orders - Waiter</h1>
+<div class='message-box clean center w50'>Inactive Orders</div>
 <table id="sort2">
 <thead unselectable="on">
 <th>OrderId</th><th>Table Number</th><th>User</th><th>Special Comment</th><th>Time Submitted</th><th>Status</th><th></th><th></th>
@@ -65,7 +88,27 @@ if(true)
 	}
 	else
 	{
-		//multiple inactive orders
+		foreach($tmpl->inactive_order_objects as $inactive_order_object)
+		{
+			//multiple inactive orders
+			print "<tr class=\"status".$inactive_order_object->statusid."\"><td>";
+			print $inactive_order_object->orderid;
+			print "</td><td>";
+			print $inactive_order_object->tableid;
+			print "</td><td>";
+			print $inactive_order_object->userid;
+			print "</td><td>";
+			print $inactive_order_object>specialComment;
+			print "</td><td>";
+			print date("g:i (A) m/d/y", $inactive_order_object->time);
+			print "</td><td class=\"status_id_order_".$inactive_order_object->orderid."\">";
+			print $inactive_order_object->statusid;
+			print "</td><td>";
+			print "<a class=\"button increase_status\" href=\"#\" id=\"".$inactive_order_object->orderid."\"><span class=\"icon uparrow\"></span>Increase Status</a>";
+			print "</td><td>";
+			print "<a class=\"button decrease_status\" href=\"#\" id=\"".$inactive_order_object->orderid."\"><span class=\"icon downarrow\"></span>Decrease Status</a>";
+			print "</td></tr>";
+		}
 	}
 ?>
 </table>
@@ -76,27 +119,25 @@ else
 {
 // ------------- cook view ----------------
 ?>
-<h1>Active Order - Cook</h1>
+<div class='message-box clean center w50'>Active Items</div>
 <div id="table_holder">
+<div id="item_desc">
+	<div class="catid1">Sandwiches</div>
+	<div class="catid2">Drinks</div>
+	<div class="catid3">Entrees</div>
+	<div class="catid4">Apps</div>
+	<div class="catid5">Desserts</div>
+	
+</div>
 <table id="sort">
 <thead unselectable="on">
 <th>OrderId</th><th>Item Name</th><th>Table Number</th><th>User</th><th>Special Comment</th><th>Time Submitted</th><th>Status</th><th></th><th></th>
 </thead>
 <?php
-if(!is_array($tmpl->active_order_objects))
-{
 	//single order in system
 	if(!is_array($tmpl->active_items))
 	{
-		//single item on order
-		
-	}
-	else
-	{
-		//deal with array of order items
-		foreach($tmpl->active_items as $active_item)
-		{
-			print "<tr class=\"status".$active_item['status']."\"><td>";
+			print "<tr class='catid".$active_item['catid']."'><td>";
 			print $active_item['orderid'];
 			print "</td><td>";
 			print $active_item['name'];
@@ -110,24 +151,32 @@ if(!is_array($tmpl->active_order_objects))
 			print $active_item['time'];
 			print "</td><td>";
 			print $active_item['status'];
+			print "</td></tr>";
+	}
+	else
+	{
+		//deal with array of order items
+		foreach($tmpl->active_items as $active_item)
+		{
+			print "<tr class='catid".$active_item['catid']."'><td>";
+			print $active_item['orderid'];
 			print "</td><td>";
-			print "<a class=\"button increase_status\" href=\"#\" id=\"".$active_item['itemid']."\"><span class=\"icon uparrow\"></span>Increase Status</a>";
+			print $active_item['name'];
 			print "</td><td>";
-			print "<a class=\"button decrease_status\" href=\"#\" id=\"".$active_item['itemid']."\"><span class=\"icon downarrow\"></span>Decrease Status</a>";
+			print $active_item['tablenumber'];
+			print "</td><td>";
+			print $active_item['user'];
+			print "</td><td>";
+			print $active_item['specialComment'];
+			print "</td><td>";
+			print $active_item['time'];
+			print "</td><td>";
+			print $active_item['status'];
 			print "</td></tr>";
 		}
 	}
-}
-else
-{
-//multiple orders
-foreach($tmpl->active_order_objects as $active_order_object)
-{
+
 ?>
-<tr>
-<td><?=$active_order_object->orderid?></td>
-</tr>
-<?}}?>
 </table>
 
 </div>
