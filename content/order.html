@@ -16,7 +16,7 @@ if( $tmpl->pending )
 					<th>Item</th>
 					<th>Comment</th>
 					<th>Price</th>
-					<th>Control</th>
+					<th></th>
 				</tr>
 			</thead>
 			<tbody>
@@ -37,7 +37,10 @@ if( $tmpl->pending )
 					<td><?= $item->item->name; ?></td>
 					<td><?= $item->specialComment; ?></td>
 					<td>$<?= $item->item->price; ?></td>
-					<td>Print Controls</td>
+					<td>
+						<a href="item.php?id=<?= $item->item->itemid; ?>&action=editOrderItem&oid=<?= $item->order_itemid; ?>" class="button"><span class="icon cog"></span>Edit</a>
+						<a href="item.php?id=<?= $item->item->itemid; ?>&action=deleteOrderItem&oid=<?= $item->order_itemid; ?>" class="negative button"><span class="icon cross"></span>Remove</a>
+					</td>
 				</tr>
 				<?
 				$sum += $item->item->price;
@@ -84,7 +87,7 @@ if( $tmpl->current )
 					<th>Item</th>
 					<th>Comment</th>
 					<th>Price</th>
-					<th>Control</th>
+					<th></th>
 				</tr>
 			</thead>
 			<tbody>
@@ -105,7 +108,16 @@ if( $tmpl->current )
 					<td><?= $item->item->name; ?></td>
 					<td><?= $item->specialComment; ?></td>
 					<td>$<?= $item->item->price; ?></td>
-					<td>Print Controls</td>
+					<td>
+						<? if( $item->order->statusid < 4 )
+						{
+						?>
+						<a href="item.php?id=<?= $item->item->itemid; ?>&action=editOrderItem&oid=<?= $item->order_itemid; ?>" class="button"><span class="icon cog"></span>Edit</a>
+						<a href="item.php?id=<?= $item->item->itemid; ?>&action=deleteOrderItem&oid=<?= $item->order_itemid; ?>" class="negative button"><span class="icon cross"></span>Remove</a>
+						<?
+						}
+						?>
+					</td>
 				</tr>
 				<?
 				$sum += $item->item->price;
@@ -152,7 +164,7 @@ if( $tmpl->past )
 					<th>Item</th>
 					<th>Comment</th>
 					<th>Price</th>
-					<th>Control</th>
+					<th></th>
 				</tr>
 			</thead>
 			<tbody>
@@ -173,7 +185,7 @@ if( $tmpl->past )
 					<td><?= $item->item->name; ?></td>
 					<td><?= $item->specialComment; ?></td>
 					<td>$<?= $item->item->price; ?></td>
-					<td>Print Controls</td>
+					<td></td>
 				</tr>
 				<?
 				$sum += $item->item->price;
