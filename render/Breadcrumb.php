@@ -75,7 +75,7 @@
 				$this->path = '<a href="reporting.php" class="button"><span class="icon book"></span>Reports</a>';
 				if($id != null)
 				{
-					$this->path .= '<a href="reporting.php?report='.$report_name.'" class="button"><span class="icon clock"></span>'.$report_name.'</a>';
+					$this->path .= '|<a href="reporting.php?report='.$report_name.'" class="button"><span class="icon clock"></span>'.$report_name.'</a>';
 				}
 			}
 		}
