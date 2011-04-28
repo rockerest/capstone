@@ -16,5 +16,21 @@
 				return false;
 			}
 		}
+		
+		public function toArray($objects)
+		{
+			if( is_array($objects) )
+			{
+				return $objects;
+			}
+			elseif( is_object($objects) )
+			{
+				return array($objects);
+			}
+			else
+			{
+				return null;
+			}
+		}
 	}
 ?>
