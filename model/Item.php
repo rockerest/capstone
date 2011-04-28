@@ -38,6 +38,17 @@
 			$sql = "SELECT FROM items WHERE LOWER(name)=?";
 			$values = array(strtolower($name));
 			$items = $db->qwv($sql, $values);
+			
+			return Item::wrap($items);
+		}
+		
+		public static function getByCharacteristic($cid)
+		{
+			global $db;
+			$sql = "SELECT FROM items WHERE itemid IN (SELECT itemid FROM items_have_characteristics WHERE characteristicid=?)";
+			$values = array($cid);
+			$items = $db->qwv($sql, $values);
+			
 			return Item::wrap($items);
 		}
 		
@@ -55,6 +66,15 @@
 		{
 			global $db;
 			$sql = "SELECT * FROM items WHERE categoryid=?";
+			$values = array($category);
+			$items = $db->qwv($sql, $values);
+			return Item::wrap($items);
+		}
+		
+		public static function getByCategorySearch($category)
+		{
+			global $db;
+			$sql = "SELECT * FROM items WHERE categoryid IN (SELECT categoryid FROM categories WHERE number LIKE ?)";
 			$values = array($category);
 			$items = $db->qwv($sql, $values);
 			return Item::wrap($items);
