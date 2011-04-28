@@ -33,6 +33,22 @@
 			return View::wrap($view);
 		}
 		
+		public static function getByUserForItem($userid, $itemid)
+		{
+			global $db;
+			$sql = "SELECT * FROM views WHERE userid=? AND itemid=?";
+			$values = array($userid, $itemid);
+			$views = $db->qwv($sql, $values);
+			
+			return View::wrap($view);
+		}
+		
+		public static function add($userid, $itemid)
+		{
+			$vw = new View(null, $userid, $itemid, time());
+			return $vw->save();
+		}
+		
 		public static function wrap($views)
 		{
 			$viewList = array();
@@ -41,18 +57,7 @@
 				array_push($viewList, new View($vw['viewsid'], $vw['userid'], $vw['itemid'], $vw['time']));
 			}
 			
-			if( count( $viewList ) > 1 )
-			{
-				return $viewList;
-			}
-			elseif( count( $viewList ) == 1 )
-			{
-				return $viewList[0];
-			}
-			else
-			{
-				return false;
-			}
+			return View::sendback($viewList);
 		}
 		
 		private $viewsid;
@@ -71,6 +76,44 @@
 		public function __get($var)
 		{
 			return $this->$var;
+		}
+		
+		public function save()
+		{
+			global $db;
+			if( $this->viewsid == null )
+			{
+				//insert
+				$sql = "INSERT INTO views (userid, itemid, time) VALUES (?, ?, ?)";
+				$values = array($this->userid, $this->itemid, $this->time);
+				$db->qwv($sql, $values);
+				
+				if( $db->stat() )
+				{
+					$this->viewsid = $db->last();
+					return $this;
+				}
+				else
+				{
+					return false;
+				}
+			}
+			else
+			{
+				//update
+				$sql = "UPDATE views SET userid=?, itemid=?, time=? WHERE viewsid=?";
+				$values = array($this->userid, $this->itemid, $this->time, $this->viewsid);
+				$db->qwv($sql, $values);
+				
+				if( $db->stat() )
+				{
+					return $this;
+				}
+				else
+				{
+					return false;
+				}
+			}
 		}
 	}
 ?>

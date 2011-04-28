@@ -2,6 +2,7 @@
 	set_include_path('backbone:components:content:render:model:scripts:styles:images');
 	
 	require_once('Item.php');
+	require_once('View.php');
 	require_once('Page.php');
 	require_once('Template.php');
 	
@@ -43,6 +44,7 @@
 	else
 	{
 		$tmpl->breadcrumb = new Breadcrumb('item', $tmpl->item->itemid);
+		View::add($_SESSION['userid'], $tmpl->item->itemid);
 	}
 	
 	switch( $tmpl->code )
