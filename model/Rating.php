@@ -53,18 +53,7 @@
 				array_push($rateList, new Rating($rating['ratingid'], $rating['rating'], $rating['userid'], $rating['itemid'], $rating['time'], $rating['commentid']));
 			}
 			
-			if( count($rateList) > 1 )
-			{
-				return $rateList;
-			}
-			elseif( count($rateList) == 1 )
-			{
-				return $rateList[0];
-			}
-			else
-			{
-				return false;
-			}
+			return Rating::sendback($rateList);
 		}
 
 		private $commentid;

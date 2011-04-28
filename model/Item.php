@@ -82,18 +82,7 @@
 				array_push($itemList, new Item($item['itemid'], $item['name'], $item['categoryid'], $item['description'], $item['image'], $item['price'], $item['prepTime'], $item['hasCookLevels']));
 			}
 			
-			if( count( $itemList ) > 1 )
-			{
-				return $itemList;
-			}
-			elseif( count( $itemList ) == 1 )
-			{
-				return $itemList[0];
-			}
-			else
-			{
-				return false;
-			}
+			return Item::sendback($itemList);
 		}
 		
 		private $itemid;
