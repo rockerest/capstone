@@ -18,6 +18,9 @@
 			<input type="radio" name="register_role" value="2">Manager</input>
 			<input type="radio" name="register_role" value="3" checked>Customer</input>
 			<br />
+		<?} elseif( $_SESSION['roleid'] == 2 ){?>
+			<input type="radio" name="register_role" value="2">Manager</input>
+			<input type="radio" name="register_role" value="3" checked>Customer</input>
 		<?}?>
 		<fieldset>
 			<legend>Account Identity</legend>
