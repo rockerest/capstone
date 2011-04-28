@@ -3,6 +3,8 @@
 	
 	require_once('Authentication.php');
 	require_once('Order.php');
+	require_once('Rating.php');
+	require_once('View.php');
 	require_once('Predict.php');
 
 	class User extends Base
@@ -115,6 +117,14 @@
 			elseif( $var == 'Predict' )
 			{
 				return new Predict($this);
+			}
+			elseif( $var == 'ratings' )
+			{
+				return Rating::getByUser($this->userid);
+			}
+			elseif( $var == 'views' )
+			{
+				return View::getByUser($this->userid);
 			}
 			else
 			{
