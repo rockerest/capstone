@@ -100,7 +100,7 @@
 				$similarities = array_merge($similarities, array($itm->itemid => array("characteristic" => $charcount, "category" => $catcount, "similarity" => $similarity)));
 			}
 			
-			return $similarities;
+			return usort($similarities, "sortSimilarities");
 		}
 		
 		private $user;
@@ -177,6 +177,22 @@
 		
 		public function recommend()
 		{
+		}
+		
+		private function sortSimilarities($a, $b)
+		{
+			if( $a['similarity'] > $b['similarity'] )
+			{
+				return 1;
+			}
+			elseif( $a['similarity'] < $b['similarity'] )
+			{
+				return -1;
+			}
+			else
+			{
+				return 0;
+			}
 		}
 	}
 ?>
