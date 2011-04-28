@@ -141,42 +141,112 @@
 			$views[0] = View::getByUserForItem($this->user->userid, $one->itemid);
 			$views[1] = View::getByUserForItem($this->user->userid, $two->itemid);
 			
+			$willTheyLikeTwoComparedToOne = 0;
+			
 			//first, try to compare ratings
 			if( $ratings[0] || $ratings[1] )
 			{
 				if( $ratings[0] && $ratings[1] )
 				{
+					//only use the first rating because if there's more than one that's bullshit.
+					$oneRate = Base::toArray($ratings[0]);
+					$oneRate = $oneRate[0];
+					$twoRate = Base::toArray($ratings[1]);
+					$twoRate = $twoRate[0];
+					
+					if( $oneRate == 0 )
+					{
+						$oneRate = .0000000000000001;
+					}
+					if( $twoRate == 0 )
+					{
+						$twoRate = .0000000000000001;
+					}
+					
+					$oneRate = 1 / $oneRate->rating;
+					$twoRate = 1 / $twoRate->rating;
+					
+					$diff = $oneRate - $twoRate;
 				}
 				else
 				{
 					//one item doesn't have ratings
+					//don't do anything right now.
 				}
+				
+				$willTheyLikeTwoComparedToOne += $diff * .05;
 			}
 			else
 			{
-				//if the user has no ratings, try to compare number of views
-				//people are more likely to view something if they want it (even subconsciously)
-				//so the comparison of views could offer a rough estimate
-				if( $views[0] || $views[1] )
+				//no ratings for either item
+			}
+			
+			//try to compare number of views
+			//people are more likely to view something if they want it (even subconsciously)
+			//so the comparison of views could offer a rough estimate
+			if( $views[0] || $views[1] )
+			{
+				if( $views[0] && $views[1] )
 				{
-					if( $views[0] && $views[1] )
+					//get counts
+					$vwOne = count(Base::toArray($views[0]));
+					$vwTwo = count(Base::toArray($views[1])); // ah, vwTwo, the most difficult Pokemon to catch.
+					
+					//close or equal
+					if( $vwTwo - 1 < $vwOne < $vwTwo + 1 )
 					{
+						//bump up the likelihood
+						$willTheyLikeTwoComparedToOne += .05;
+					}
+					elseif( $vwTwo < $vwOne )
+					{
+						//maybe not
+						$willTheyLikeTwoComparedToOne -= .05;
 					}
 					else
 					{
-						//one of the items hasn't been viewed
+						//very likely
+						$willTheyLikeTwoComparedToOne += .1;
 					}
 				}
 				else
 				{
-					//The user has no ratings for either item, and no views for either item.
-					//The only option is to return an unknown for the direct comparison
+					//one of the items hasn't been viewed
+					//don't do anything right now.
 				}
 			}
+			else
+			{
+				//The user has no views for either item
+			}
+			
+			return $willTheyLikeTwoComparedToOne;
 		}
 		
-		public function recommend()
+		public function recommend($item)
 		{
+			if( !($item instanceof Item) )
+			{
+				if( is_integer($item) )
+				{
+					$item = Item::getByID($item);
+				}
+				else
+				{
+					return false;
+				}
+			}
+			
+			//get similarity array for the item
+			$similar = Predict::similar($item);
+			foreach( $similar as $arr )
+			{
+				$id = $arr['itemid'];
+				$similarity = $arr['similarity'];
+				$arr['recommendation'] = $similarity + Predict::compare($item, $id);
+			}
+			
+			return usort($similarities, "sortSimilarities");
 		}
 		
 		private function sortSimilarities($a, $b)
