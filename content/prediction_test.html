@@ -1,0 +1,20 @@
+<div id="login" class="center">
+	<form action="#" method="post" id="item_suggest" class="clear">
+		<fieldset>
+			<legend>Similar Items</legend>
+			<label for="name">Item:</label>
+			<br />
+			<input type="text" id="name" name="name" />
+			<br />
+		</fieldset>
+		<div id="submit_button" class="clear">
+			<button type="submit" class="big primary positive button"><span class="icon key"></span>Suggest</button>
+		</div>
+	</form>
+	<?php
+		if($tmpl->suggested_items != -1)
+		{
+			var_dump($suggested_item_objects);
+		}
+	?>
+</div>

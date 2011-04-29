@@ -1,7 +1,7 @@
 <?php
 	require_once('connect.php');
 	
-	class View
+	class View extends Base
 	{
 		public static function getByID($id)
 		{

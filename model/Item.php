@@ -7,7 +7,7 @@
 	require_once('Category.php');
 	require_once('Search.php');
 	
-	class Item
+	class Item extends Base
 	{
 		public static function getByID($id)
 		{
@@ -35,7 +35,7 @@
 		public static function getByName($name)
 		{
 			global $db;
-			$sql = "SELECT FROM items WHERE LOWER(name)=?";
+			$sql = "SELECT * FROM items WHERE LOWER(name)=?";
 			$values = array(strtolower($name));
 			$items = $db->qwv($sql, $values);
 			

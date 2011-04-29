@@ -46,7 +46,8 @@
 			while( count($numbers) > 0 )
 			{
 				$newtms = Base::toArray(Item::getByCategorySearch(implode('.',$numbers).'%')); //mmm, delicious Newtms.
-				$itms = array_merge($itms, array_diff($newtms, $itms));
+				$itms = array_merge($itms, $newtms);
+				
 				array_pop($numbers);
 			}
 			
@@ -97,10 +98,16 @@
 				$similarity += ($CATADD * $catcount['match']);
 				$similarity += ($CHARADD * $charcount['match']);
 				
-				$similarities = array_merge($similarities, array($itm->itemid => array("characteristic" => $charcount, "category" => $catcount, "similarity" => $similarity)));
+				$similarities = array_merge($similarities, array("itemid" => $itm->itemid, "characteristic" => $charcount, "category" => $catcount, "similarity" => $similarity));
 			}
-			
-			return usort($similarities, "sortSimilarities");
+			if(usort($similarities, array(Predict, 'sortSimilarities')))
+			{
+				return $similarities;
+			}
+			else
+			{
+				return false;
+			}
 		}
 		
 		private $user;
@@ -193,7 +200,7 @@
 					$vwTwo = count(Base::toArray($views[1])); // ah, vwTwo, the most difficult Pokemon to catch.
 					
 					//close or equal
-					if( $vwTwo - 1 < $vwOne < $vwTwo + 1 )
+					if( ( $vwTwo - 1 < $vwOne ) && ( $vwTwo < $vwTwo + 1 ) )
 					{
 						//bump up the likelihood
 						$willTheyLikeTwoComparedToOne += .05;
@@ -249,20 +256,12 @@
 			return usort($similarities, "sortSimilarities");
 		}
 		
-		private function sortSimilarities($a, $b)
+		private static function sortSimilarities($a, $b)
 		{
-			if( $a['similarity'] > $b['similarity'] )
-			{
-				return 1;
-			}
-			elseif( $a['similarity'] < $b['similarity'] )
-			{
-				return -1;
-			}
-			else
-			{
+			if ($a == $b) {
 				return 0;
 			}
+			return ($a < $b) ? -1 : 1;
 		}
 	}
 ?>
