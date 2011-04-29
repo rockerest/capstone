@@ -12,11 +12,13 @@
 	$suggested_item_objects = array();
 	
 	$suggested_items = isset($_GET['item']) ? Predict::similar(Item::getByName($_GET['item'])) : -1;
-	var_dump($suggested_items);
-	foreach($suggested_items as $suggested_item)
+	if($suggested_items != -1)
 	{
-		//var_dump($suggested_item);
-		array_push($suggested_item_objects, Item::getByID($suggested_item['itemid'])); 
+		foreach($suggested_items as $suggested_item)
+		{
+			var_dump($suggested_item);
+			array_push($suggested_item_objects, Item::getByID($suggested_item['itemid'])); 
+		}
 	}
 	$tmpl->suggested_item_objects = $suggested_item_objects;
 	
