@@ -111,16 +111,11 @@ if( $('#char').length > 0 )
 	makeSuggest($('#char #name'), 3, 0, "name", "name", 0);
 }
 
-$( '#char button[type="submit"]' ).click(function(){
-	var name = $( '#char #name' ).val(),
-		
-	json = {
-				"name" : name
-			};
+var add = function(obj, script){
 	$.ajax({
 		type : "POST",
-		url : "components/AddCharacteristic.php",
-		data : json,
+		url : "components/" + script,
+		data : obj.serialize(),
 		success : function(data){
 			var data = $.parseJSON(data),
 				css = data.status ? "okay" : "error",
@@ -135,8 +130,16 @@ $( '#char button[type="submit"]' ).click(function(){
 				$( '#switch' ).after('<div id="ajaxError" class="message-box center w50 bump ' + css + '">' + data.message + '</div>');
 			}
 		}
-	});
-	
+	})
+};
+
+$( '#char button[type="submit"]' ).click(function(){
+	add($( '#char' ), "AddCharacteristic.php");	
+	return false;
+});
+
+$( '#ing button[type="submit"]' ).click(function(){
+	add($( '#ing' ), "AddIngredient.php");
 	return false;
 });
 

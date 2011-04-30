@@ -1,16 +1,16 @@
-#char fieldset{
+fieldset{
 	padding-top: .25em;
 }
 
-#char fieldset input{
+fieldset input[type="text"]{
 	width: 25em;
 }
 
-#char + table{
+table{
 	border-collapse: collapse;
 }
 
-#char + table tbody td, #char + table thead th{
+table tbody td, table thead th{
 	border: .0625em solid #5555AA;
 	padding: .25em;
 }

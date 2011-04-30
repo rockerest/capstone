@@ -41,6 +41,30 @@
 			array_push($tmpl->items, new Characteristic("",""));
 		}
 	}
+	elseif( $tmpl->type == 'ingredient' )
+	{
+		$ings = Ingredient::getAll();
+		if( $ings )
+		{
+			if( is_object($ings) )
+			{
+				$tmpl->items = array($ings);
+			}
+			elseif( is_array($ings) )
+			{
+				$tmpl->items = $ings;
+			}
+		}
+		else
+		{
+			$tmpl->items = array();
+		}
+		
+		while( (count($tmpl->items) % 6) != 0 )
+		{
+			array_push($tmpl->items, new Ingredient("","","","",""));
+		}
+	}
 	
 	$page->run();
 	
