@@ -32,6 +32,27 @@ if( $tmpl->type != null )
 			<button type="submit" class="big primary button center"><span class="plus icon"></span>Create New Characteristic</button>
 		</div>
 	</form>
+	<table class="w75 center bump">
+	<?
+	$main = 0;
+	for( $i = 0; $i < (count($tmpl->items) / 5) ; $i++ )
+	{
+		?>
+		<tr>
+		<?
+		for( $j = 0; $j < 6; $j++ )
+		{
+			?>
+			<td><?= $tmpl->items[$main]->characteristic; ?></td>
+			<?
+			$main++;
+		}
+		?>
+		</tr>
+		<?
+	}
+	?>
+	</table>
 	<?
 	}
 	elseif( $tmpl->type == 'ingredient' )

@@ -5,3 +5,12 @@
 #char fieldset input{
 	width: 25em;
 }
+
+#char + table{
+	border-collapse: collapse;
+}
+
+#char + table td, #char + table th{
+	border: .0625em solid #5555AA;
+	padding: .25em;
+}

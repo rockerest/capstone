@@ -3,6 +3,8 @@
 	
 	require_once('Page.php');
 	require_once('Template.php');
+	require_once('Characteristic.php');
+	require_once('Ingredient.php');
 
 	$page = new Page(0, "OrderUp - add things");
 	$tmpl = new Template();
@@ -14,6 +16,31 @@
 	}
 	
 	$tmpl->type = isset($_GET['type']) ? $_GET['type'] : null;
+	
+	if( $tmpl->type == 'characteristic' )
+	{
+		$chars = Characteristic::getAll();
+		if( $chars )
+		{
+			if( is_object($chars) )
+			{
+				$tmpl->items = array($chars);
+			}
+			elseif( is_array($chars) )
+			{
+				$tmpl->items = $chars;
+			}
+		}
+		else
+		{
+			$tmpl->items = array();
+		}
+		
+		while( (count($tmpl->items) % 5) != 0 )
+		{
+			array_push($tmpl->items, new Characteristic("",""));
+		}
+	}
 	
 	$page->run();
 	
