@@ -111,6 +111,8 @@
 				//    Because only truly logged in users are "active"
 				$_SESSION['roleid'] = 4;
 				$_SESSION['userid'] = $tblUser->userid;
+				$_SESSION['fname'] = $tblUser->fname;
+				$_SESSION['isAnon'] = true;
 			}
 		}
 	}

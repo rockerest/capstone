@@ -21,7 +21,7 @@
 	
 	$tmpl->pending = getOrderArray($pending);
 	$tmpl->current = getOrderArray($current);
-	$tmpl->past = getOrderArray($past);
+	$tmpl->past = $_SESSION['isAnon'] ? false : getOrderArray($past);
 	
 	$html = $tmpl->build('order.html');
 	$css = $tmpl->build('order.css');

@@ -12,9 +12,9 @@ if( $tmpl->pending )
 		<table class="w90 center bump follow">
 			<thead>
 				<tr>
-					<th>Item Category</th>
 					<th>Item</th>
 					<th>Comment</th>
+					<th>Considerations</th>
 					<th>Price</th>
 					<th></th>
 				</tr>
@@ -33,9 +33,9 @@ if( $tmpl->pending )
 				{
 				?>
 				<tr class="item">
-					<td><?= $item->item->category->name; ?></td>
 					<td><?= $item->item->name; ?></td>
 					<td><?= $item->specialComment; ?></td>
+					<td>Show modified ingredients</td>
 					<td>$<?= $item->item->price; ?></td>
 					<td>
 						<a href="item.php?id=<?= $item->item->itemid; ?>&action=editOrderItem&oid=<?= $item->order_itemid; ?>" class="button"><span class="icon cog"></span>Edit</a>
@@ -83,9 +83,9 @@ if( $tmpl->current )
 		<table class="w90 center bump follow">
 			<thead>
 				<tr>
-					<th>Item Category</th>
 					<th>Item</th>
 					<th>Comment</th>
+					<th>Considerations</th>
 					<th>Price</th>
 					<th></th>
 				</tr>
@@ -104,9 +104,9 @@ if( $tmpl->current )
 				{
 				?>
 				<tr class="item">
-					<td><?= $item->item->category->name; ?></td>
 					<td><?= $item->item->name; ?></td>
 					<td><?= $item->specialComment; ?></td>
+					<td>Show modified ingredients</td>
 					<td>$<?= $item->item->price; ?></td>
 					<td>
 						<? if( $item->order->statusid < 4 )
@@ -146,11 +146,17 @@ else
 ?>
 </div>
 
+<?php
+if( $tmpl->past )
+{
+?>
 <div id="past" class="section follow">
 	<div class="message-box clean center w50">
 		Past Orders
 	</div>
-<?php
+<?
+}
+
 if( $tmpl->past )
 {
 	foreach( $tmpl->past as $order )
@@ -160,9 +166,9 @@ if( $tmpl->past )
 		<table class="w90 center bump follow">
 			<thead>
 				<tr>
-					<th>Item Category</th>
 					<th>Item</th>
 					<th>Comment</th>
+					<th>Considerations</th>
 					<th>Price</th>
 					<th></th>
 				</tr>
@@ -181,9 +187,9 @@ if( $tmpl->past )
 				{
 				?>
 				<tr class="item">
-					<td><?= $item->item->category->name; ?></td>
 					<td><?= $item->item->name; ?></td>
 					<td><?= $item->specialComment; ?></td>
+					<td>Show modified ingredients</td>
 					<td>$<?= $item->item->price; ?></td>
 					<td></td>
 				</tr>

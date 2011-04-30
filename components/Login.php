@@ -33,6 +33,7 @@
 				setSessionVar('lname', $tmp->lname);
 				setSessionVar('roleid', $tmp->authentication->role->roleid);
 				setSessionVar('userid', $tmp->userid);
+				setSessionVar('isAnon', false);
 				
 				kick(2, null, 0 );
 			}
