@@ -19,26 +19,52 @@
 		print $tmpl->breadcrumb;
 	?>
 </div>
-<div id="button_container" class="clear">
 
 <?php
+
+	if( (isset($tmpl->items) && count($tmpl->items) > 0) && (isset($tmpl->cats) && count($tmpl->cats) > 0) )
+	{
+		?>
+		<div class="message-box center w50 info">Items in this Category</div>
+		<?
+	}
+
 	if( isset($tmpl->items) && count($tmpl->items) > 0 )
 	{
+		?>
+		<div class="button_container clear">
+		<?
 		foreach( $tmpl->items as $item )
 		{
 			?>
 			<div class="url(item.php?id=<?= $item->itemid; ?>) div_link item big_button"><span><?= $item->name; ?></span></div>
 			<?
 		}
+		?>
+		</div>
+		<?
 	}
-	elseif( isset($tmpl->cats) && count($tmpl->cats) > 0 )
+	
+	if( (isset($tmpl->items) && count($tmpl->items) > 0) && (isset($tmpl->cats) && count($tmpl->cats) > 0) )
 	{
+		?>
+		<div class="message-box center w50 info">Sub-categories in this Category</div>
+		<?
+	}
+	
+	if( isset($tmpl->cats) && count($tmpl->cats) > 0 )
+	{
+		?>
+		<div class="button_container clear">
+		<?
 		foreach( $tmpl->cats as $cat )
 		{
 			?>
 			<div class="url(menu.php?cat=<?= $cat->categoryid; ?>) div_link category big_button"><span><?= $cat->name; ?></span></div>
 			<?
 		}
+		?>
+		</div>
+		<?
 	}
 ?>
-</div>

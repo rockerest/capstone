@@ -28,14 +28,13 @@
 		$num = $tmp->number;
 		$tmpl->prev = Category::getByNumber(preg_replace('#\.[\d]+$#','',$num));
 		$tmpl->cats = Category::getByParent($cat);
-		if( $tmpl->cats == false )
-		{
-			unset($tmpl->cats);
-			$tmpl->items = Item::getByCategory($cat);
-		}
-		elseif( $tmpl->cats instanceof Category )
+		if( $tmpl->cats instanceof Category )
 		{
 			$tmpl->items = Item::getByCategory($tmpl->cats->categoryid);
+		}
+		else
+		{
+			$tmpl->items = Item::getByCategory($cat);
 		}
 		
 		if( $tmpl->items instanceof Item )
@@ -43,12 +42,21 @@
 			$tmpl->items = array( $tmpl->items );
 		}
 		
-		if( $tmpl->items === false )
+		if( $tmpl->items === false && $tmpl->cats === false )
 		{
 			unset($tmpl->items);
+			unset($tmpl->cats);
 			$tmpl->code = 0;
 			$tmpl->css = "error";
 			$tmpl->message = "There are no items to display.";
+		}
+		elseif( $tmpl->items === false )
+		{
+			unset( $tmpl->items );
+		}
+		elseif( $tmpl->cats === false )
+		{
+			unset( $tmpl->cats );
 		}
 	}
 	
