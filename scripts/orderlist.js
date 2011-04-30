@@ -53,9 +53,13 @@ $( '.increase_status' ).click(function(){
 	classint++;
 	$(this).parent().parent().attr('class', classint);
 	update_status($(this).attr('id'), classint);
-	if(classint==4)
+	if(classint==6 || classint==11)
 	{
 		$('#sort2 tr:last').after($(this).parent().parent());
+	}
+	if(classint==7)
+	{
+		$('#sort thead').after($(this).parent().parent());
 	}
 });
 
@@ -64,7 +68,7 @@ $( '.decrease_status' ).click(function(){
 	classint--;
 	$(this).parent().parent().attr('class', classint);
 	update_status($(this).attr('id'), classint);	
-	if(classint==3)
+	if(classint==5 || classint==10)
 	{
 		$('#sort thead').after($(this).parent().parent());
 	}

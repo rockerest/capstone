@@ -58,7 +58,7 @@
 		public static function getActiveByUser($userid)
 		{
 			global $db;
-			$sql = "SELECT orderid FROM orders WHERE userid=? AND statusid!=4 AND statusid!=9";
+			$sql = "SELECT orderid FROM orders WHERE userid=? AND statusid!=6 AND statusid!=11";
 			$values = array($userid);
 			$orders = $db->qwv($sql, $values);
 			return Order::wrap($orders);
@@ -67,7 +67,7 @@
 		public static function getAllActive()
 		{
 			global $db;
-			$sql = "SELECT * FROM orders WHERE statusid!=4 AND statusid!=9";
+			$sql = "SELECT * FROM orders WHERE statusid!=6 AND statusid!=11";
 			$values = array($userid);
 			$orders = $db->qwv($sql, $values);
 			return Order::wrap($orders);
@@ -76,7 +76,7 @@
 		public static function getAllInactive()
 		{
 			global $db;
-			$sql = "SELECT * FROM orders WHERE statusid=4 OR statusid=9";
+			$sql = "SELECT * FROM orders WHERE statusid=6 OR statusid=11";
 			$values = array($userid);
 			$orders = $db->qwv($sql, $values);
 			return Order::wrap($orders);

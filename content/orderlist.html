@@ -16,7 +16,7 @@ if(isset($_GET['view']) && $_GET['view']==waiter)
 	if(!is_array($tmpl->active_order_objects))
 	{
 		//single order
-		print "<tr class=\"status".$tmpl->active_order_objects->statusid."\"><td>";
+		print "<tr class=\"".$tmpl->active_order_objects->statusid."\"><td>";
 		print $tmpl->active_order_objects->orderid;
 		print "</td><td>";
 		print $tmpl->active_order_objects->tableid;
@@ -91,7 +91,7 @@ if(isset($_GET['view']) && $_GET['view']==waiter)
 		foreach($tmpl->inactive_order_objects as $inactive_order_object)
 		{
 			//multiple inactive orders
-			print "<tr class=\"status".$inactive_order_object->statusid."\"><td>";
+			print "<tr class=\"".$inactive_order_object->statusid."\"><td>";
 			print $inactive_order_object->orderid;
 			print "</td><td>";
 			print $inactive_order_object->tableid;
