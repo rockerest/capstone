@@ -3,6 +3,15 @@
 	
 	class Ingredient
 	{
+		public static function getAll()
+		{
+			global $db;
+			$sql = "SELECT * FROM ingredients";
+			$ing = $db->q($sql);
+			
+			return Ingredient::wrap($ing);
+		}
+		
 		public static function getByID($id)
 		{
 			global $db;
