@@ -46,13 +46,30 @@
 			while( count($numbers) > 0 )
 			{
 				$newtms = Base::toArray(Item::getByCategorySearch(implode('.',$numbers).'%')); //mmm, delicious Newtms.
-				$itms = array_merge($itms, $newtms);
+				
+				$tmp = array();
+				foreach( $newtms as $i )
+				{
+					//disallow the same item
+					if( $i->itemid != $item->itemid )
+					{
+						//just push the ids now, so the array_diff doesn't choke
+						array_push($tmp, $i->itemid);
+					}
+				}
+				
+				$itms = array_merge($itms, array_diff($tmp, $itms));
 				
 				array_pop($numbers);
 			}
 			
 			//itemset is all chars + all categories
-			$items = array_merge($items, $itms);
+			foreach( $itms as $num )
+			{
+				//go get all the items and push them onto the itemlist
+				array_push($items, Item::getByID($num));
+			}
+			
 			$similarities = array();
 			foreach( $items as $itm )
 			{
@@ -262,7 +279,7 @@
 			if ($a['similarity'] == $b['similarity']) {
 				return 0;
 			}
-			return ($a['similarity'] < $b['similarity']) ? -1 : 1;
+			return ($a['similarity'] < $b['similarity']) ? 1 : -1;
 		}
 	}
 ?>

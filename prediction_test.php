@@ -18,7 +18,7 @@
 	{
 		foreach($suggested_items as $si)
 		{
-			array_push($suggested_item_objects, Item::getByID(intval($si['itemid'])));
+			array_push($suggested_item_objects, array(Item::getByID(intval($si['itemid'])), $si['similarity']));
 		}
 	}
 	$tmpl->suggested_item_objects = $suggested_item_objects;

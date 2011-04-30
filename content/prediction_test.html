@@ -7,16 +7,18 @@
 			<input type="text" id="name" name="name" />
 			<br />
 		</fieldset>
-		<div id="submit_button" class="clear">
+		<div id="submit_button" class="clear bump">
 			<button type="submit" class="big primary positive button"><span class="icon key"></span>Suggest</button>
 		</div>
 	</form>
 	<?php
 		if($tmpl->suggested_items != -1)
 		{
-			foreach($tmpl->suggested_item_objects as $sio)
+			foreach($tmpl->suggested_item_objects as $obj)
 			{
-				print "<a href=\"item.php?id=$sio->itemid\" >".$sio->name."</a><br />";
+				$sio = $obj[0];
+				$rating = $obj[1];
+				print "<a href=\"item.php?id=$sio->itemid\" >" . $sio->name . " = " . $rating . "</a><br />";
 			}
 		}
 	?>
