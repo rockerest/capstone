@@ -1,8 +1,17 @@
 <?php
 	require_once('connect.php');
 	
-	class Characteristic
+	class Characteristic extends Base
 	{
+		public static function getAll()
+		{
+			global $db;
+			$sql = "SELECT * FROM characteristics";
+			$char = $db->q($sql);
+			
+			return Characteristic::wrap($char);
+		}
+		
 		public static function getByID($id)
 		{
 			global $db;
