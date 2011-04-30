@@ -12,16 +12,16 @@
 	$suggested_item_objects = array();
 	
 	$suggested_items = isset($_GET['item']) ? Predict::similar(Item::getByName($_GET['item'])) : -1;
+	
+	$tmpl->suggested_items = $suggested_items;
 	if($suggested_items != -1)
 	{
-		foreach($suggested_items as $suggested_item)
+		foreach($suggested_items as $si)
 		{
-			var_dump($suggested_item);
-			array_push($suggested_item_objects, Item::getByID($suggested_item['itemid'])); 
+			array_push($suggested_item_objects, Item::getByID(intval($si['itemid'])));
 		}
 	}
 	$tmpl->suggested_item_objects = $suggested_item_objects;
-	
 	
 	$html = $tmpl->build('prediction_test.html');
 	$css = $tmpl->build('reporting.css');

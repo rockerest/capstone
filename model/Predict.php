@@ -98,7 +98,7 @@
 				$similarity += ($CATADD * $catcount['match']);
 				$similarity += ($CHARADD * $charcount['match']);
 				
-				$similarities = array_merge($similarities, array($itm->itemid => array("characteristic" => $charcount, "category" => $catcount, "similarity" => $similarity)));
+				$similarities = array_merge($similarities, array($itm->itemid => array("itemid" => $itm->itemid, "characteristic" => $charcount, "category" => $catcount, "similarity" => $similarity)));
 			}
 			if(usort($similarities, array(Predict, 'sortSimilarities')))
 			{
@@ -255,6 +255,7 @@
 			
 			return usort($similarities, "sortSimilarities");
 		}
+		
 		
 		private static function sortSimilarities($a, $b)
 		{
