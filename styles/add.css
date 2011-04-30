@@ -10,7 +10,7 @@
 	border-collapse: collapse;
 }
 
-#char + table td, #char + table th{
+#char + table tbody td, #char + table thead th{
 	border: .0625em solid #5555AA;
 	padding: .25em;
 }

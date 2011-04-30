@@ -139,3 +139,7 @@ $( '#char button[type="submit"]' ).click(function(){
 	
 	return false;
 });
+
+$( '#refreshPage' ).click(function(){
+	window.location.reload();
+});

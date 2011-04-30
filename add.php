@@ -36,7 +36,7 @@
 			$tmpl->items = array();
 		}
 		
-		while( (count($tmpl->items) % 5) != 0 )
+		while( (count($tmpl->items) % 6) != 0 )
 		{
 			array_push($tmpl->items, new Characteristic("",""));
 		}
