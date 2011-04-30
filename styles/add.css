@@ -1,0 +1,7 @@
+#char fieldset{
+	padding-top: .25em;
+}
+
+#char fieldset input{
+	width: 25em;
+}

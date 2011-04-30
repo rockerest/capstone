@@ -1,0 +1,44 @@
+<?
+if( $tmpl->code > -1 )
+{
+?>
+<div class="message-box center w50 bump <?= $tmpl->css; ?>">
+	<?= $tmpl->message; ?>
+</div>
+<?
+}
+?>
+
+<div id="switch">
+	<a href="#" class="left pill button" id="gotoItem">Add Item</a>
+	<a href="#" class="middle pill button" id="gotoIng">Add Ingredient</a>
+	<a href="#" class="right pill button" id="gotoChar">Add Characteristic</a>
+</div>
+
+<?
+if( $tmpl->type != null )
+{
+	if( $tmpl->type == 'characteristic' )
+	{
+	?>
+	<form class="center w75 bump" id="char">
+		<fieldset>
+			<legend>Add new characteristic</legend>
+			<label for="name">Name</label>
+			<br />
+			<input type="text" id="name" name="name" />
+		</fieldset>
+		<div id="submit" class="bump">
+			<button type="submit" class="big primary button center"><span class="plus icon"></span>Create New Characteristic</button>
+		</div>
+	</form>
+	<?
+	}
+	elseif( $tmpl->type == 'ingredient' )
+	{
+	?>
+	Display Ingredient
+	<?
+	}
+}
+?>
