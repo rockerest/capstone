@@ -58,7 +58,7 @@
 		public static function add($characteristic)
 		{
 			$char = Characteristic::getByCharacteristic($characteristic);
-			if( !char )
+			if( !$char )
 			{
 				$char = new Characteristic(null, $characteristic);
 				return $char->save();
@@ -113,7 +113,7 @@
 			if( $this->characteristicid == null )
 			{
 				$sql = "INSERT INTO characteristics (characteristic) VALUES (?)";
-				$value = array($this->characteristic);
+				$values = array($this->characteristic);
 				$db->qwv($sql, $values);
 				
 				if( $db->stat() )
@@ -129,7 +129,7 @@
 			else
 			{
 				$sql = "UPDATE characteristics SET characteristic=? WHERE characteristicid=?";
-				$value = array($this->characteristic, $this->characteristicid);
+				$values = array($this->characteristic, $this->characteristicid);
 				$db->qwv($sql, $values);
 				
 				if( $db->stat() )
