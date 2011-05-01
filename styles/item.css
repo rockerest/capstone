@@ -89,3 +89,10 @@
 /* delete item form */
 
 /* ---------------- */
+
+.recButton{
+	width: 7em;
+	height: 7em;
+	margin: .75em;
+	float: left;
+}

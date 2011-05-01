@@ -8,6 +8,7 @@
 	require_once('Image.php');
 	require_once('RedirectBrowserException.php');
 	require_once('Breadcrumb.php');
+	require_once('User.php');
 	
 	$tmpl = new Template();
 
@@ -55,6 +56,13 @@
 	{
 		$tmpl->breadcrumb = new Breadcrumb('item', $tmpl->item->itemid);
 		View::add($_SESSION['userid'], $tmpl->item->itemid);
+		$usr = User::getByID($_SESSION['userid']);
+		$tmp = array_slice($usr->Predict->recommend($tmpl->item), 0, 6);
+		$tmpl->recommendations = array();
+		foreach( $tmp as $rec )
+		{
+			array_push($tmpl->recommendations, Item::getByID($rec['itemid']));
+		}
 	}
 	
 	switch( $tmpl->code )
@@ -73,6 +81,10 @@
 			break;
 		case 13:
 			$tmpl->message = "Adding item succeeded.";
+			$tmpl->css = "okay";
+			break;
+		case 14:
+			$tmpl->message = "Updating item succeeded.";
 			$tmpl->css = "okay";
 			break;
 		default:

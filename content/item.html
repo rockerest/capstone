@@ -232,6 +232,17 @@ else
 			</div>
 		</div>
 	</div>
+	<div id="suggest" class="bump center">
+		<div class="message-box center w75 clean">Items also recommended for you</div>
+		<?
+			foreach( $tmpl->recommendations as $item )
+			{
+				?>
+				<div class="recButton big_button div_link url(item.php?id=<?= $item->itemid; ?>)"><span><?= $item->name; ?></span></div>
+				<?
+			}
+		?>
+	</div>
 	<?
 	}
 }
