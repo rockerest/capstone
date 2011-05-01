@@ -87,7 +87,7 @@ elseif( $tmpl->action == 'edit' )
 	if( $tmpl->item )
 	{
 	?>
-	<form id="edit" action="components/EditItem.php" method="post" enctype="multipart/form-data" class="center clear">
+	<form id="edit" action="components/EditItem.php?id=<? $tmpl->item->itemid; ?>" method="post" enctype="multipart/form-data" class="center clear">
 		<fieldset>
 			<legend>Basic Information</legend>
 			<label for="name">Name</label>

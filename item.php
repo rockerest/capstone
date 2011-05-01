@@ -24,8 +24,7 @@
 		case 'edit':
 					checkLogin(array(1,2));
 					$page = new Page(1, "OrderUp - Edit Existing Item");
-					$img = new Image();
-					$img->setBoth("../sub_cap/images/".$tmpl->item->image, "../sub_cap/images/" . preg_replace('#(\.[\w]+)#', '_50x50$1', $tmpl->item->image));
+					$img = new Image("../sub_cap/images/".$tmpl->item->image, "../sub_cap/images/" . preg_replace('#(\.[\w]+)#', '_50x50$1', $tmpl->item->image));
 					if( !$img->check() )
 					{
 						$img->resize(50, 50, false);
