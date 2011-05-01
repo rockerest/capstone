@@ -16,7 +16,7 @@ $( '.elevate_order' ).click( function(){
 		type : "POST",
 		data : {"id" : id},
 		url : "components/SubmitOrder.php",
-		success : function(){
+		success : function(data){
 			var order = $(this).closest('.order');
 			$(this).remove();
 			order.appendTo('#current');
