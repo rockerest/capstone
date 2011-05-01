@@ -7,6 +7,14 @@
 	
 	class Order extends Base
 	{
+		public static function getAll()
+		{
+			global $db;
+			$sql = "SELECT * FROM orders";
+			$order = $db->q($sql);
+			return Order::wrap($order);
+		}
+		
 		public static function getByID($id)
 		{
 			global $db;
@@ -26,9 +34,25 @@
 		}
 		
 		//where $statuses is an array of ints: array(4, 9);
-		public static function getForStatusesByUser($userid, $statuses)
+		public static function getForStatusesByUser($userid, $statuses = null)
 		{
-			$prelimOrders = Order::getByUser($userid);
+			if( $statuses == null )
+			{
+				if( !is_array($userid) )
+				{
+					return false;
+				}
+				else
+				{
+					$prelimOrders = Order::getAll();
+					$statuses = $userid;
+				}
+			}
+			else
+			{
+				$prelimOrders = Order::getByUser($userid);
+			}
+			
 			if( $prelimOrders instanceof Order && in_array($prelimOrders->statusid, $statuses) )
 			{
 				return $prelimOrders;
@@ -53,6 +77,11 @@
 					return false;
 				}
 			}
+		}
+		
+		public static function getForStatuses($statuses)
+		{
+			return Order::getForStatusesByUser($statuses);
 		}
 
 		public static function getActiveByUser($userid)
