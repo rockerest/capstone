@@ -34,12 +34,12 @@
 	height: 22em;
 }
 
-/* add item form */
-	#add{
+/* add/edit item form */
+	#add, #edit{
 		width: 100%;
 	}
 
-	#add fieldset{
+	#add fieldset, #edit fieldset{
 		float: left;
 		
 		margin-right: .5em;
@@ -48,37 +48,38 @@
 		width: 26.6em;
 	}
 
-	#add label{
+	#add label, #edit label{
 		margin-bottom: .1em;
 		display: inline-block;
 	}
 
-	#add input[type="text"], #add input[type="file"], #add textarea, #add a.y{
+	#add input[type="text"], #add input[type="file"], #add textarea, #add a.y,
+	#edit input[type="text"], #edit input[type="file"], #edit textarea, #edit a.y{
 		margin-left: 3.4em;
 		margin-bottom: 1em;
 	}
 	
 	/* prep & price fields */
-	#add #prep{
+	#add #prep, #edit #prep{
 		width: 2em;
 		text-align: right;
 	}
 	
-	#add #price{
+	#add #price, #edit #price{
 		width: 4em;
 		text-align: right;
 	}
 	/* end prep & price fields */
 
-	#add input[type="text"]{
+	#add input[type="text"], #edit input[type="text"]{
 		width: 28em;
 	}
 
-	#add textarea{
+	#add textarea, #edit textarea{
 		width: 28.8em;
 	}
 
-	#add #submit{
+	#add #submit, #edit #submit{
 		width: 100%;
 		float: left;
 		margin-top: 3em;
