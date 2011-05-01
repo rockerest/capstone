@@ -263,14 +263,24 @@
 			
 			//get similarity array for the item
 			$similar = Predict::similar($item);
-			foreach( $similar as $arr )
+			if( $similar )
 			{
-				$id = $arr['itemid'];
-				$similarity = $arr['similarity'];
-				$arr['recommendation'] = $similarity + Predict::compare($item, $id);
+				foreach( $similar as $arr )
+				{
+					$id = $arr['itemid'];
+					$similarity = $arr['similarity'];
+					$arr['recommendation'] = $similarity + Predict::compare($item, $id);
+				}
 			}
 			
-			return usort($similarities, "sortSimilarities");
+			if( usort($similar, array(Predict, 'sortSimilarities')) )
+			{
+				return $similar;
+			}
+			else
+			{
+				return false;
+			}
 		}
 		
 		
