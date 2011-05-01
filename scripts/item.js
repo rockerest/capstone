@@ -151,7 +151,11 @@ $( '#AddItemToOrder' ).click(function(){
 		type : "POST",
 		url : "components/OrderItem.php",
 		data : json,
-		success : function(data){
+		success : function(data, textStatus){
+			if(textStatus=='success')
+			{
+				$('<p class="message-box clean">This item has been added to your order.</p>').appendTo('#control').fadeOut(3000);
+			}
 			console.log(data);
 		}
 	});

@@ -49,45 +49,27 @@ function update_status(orderid, status){
 }
 
 $( '.increase_status' ).click(function(){
-	if($(this).parent().parent().attr('class')=='status2')
+	var classint = parseInt($(this).parent().parent().attr('class'));
+	classint++;
+	$(this).parent().parent().attr('class', classint);
+	update_status($(this).attr('id'), classint);
+	if(classint==6 || classint==11)
 	{
-		$(this).parent().parent().removeClass('status2');
-		$(this).parent().parent().addClass('status3');
-		update_status($(this).attr('id'), 3);
-	}
-	else if($(this).parent().parent().attr('class')=='status3')
-	{
-		$(this).parent().parent().removeClass('status3');
-		$(this).parent().parent().addClass('status4');
-		update_status($(this).attr('id'), 4);
 		$('#sort2 tr:last').after($(this).parent().parent());
 	}
-	else if($(this).parent().parent().attr('class')=='status0')
+	if(classint==7)
 	{
-		$(this).parent().parent().removeClass('status0');
-		$(this).parent().parent().addClass('status2');
-		update_status($(this).attr('id'), 2);
+		$('#sort thead').after($(this).parent().parent());
 	}
 });
 
 $( '.decrease_status' ).click(function(){
-	if($(this).parent().parent().attr('class')=='status0')
+	var classint = parseInt($(this).parent().parent().attr('class'));
+	classint--;
+	$(this).parent().parent().attr('class', classint);
+	update_status($(this).attr('id'), classint);	
+	if(classint==5 || classint==10)
 	{
-		$(this).parent().parent().removeClass('status0');
-		$(this).parent().parent().addClass('status2');
-		update_status($(this).attr('id'), 2);
-	}
-	else if($(this).parent().parent().attr('class')=='status3')
-	{
-		$(this).parent().parent().removeClass('status3');
-		$(this).parent().parent().addClass('status2');
-		update_status($(this).attr('id'), 2);
-	}
-	else if($(this).parent().parent().attr('class')=='status4')
-	{
-		$(this).parent().parent().removeClass('status4');
-		$(this).parent().parent().addClass('status3');
-		update_status($(this).attr('id'), 3);
 		$('#sort thead').after($(this).parent().parent());
 	}
 });

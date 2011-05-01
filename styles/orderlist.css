@@ -31,21 +31,22 @@ tr
 {
 font-size:.8em;
 height:1em;
+background-color:#cdcdcd;
 }
-tr.status0
+.\31, .\40, .\41
 {
 background-color:#8AEB96;
 }
-tr.status2
+tr.\32, .\37
 {
 background-color:#E3FFEB;
 font-weight: strong;
 }
-tr.status3
+tr.\33, .\38
 {
 background-color:#E5E3FF;
 }
-tr.status4
+tr.\34, .\39
 {
 background-color:#FFE3E3;
 color:#666;
