@@ -112,6 +112,13 @@ if( $('#add').length > 0 )
 	makeSuggest($('#add #chars'), 3, 10000, "name", "name", 0);
 	makeSuggest($('#add #ings'), 2, 10000, "name", "name", 0);
 }
+if( $('#edit').length > 0 )
+{
+	makeSuggest($('#edit #name'), 0, 1, "name", "name", 0);
+	makeSuggest($('#edit #cat'), 1, 1, "name", "name", 0);
+	makeSuggest($('#edit #chars'), 3, 10000, "name", "name", 0);
+	makeSuggest($('#edit #ings'), 2, 10000, "name", "name", 0);
+}
 
 $( '#delete #no' ).click(function(){
 	history.go(-1);

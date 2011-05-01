@@ -9,12 +9,13 @@
 	require_once('Session.php');
 	setSession(0, '/');
 	
+	$id = isset($_GET['id']) ? $_GET['id'] : null;
 	$name = isset($_POST['name']) ? $_POST['name'] : null;
 	$desc = isset($_POST['desc']) ? $_POST['desc'] : null;
 	$cat = isset($_POST['cat']) ? $_POST['cat'] : null;
 	$img = isset($_POST['image']) ? $_POST['image'] : null;
 	$prep = isset($_POST['prep']) ? $_POST['prep'] : null;
-	$lvl = isset($_POST['lvl']) ? $_POST['lvl'] : false;
+	$lvl = isset($_POST['lvl']) ? true : false;
 	$price = isset($_POST['price']) ? $_POST['price'] : null;
 	$ing = isset($_POST['ing']) ? $_POST['ing'] : null;
 	$char = isset($_POST['char']) ? $_POST['char'] : null;
@@ -27,6 +28,7 @@
 	$char = replaceName(explode(',', $char), 2);
 	
 	$data = array(
+				'id' => $id,
 				'name' => $name,
 				'desc' => $desc,
 				'cat' => $cat,
@@ -43,9 +45,9 @@
 		kick(0, $data, 0);
 	}
 	
-	//check for existing name
-	$item = Item::getByName($data['name']);
-	if( $item )
+	//check for item
+	$item = Item::getByID($data['id']);
+	if( !$item )
 	{
 		kick(1, $data, 9);
 	}
@@ -65,7 +67,7 @@
 		kick(1, $data, 2);
 	}
 	
-	if( $data['img'] != '' || $data['img'] != null )
+	if( $data['img'] != '' && $data['img'] != null )
 	{
 		$type = $_FILES['image']['type'];
 		if( $type != 'image/png' && $type != 'image/gif' && $type != 'image/jpeg' )
@@ -101,8 +103,8 @@
 	
 	//if it's all okay data:
 	
-	if( $data['img'] != '' || $data['img'] != null )
-		{
+	if( $data['img'] != null && $data['img'] != '' )
+	{
 		//get the image name
 		$fn = pathinfo( $_FILES['image']['name'] );
 		$svFn = time() . "." . $fn['extension'];
@@ -153,33 +155,67 @@
 		{
 			kick(1, $data, 15);
 		}
-	}
-	else
-	{
-		$svDBFn = '';
+		
+		//save the new image
+		$item->image = $svDBFn;
 	}
 	
-	$newItem = Item::add($data['name'], intval($data['cat'][0]), $data['desc'], $svDBFn, floatval($data['price']), intval($data['prep']), intval($data['lvl']));
-	if( $newItem instanceof Item )
+	//set the category
+	$item->categoryid = $data['cat'][0];
+	
+	//clear all of the ings/chars linked to the item
+	//these need to be on a diff, so the database doesn't get hit so hard.
+	//...I'll, uh, do that later.
+	$ings = $item->ingredients;
+	$chars = $item->characteristics;
+	
+	if( is_bool($ings) )
 	{
-		foreach( $data['ing'] as $ing )
-		{
-			$newItem->attach('ingredient', intval($ing));
-		}
-		
-		foreach( $data['char'] as $char )
-		{
-			$newItem->attach('characteristic', intval($char));
-		}
-		
-		$data['id'] = $newItem->itemid;
-		
-		kick(2, $data, 13);
+		$ings = array();
 	}
-	else
+	elseif( is_object($ings) )
 	{
-		kick(1, $data, 14);
+		$ings = array($ings);
 	}
+	
+	if( is_bool($chars) )
+	{
+		$chars = array();
+	}
+	elseif( is_object($chars) )
+	{
+		$chars = array($chars);
+	}
+	
+	foreach( $ings as $ing )
+	{
+		$ing->deleteLink($data['id']);
+	}
+	
+	foreach( $chars as $char )
+	{
+		$char->deleteLink($data['id']);
+	}
+	
+	//add all the new ings/chars
+	foreach( $data['ing'] as $ing )
+	{
+		$item->attach('ingredient', intval($ing));
+	}
+	
+	foreach( $data['char'] as $char )
+	{
+		$item->attach('characteristic', intval($char));
+	}
+	
+	//save all the other stuff.
+	$item->price = floatval($data['price']);
+	$item->hasCookLevels = $data['lvl'];
+	$item->prepTime = $data['prep'];
+	$item->description = $data['desc'];
+	$item->name = $data['name'];
+	
+	kick(2, $data, 14);
 	
 	function kick( $to, $data, $code )
 	{
@@ -196,7 +232,7 @@
 			}
 			elseif( $to == 1 )
 			{
-				throw new RedirectBrowserException("/item.php?action=add&code=" . $code . "&" . http_build_query($data));
+				throw new RedirectBrowserException("/item.php?action=edit&code=" . $code . "&" . http_build_query($data));
 			}
 			elseif( $to == 2 )
 			{

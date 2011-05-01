@@ -5,15 +5,17 @@
 	require_once('View.php');
 	require_once('Page.php');
 	require_once('Template.php');
-	
+	require_once('Image.php');
+	require_once('RedirectBrowserException.php');
 	require_once('Breadcrumb.php');
+	require_once('User.php');
 	
 	$tmpl = new Template();
 
 	$tmpl->itemid = isset($_GET['id']) ? $_GET['id'] : -1;
 	$tmpl->action = isset($_GET['action']) ? $_GET['action'] : null;
 	$tmpl->code = isset($_GET['code']) ? $_GET['code'] : -1;
-	$tmpl->item = $tmp = Item::getByID($tmpl->itemid);
+	$tmpl->item = Item::getByID($tmpl->itemid);
 	
 	switch( $tmpl->action )
 	{
@@ -21,9 +23,18 @@
 					$page = new Page(1, "OrderUp - Create New Item");
 					break;
 		case 'edit':
+					checkLogin(array(1,2));
 					$page = new Page(1, "OrderUp - Edit Existing Item");
+					$img = new Image("../sub_cap/images/".$tmpl->item->image, "../sub_cap/images/" . preg_replace('#(\.[\w]+)#', '_50x50$1', $tmpl->item->image));
+					if( !$img->check() )
+					{
+						$img->resize(50, 50, false);
+						$img->output();
+						$img->clean();
+					}
 					break;
 		case 'delete':
+					checkLogin(array(1,2));
 					$page = new Page(1, "OrderUp - Delete Existing Item");
 					break;
 		case null:
@@ -45,6 +56,13 @@
 	{
 		$tmpl->breadcrumb = new Breadcrumb('item', $tmpl->item->itemid);
 		View::add($_SESSION['userid'], $tmpl->item->itemid);
+		$usr = User::getByID($_SESSION['userid']);
+		$tmp = array_slice($usr->Predict->recommend($tmpl->item), 0, 6);
+		$tmpl->recommendations = array();
+		foreach( $tmp as $rec )
+		{
+			array_push($tmpl->recommendations, Item::getByID($rec['itemid']));
+		}
 	}
 	
 	switch( $tmpl->code )
@@ -63,6 +81,10 @@
 			break;
 		case 13:
 			$tmpl->message = "Adding item succeeded.";
+			$tmpl->css = "okay";
+			break;
+		case 14:
+			$tmpl->message = "Updating item succeeded.";
 			$tmpl->css = "okay";
 			break;
 		default:
@@ -84,5 +106,12 @@
 						);
 
 	print $page->build($appContent);
-
+	
+	function checkLogin($roles)
+	{
+		if( !in_array($_SESSION['roleid'], $roles) )
+		{
+			throw new RedirectBrowserException("login.php?code=10");
+		}
+	}
 ?>

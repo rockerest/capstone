@@ -82,6 +82,100 @@ if( $tmpl->action == 'add' )
 	</form>
 <?
 }
+elseif( $tmpl->action == 'edit' )
+{
+	if( $tmpl->item )
+	{
+	?>
+	<form id="edit" action="components/EditItem.php?id=<?= $tmpl->item->itemid; ?>" method="post" enctype="multipart/form-data" class="center clear">
+		<fieldset>
+			<legend>Basic Information</legend>
+			<label for="name">Name</label>
+			<br />
+			<input type="text" id="name" name="name" value="<?= $tmpl->item->name; ?>" />
+			<br />
+			<label for="desc">Description</label>
+			<br />
+			<textarea name="desc" id="desc"><?= $tmpl->item->description; ?></textarea>
+			<br />
+			<label for="cat">Category</label>
+			<br />
+			<input type="text" name="cat" id="cat" value="<?= $tmpl->item->category->name; ?>" />
+			<br />
+			<label for="image">Image</label>
+			<br />
+			<img src="/images/<?= preg_replace('#(\.[\w]+)#', '_50x50$1', $tmpl->item->image); ?>" alt="<?= $tmpl->item->name . " image"; ?>" width="40"/>
+			<input type="file" name="image" id="image" style="margin-left: 0.1em;" />
+			<br />
+			<label for="prep">Prep Time</label>
+			<br />
+			<input type="text" name="prep" id="prep" value="<?= $tmpl->item->prepTime; ?>" />&nbsp;minutes.
+			<br />
+			<label for="lvls">Has cook levels?</label>
+			<br />
+			<div class="hide">
+				<input type="radio" name="lvl" id="lvl_yes" value="1" <? if( $tmpl->item->hasCookLevels ){ print "checked=\"checked\""; } ?>/>
+				<input type="radio" name="lvl" id="lvl_no" value="0" <? if( !$tmpl->item->hasCookLevels ){ print "checked=\"checked\""; } ?>/>
+			</div>
+			<a href="#" class="left positive button y<? if( $tmpl->item->hasCookLevels ){ print " active"; } ?>"><span class="icon check"></span>Yes</a>
+			<a href="#" class="right negative button n<? if( !$tmpl->item->hasCookLevels ){ print " active"; } ?>"><span class="cross icon"></span>&nbsp;No</a>
+			<br />
+			<label for="price">Menu Price</label>
+			<br />
+			<input type="text" name="price" id="price" value="<?= $tmpl->item->price; ?>" />
+			<br />
+		</fieldset>
+		<fieldset>
+			<legend>Ingredients</legend>
+			<label>Name</label><br />
+			<?
+			$nameArray = array();
+			$ings = $tmpl->item->ingredients;
+			if( is_object($ings) )
+			{
+				$ings = array($ings);
+			}
+			elseif( is_bool($ings) )
+			{
+				$ings = array();
+			}
+			foreach( $ings as $ing )
+			{
+				array_push($nameArray, $ing->name);
+			}
+			$ingString = implode(', ', $nameArray) . ", ";
+			?>
+			<input type="text" name="ing" id="ings" value="<?= $ingString; ?>" />
+		</fieldset>
+		<fieldset class="clear">
+			<legend>Characteristics</legend>
+			<label>Characteristic</label><br />
+			<?
+			$charArray = array();
+			$chars = $tmpl->item->characteristics;
+			if( is_object($chars) )
+			{
+				$chars = array($chars);
+			}
+			elseif( is_bool($chars) )
+			{
+				$chars = array();
+			}
+			foreach( $chars as $char )
+			{
+				array_push($charArray, $char->characteristic);
+			}
+			$charString = implode(', ', $charArray) . ", ";
+			?>
+			<input type="text" name="char" id="chars" value="<?= $charString; ?>" />
+		</fieldset>
+		<div id="submit">
+			<button type="submit" class="big primary button center"><span class="pen icon"></span>Update Item</button>
+		</div>
+	</form>
+	<?
+	}
+}
 elseif( $tmpl->action == 'delete' )
 {
 ?>
@@ -137,6 +231,17 @@ else
 				</form>
 			</div>
 		</div>
+	</div>
+	<div id="suggest" class="bump center">
+		<div class="message-box center w75 clean">Items also recommended for you</div>
+		<?
+			foreach( $tmpl->recommendations as $item )
+			{
+				?>
+				<div class="recButton big_button div_link url(item.php?id=<?= $item->itemid; ?>)"><span><?= $item->name; ?></span></div>
+				<?
+			}
+		?>
 	</div>
 	<?
 	}
