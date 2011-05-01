@@ -87,7 +87,7 @@ elseif( $tmpl->action == 'edit' )
 	if( $tmpl->item )
 	{
 	?>
-	<form id="edit" action="components/EditItem.php?id=<? $tmpl->item->itemid; ?>" method="post" enctype="multipart/form-data" class="center clear">
+	<form id="edit" action="components/EditItem.php?id=<?= $tmpl->item->itemid; ?>" method="post" enctype="multipart/form-data" class="center clear">
 		<fieldset>
 			<legend>Basic Information</legend>
 			<label for="name">Name</label>
@@ -109,7 +109,7 @@ elseif( $tmpl->action == 'edit' )
 			<br />
 			<label for="prep">Prep Time</label>
 			<br />
-			<input type="text" name="prep" id="prep" value="<? $tmpl->item->prepTime; ?>" />&nbsp;minutes.
+			<input type="text" name="prep" id="prep" value="<?= $tmpl->item->prepTime; ?>" />&nbsp;minutes.
 			<br />
 			<label for="lvls">Has cook levels?</label>
 			<br />
