@@ -215,7 +215,7 @@
 	$item->description = $data['desc'];
 	$item->name = $data['name'];
 	
-	kick(2, $data, 13);
+	kick(2, $data, 14);
 	
 	function kick( $to, $data, $code )
 	{
