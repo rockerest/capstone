@@ -101,7 +101,7 @@
 	
 	//if it's all okay data:
 	
-	if( $data['img'] != '' || $data['img'] != null )
+	if( $data['img'] != '' && $data['img'] != null )
 		{
 		//get the image name
 		$fn = pathinfo( $_FILES['image']['name'] );
