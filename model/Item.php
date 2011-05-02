@@ -144,6 +144,10 @@
 			{
 				return Category::getByID($this->categoryid);
 			}
+			elseif( $var == 'price' )
+			{
+				return money_format('%i', $this->price);
+			}
 			else
 			{
 				return $this->$var;
