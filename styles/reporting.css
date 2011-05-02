@@ -12,13 +12,13 @@
 #report_opts
 {
 	float:left;
-	width:9.375em;
+	width:15.375em;
 	margin-right:0.938em;
 	text-align:right;
 }
 #report_body
 {
-	width:47.813em;
+	width:100%;
 	margin: 1.563em auto auto auto;
 }
 #update_form, #add_item_selector
@@ -42,4 +42,5 @@
 {
 	width:47em;
 	height:25em;
+	margin:auto;
 }
