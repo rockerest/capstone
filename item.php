@@ -32,7 +32,6 @@
 						$img->output();
 						$img->clean();
 					}
-					var_dump($tmpl->item);
 					break;
 		case 'delete':
 					checkLogin(array(1,2));
