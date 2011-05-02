@@ -53,18 +53,21 @@
 				}
 			}
 			
-			if( $_SERVER['SCRIPT_NAME'] != '/login.php' && !isset($_SESSION['umbrella']['tableid']) )
+			if( $_SERVER['SCRIPT_NAME'] != '/error.php' )
 			{
-				if( $_SESSION['roleid'] > 2 )
+				if( ($_SERVER['SCRIPT_NAME'] != '/login.php' && !isset($_SESSION['umbrella']['tableid'])) )
 				{
-					$loc = urlencode("login.php?code=11");
-					header('Location: login.php?action=logout&fwd='.$loc);
-				}
-				else
-				{
-					if( $_SERVER['SCRIPT_NAME'] != '/table.php' )
+					if( $_SESSION['roleid'] > 2 )
 					{
-						header('Location: table.php?code=0');
+						$loc = urlencode("login.php?code=11");
+						header('Location: login.php?action=logout&fwd='.$loc);
+					}
+					else
+					{
+						if( $_SERVER['SCRIPT_NAME'] != '/table.php' )
+						{
+							header('Location: table.php?code=0');
+						}
 					}
 				}
 			}
