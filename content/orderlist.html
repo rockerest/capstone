@@ -98,7 +98,7 @@ if(isset($_GET['view']) && $_GET['view']==waiter)
 			print "</td><td>";
 			print $inactive_order_object->userid;
 			print "</td><td>";
-			print $inactive_order_object>specialComment;
+			print $inactive_order_object->specialComment;
 			print "</td><td>";
 			print date("g:i (A) m/d/y", $inactive_order_object->time);
 			print "</td><td class=\"status_id_order_".$inactive_order_object->orderid."\">";

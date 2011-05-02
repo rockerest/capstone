@@ -80,12 +80,12 @@
 			return Item::wrap($items);
 		}
 		
-		public static function add($name, $categoryid, $description, $image, $price, $preptime, $cooklvl)
+		public static function add($name, $categoryid, $description, $image, $price, $prepTime, $cooklvl)
 		{
 			$item = Item::getByName($name);
 			if( !$item )
 			{
-				$item = new Item(null, $name, $categoryid, $description, $image, $price, $preptime, $cooklvl);
+				$item = new Item(null, $name, $categoryid, $description, $image, $price, $prepTime, $cooklvl);
 				return $item->save();
 			}
 			else

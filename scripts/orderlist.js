@@ -1,6 +1,6 @@
 $(document).ready(function() {
-
-	  
+	
+	setTimeout("location.reload()", 10000);
 	// Return a helper with preserved width of cells
 	var fixHelper = function(e, ui) {
 	  ui.children().each(function() {

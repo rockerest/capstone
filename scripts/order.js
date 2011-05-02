@@ -17,9 +17,7 @@ $( '.elevate_order' ).click( function(){
 		data : {"id" : id},
 		url : "components/SubmitOrder.php",
 		success : function(data){
-			var order = $(this).closest('.order');
-			$(this).remove();
-			order.appendTo('#current');
+			location.reload();
 		}
 	});
 });
