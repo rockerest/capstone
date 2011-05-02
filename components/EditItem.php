@@ -75,10 +75,7 @@
 			kick(1, $data, 3);
 		}	
 	}
-	else
-	{
-		kick(1, $data, 3);
-	}
+	//allow no image to be uploaded
 	
 	if( $data['prep'] == '' || $data['prep'] == null || !is_numeric($data['prep']) )
 	{
@@ -155,12 +152,15 @@
 	//move the image
 	if( !move_uploaded_file( $_FILES['image']['tmp_name'], "../images/" . $svDBFn ) )
 	{
-		kick(1, $data, 15);
+		//image upload didn't work.
+		//kick(1, $data, 15);
 	}
-	
-	//save the new image
-	$item->image = $svDBFn;
-	
+	else
+	{
+		//save the new image
+		$item->image = $svDBFn;
+	}
+
 	//set the category
 	$item->categoryid = $data['cat'][0];
 	
