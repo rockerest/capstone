@@ -23,11 +23,11 @@
 			}
 			
 			$CHARADD = .1;//each matching characteristic = .1
-			$CATADD = .05;//each matching category level = .05
+			$CATADD = .01;//each matching category level = .01
 			$VOADD = .025;//a user viewed one and ordered other = .025
 			
-			$UGTMADD = -.5;//more unmatched characteristics than matched = -.5
-			$NOMATCHTOPLVLADD = -.25;//top level category doesn't match = -.25
+			$UGTMADD = -.35;//more unmatched characteristics than matched = -.35
+			$NOMATCHTOPLVLADD = -.15;//top level category doesn't match = -.15
 			
 			$chars = Base::toArray($item->characteristics);
 			$views = Base::toArray(View::getByItem($item->itemid));
@@ -198,7 +198,7 @@
 					//don't do anything right now.
 				}
 				
-				$willTheyLikeTwoComparedToOne += $diff * .05;
+				$willTheyLikeTwoComparedToOne += $diff * .1;
 			}
 			else
 			{
